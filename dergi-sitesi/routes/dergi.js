@@ -14,8 +14,8 @@ router.get('/:dergiId', (req, res) => {
             // Dergi bulunamadıysa 404 hatası gönder
             return res.status(404).send('Dergi bulunamadı');
         }
-        const ekleyenkisi = dergi.olusturan_user_id === 1 ? 'Admin' : 'Anonim';
         const dergi = results[0];
+        const ekleyenkisi = dergi.olusturan_user_id === 1 ? 'Admin' : 'Anonim';
         res.render('dergiDetay', { dergi, ekleyenkisi });
     });
 });
