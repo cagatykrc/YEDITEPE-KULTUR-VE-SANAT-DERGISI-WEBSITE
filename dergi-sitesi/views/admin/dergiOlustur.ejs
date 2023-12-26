@@ -1,0 +1,22 @@
+<%- include('./partials/header.ejs') %>
+
+    <h1>Dergi Oluştur</h1>
+
+    <form action="/dergiler/olustur" method="POST">
+        <label for="konu">Konu:</label>
+        <input type="text" id="konu" name="konu" required>
+
+        <label for="aciklama">Açıklama:</label>
+        <textarea id="aciklama" name="aciklama"></textarea>
+
+        <label for="resim">Resim URL:</label>
+        <input type="text" id="resim" name="resim">
+
+        <label for="indirmeLinki">İndirme Linki:</label>
+        <input type="text" id="indirmeLinki" name="indirmeLinki" required>
+
+        <button type="submit">Dergi Oluştur</button>
+    </form>
+
+</body>
+</html>
