@@ -3,10 +3,18 @@
 
 <div class="container mt-4">
     <h2>Kayıt Ol</h2>
-    <form>
+    <form action="/auth/kayit" method="post">
+        <div class="form-group">
+            <label for="name">Kullanıcı Adınız:</label>
+            <input type="text" class="form-control" id="username" placeholder="Kullanıcı adınızı girin">
+        </div>
         <div class="form-group">
             <label for="name">Adınız:</label>
-            <input type="text" class="form-control" id="name" placeholder="Adınızı girin">
+            <input type="text" class="form-control" id="firstName" placeholder="Adınızı girin">
+        </div>
+        <div class="form-group">
+            <label for="name">Soyadınız:</label>
+            <input type="text" class="form-control" id="lastName" placeholder="Soyadınızı girin">
         </div>
         <div class="form-group">
             <label for="email">E-posta Adresi:</label>
