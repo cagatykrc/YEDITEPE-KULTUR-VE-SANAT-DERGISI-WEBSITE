@@ -1,28 +1,28 @@
 <!-- views/kayit.ejs -->
-<%- include('./partials/header.ejs') %>
+<%- include('./partials/header.ejs',) %>
 
 <div class="container mt-4">
     <h2>Kayıt Ol</h2>
     <form action="/auth/kayit" method="post">
         <div class="form-group">
             <label for="name">Kullanıcı Adınız:</label>
-            <input type="text" class="form-control" id="username" placeholder="Kullanıcı adınızı girin">
+            <input type="text" class="form-control" name="username" id="username" placeholder="Kullanıcı adınızı girin">
         </div>
         <div class="form-group">
             <label for="name">Adınız:</label>
-            <input type="text" class="form-control" id="firstName" placeholder="Adınızı girin">
+            <input type="text" class="form-control" name="firstName" id="firstName" placeholder="Adınızı girin">
         </div>
         <div class="form-group">
             <label for="name">Soyadınız:</label>
-            <input type="text" class="form-control" id="lastName" placeholder="Soyadınızı girin">
+            <input type="text" class="form-control" name="lastName" id="lastName" placeholder="Soyadınızı girin">
         </div>
         <div class="form-group">
             <label for="email">E-posta Adresi:</label>
-            <input type="email" class="form-control" id="email" placeholder="E-posta adresinizi girin">
+            <input type="email" class="form-control" name="email" id="email" placeholder="E-posta adresinizi girin">
         </div>
         <div class="form-group">
             <label for="password">Şifre:</label>
-            <input type="password" class="form-control" id="password" placeholder="Şifrenizi girin">
+            <input type="password" class="form-control" name="password" id="password" placeholder="Şifrenizi girin">
         </div>
         <button type="submit" class="btn btn-primary">Kayıt Ol</button>
     </form>
