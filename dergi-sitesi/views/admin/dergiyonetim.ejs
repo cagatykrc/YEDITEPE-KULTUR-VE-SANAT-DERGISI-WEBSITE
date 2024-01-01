@@ -1,0 +1,23 @@
+<%- include('../partials/header.ejs') %>
+
+<h1>Dergiler</h1>
+
+<ul>
+    <% dergiler.forEach(dergi => { %>
+        <li>
+            <%= dergi.konu %>
+            <a href="/dergiler/<%= dergi.dergi_id %>/duzenle">Düzenle</a>
+            <a href="#" onclick="confirmDelete('<%= dergi.dergi_id %>')">Sil</a>
+        </li>
+    <% }); %>
+</ul>
+
+<script>
+    function confirmDelete(dergiId) {
+        if (confirm('Emin misiniz?')) {
+            window.location.href = '/dergiler/' + dergiId + '/sil';
+        }
+    }
+</script>
+
+<%- include('../partials/footer.ejs') %>
