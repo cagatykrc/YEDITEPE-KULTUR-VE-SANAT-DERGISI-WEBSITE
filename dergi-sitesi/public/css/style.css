@@ -11,16 +11,33 @@ body {
 }
 
 .navbar {
-    border-bottom: 1px solid #dee2e6;
-    transition: .5s;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #1a1a1a;
+    padding: 15px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
 }
 
-.navbar-brand {
-    font-size: 1.5rem;
-    color: #007bff;
+.navbar a {
+    text-decoration: none;
+    color: #fff;
 }
+
+.logo{
+  margin-left: 30px;
+  font-weight: 500;
+}
+
+.list{
+    list-style: none;
+    display: flex;
+    gap:30px;
+    color: #fff;
+    margin-right: 30px;
+  }
 
 .navbar-nav .nav-link {
     font-size: 1.2rem;
