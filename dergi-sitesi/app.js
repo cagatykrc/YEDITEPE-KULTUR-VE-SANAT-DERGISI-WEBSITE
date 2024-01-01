@@ -7,9 +7,12 @@ const indexRoute = require('./routes/index');
 const dergiRoute = require('./routes/dergi');
 const adminRoutes = require('./routes/admin');
 const app = express();
+const crypto = require('crypto');
+const secretKey = crypto.randomBytes(32).toString('hex');
 
+console.log(secretKey);
 app.use(session({
-    secret: 'sa',
+    secret: secretKey,
     resave: false,
     saveUninitialized: true,
     cookie: {
