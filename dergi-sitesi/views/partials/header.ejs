@@ -32,6 +32,12 @@
                         <a class="nav-link" href="/auth/kayit">Kayıt Ol</a>
                     </li>
                 <% } %>
+                <% if(userS && userS.role==='admin'){ %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/Panel">Kontrol Paneli</a>
+                    </li>
+                    <% }else{}%>
+
             </ul>
         </div>
     </nav>
