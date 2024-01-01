@@ -14,33 +14,35 @@
 <body>
 
     <nav class="navbar">
-        <a href="" class="logo"><img src="*.jpg" alt="LOGO"></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
+        <a href="#" class="logo"><img src="*.jpg" alt="LOGO"></a>
+        <input type="checkbox" id="toggler">
+        <label for="toggler"><i class="fa fa-bars"></i></label>
+        <div class="menu">
+            <ul class="list">
                 <% if (userS && userS.username) { %>
                     <!-- Kullanıcı giriş yapmışsa -->
-                    <li class="nav-item">
-                        <span class="nav-link">Merhaba, <%= userS.firstName %></span>
+                    <li class="item">
+                        <span class="greeting">Merhaba, <%= userS.firstName %></span>
                     </li>
+                    <li class="item"><a href="/">Anasayfa</a></li>
+                    <li class="item"><a href="/hakkimizda">Hakkımızda</a></li>
+                    <li class="item"><a href="#">İletişim</a></li>
                     <% if(userS && userS.role==='admin'){ %>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/admin/Panel">Kontrol Paneli</a>
+                        <!-- Kullanıcı yöneticiyse -->
+                        <li class="item">
+                            <a class="navbar" href="/admin/Panel">Kontrol Paneli</a>
                         </li>
-                        <% }else{}%>
+                    <% } %>
                 <% } else { %>
                     <!-- Kullanıcı giriş yapmamışsa -->
-                    <li class="text-end nav-item">
-                        <a class="nav-link" href="/auth/giris">Giriş Yap</a>
+                    <li class="navbar">
+                        <a class="item" href="/auth/giris">Giriş Yap</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="item">
                         <a class="nav-link" href="/auth/kayit">Kayıt Ol</a>
                     </li>
                 <% } %>
-
-
             </ul>
         </div>
     </nav>
+    
