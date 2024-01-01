@@ -1,22 +1,42 @@
-<%- include('partials/header.ejs') %>
+<%- include('../partials/header.ejs') %>
 
-    <h1>Dergi Oluştur</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-header">
+                    <h1>Dergi Oluştur</h1>
+                </div>
+                <div class="card-body">
+                    <form action="/admin/dergiolustur" method="POST">
 
-    <form action="/admin/olustur" method="POST">
-        <label for="konu">Konu:</label>
-        <input type="text" id="konu" name="konu" required>
+                        <div class="form-group">
+                            <label for="konu">Konu:</label>
+                            <input type="text" class="form-control admin-panel-input" id="konu" name="konu" required>
+                        </div>
 
-        <label for="aciklama">Açıklama:</label>
-        <textarea id="aciklama" name="aciklama"></textarea>
+                        <div class="form-group">
+                            <label for="aciklama">Açıklama:</label>
+                            <textarea class="form-control admin-panel-input" id="aciklama" name="aciklama"></textarea>
+                        </div>
 
-        <label for="resim">Resim URL:</label>
-        <input type="text" id="resim" name="resim">
+                        <div class="form-group">
+                            <label for="resim">Resim URL:</label>
+                            <input type="text" class="form-control admin-panel-input" id="resim" name="resim">
+                        </div>
 
-        <label for="indirmeLinki">İndirme Linki:</label>
-        <input type="text" id="indirmeLinki" name="indirmeLinki" required>
+                        <div class="form-group">
+                            <label for="indirmeLinki">İndirme Linki:</label>
+                            <input type="text" class="form-control admin-panel-input" id="indirmeLinki" name="indirmeLinki" required>
+                        </div>
 
-        <button type="submit">Dergi Oluştur</button>
-    </form>
+                        <button type="submit" class="btn btn-primary">Dergiyi Oluştur</button>
+                    </form>
+                    <a href="/admin/panel"><button class="btn btn-danger">Geri</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-</body>
-</html>
+<%- include('../partials/footer.ejs') %>

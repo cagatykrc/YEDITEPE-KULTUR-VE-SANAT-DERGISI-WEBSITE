@@ -6,23 +6,19 @@ router.get('/panel', (req, res) => {
 
     // Kullanıcı admin rolüne sahipse, sayfayı render et
     if (userS && userS.role === 'admin') {
-        res.render('kontrolPanel',{userS});
+        res.render('admin/kontrolPanel', { userS });
     } else {
         // Admin değilse, başka bir sayfaya yönlendir veya hata mesajı göster
         res.status(403).send('Bu sayfaya erişim izniniz yok.');
     }
 });
 
-
-
-router.get('/dergiolustur', (req,res)=>{
+router.get('/dergiolustur', (req, res) => {
     const userS = req.session.user;
     if (userS && userS.role === 'admin') {
-        res.render('dergiOlustur',{userS} )
-        
-    }
-    else{
-        res.redirect('/')
+        res.render('admin/dergiOlustur', { userS });
+    } else {
+        res.redirect('/');
     }
 });
 
