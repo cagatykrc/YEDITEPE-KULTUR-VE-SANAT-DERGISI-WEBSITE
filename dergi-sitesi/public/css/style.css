@@ -261,3 +261,112 @@ a{
     width: 120px;
     height: 120px;
 }
+
+
+.custom-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    margin-bottom: 20px;
+}
+
+.custom-card:hover {
+    transform: scale(1.05);
+}
+
+.custom-card img {
+    width: 100%;
+    height: 200px; /* İstediğiniz yüksekliği ayarlayabilirsiniz */
+    object-fit: cover;
+}
+
+.custom-card-content {
+    padding: 20px;
+}
+
+.custom-card-title {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.custom-card-text {
+    color: #666;
+    font-size: 1rem;
+    margin-bottom: 15px;
+}
+
+.btn-custom {
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    display: inline-block;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.btn-custom:hover {
+    background-color: #0056b3;
+}
+
+.detail-info {
+    padding: 20px;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+}
+
+.download-link a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+/* Yorum ekle stilleri */
+.detail-comment-area {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+}
+
+.custom-textarea {
+    min-height: 100px;
+}
+
+.custom-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+/* Yorumlar stilleri */
+.custom-list {
+    list-style: none;
+    padding: 0;
+}
+
+.custom-list-item {
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.custom-list-item-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.custom-list-item p {
+    padding: 10px;
+}

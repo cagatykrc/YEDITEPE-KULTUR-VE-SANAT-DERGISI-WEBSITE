@@ -9,7 +9,7 @@ router.get('/panel', (req, res) => {
         res.render('admin/kontrolPanel', { userS });
     } else {
         // Admin değilse, başka bir sayfaya yönlendir veya hata mesajı göster
-        res.status(403).send('Bu sayfaya erişim izniniz yok.');
+        res.render('404', { userS });
     }
 });
 
@@ -25,7 +25,7 @@ router.get('/dergiyonetim', async (req, res) => {
             return res.status(500).send('Internal Server Error');
         }
     } else {
-        res.status(403).send('Bu sayfaya erişim izniniz yok.');
+        res.render('404', { userS });
     }
 });
 
@@ -36,7 +36,7 @@ router.get('/dergiolustur', (req, res) => {
     if (userS && userS.role === 'admin') {
         res.render('admin/dergiOlustur', { userS });
     } else {
-        res.redirect('/');
+        res.render('404', { userS });
     }
 });
 
@@ -125,7 +125,7 @@ router.post('/:dergiId/sil', (req, res) => {
         }
 
         console.log('Dergi başarıyla silindi.');
-        res.redirect('/dergiler');
+        res.redirect('/admin/dergiyonetim');
     });
 });
 

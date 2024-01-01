@@ -1,15 +1,16 @@
 <%- include('./partials/header.ejs',) %>
 <%- include('./partials/loader.ejs') %>
+
 <div class="container mt-4">
     <div class="row">
         <% dergiler.forEach(dergi => { %>
             <div class="col-md-4 mb-4">
-                <div class="card index-img">
-                    <img src="<%= dergi.resim %>" class="card-img-top" alt="<%= dergi.baslik %>">
-                    <div class="card-body">
-                        <h5 class="card-title"><%= dergi.dergi_basligi %></h5>
-                        <p class="card-text"><%= dergi.aciklama.substring(0, 100) %>...</p>
-                        <a href="/dergiler/<%= dergi.dergi_id %>" class="btn btn-primary">İncele</a>
+                <div class="custom-card">
+                    <img src="<%= dergi.resim %>" alt="<%= dergi.baslik %>">
+                    <div class="custom-card-content">
+                        <h5 class="custom-card-title"><%= dergi.dergi_basligi %></h5>
+                        <p class="custom-card-text"><%= dergi.aciklama.substring(0, 100) %>...</p>
+                        <a href="/dergiler/<%= dergi.dergi_id %>" class="btn btn-custom">İncele</a>
                     </div>
                 </div>
             </div>

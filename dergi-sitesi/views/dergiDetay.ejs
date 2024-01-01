@@ -1,4 +1,3 @@
-
 <%- include('./partials/header.ejs') %>
 
 <div class="container mt-4">
@@ -8,11 +7,11 @@
             <img src="<%= dergi.resim %>" class="img-fluid rounded" alt="<%= dergi.konu %>">
         </div>
         <div class="col-md-6">
-            <div class="detail-info border-0">
+            <div class="detail-info">
                 <h2><%= dergi.dergi_basligi %></h2>
                 <h3 class="text-muted"><%= dergi.konu %></h3>
                 <p class="author-info"><strong>Yazar:</strong> <%= dergi.yazar %></p>
-                <p class="user-info"><strong>Ekleyen:</strong>HATA</p>
+                <p class="user-info"><strong>Ekleyen:</strong> <%= dergi.ekleyen_username %></p>
                 <p class="description"><strong>Açıklama:</strong> <%= dergi.aciklama %></p>
                 <p class="download-link">
                     <strong>İndirme Linki:</strong>
@@ -22,27 +21,27 @@
         </div>
     </div>
 
-    <div class="detail-comment-area border rounded p-2 mt-3">
+    <div class="detail-comment-area border rounded p-4 mt-3">
         <div class="row mt-4">
             <div class="col-md-6">
-                <h3>Yorum Ekle</h3>
+                <h3 class="mb-3">Yorum Ekle</h3>
                 <form action="/dergiler/<%= dergi.dergi_id %>/yorumEkle" method="POST">
                     <div class="form-group">
                         <label for="yorumMetni">Yorumunuz:</label>
                         <textarea class="form-control" id="yorumMetni" name="yorumMetni" required></textarea>
                     </div>
-                    <button type="submit" class="mt-1 btn btn-primary">Yorum Ekle</button>
+                    <button type="submit" class="mt-2 btn btn-primary">Yorum Ekle</button>
                 </form>
             </div>
         </div>
 
         <!-- Dergi yorumları -->
         <div class="mt-4">
-            <h3 class="mb-3">Yorumlar</h3>
-            <div class="list-group border-0">
+            <h3 class="mb-4">Yorumlar</h3>
+            <div class="list-group">
                 <% dergiYorumlari.forEach(yorum => { %>
-                    <div class="list-group-item border-0">
-                        <div class="d-flex border-0 w-100 justify-content-between">
+                    <div class="list-group-item">
+                        <div class="d-flex w-100 justify-content-between">
                             <h5 class="mb-1"><strong><%= yorum.username %>:</strong></h5>
                             <small>
                                 <% if (yorum.created_at) { %>
@@ -58,5 +57,6 @@
             </div>
         </div>
     </div>
+</div>
 
 <%- include('./partials/footer.ejs') %>
