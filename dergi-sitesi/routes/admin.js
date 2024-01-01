@@ -13,14 +13,23 @@ router.get('/panel', (req, res) => {
     }
 });
 
-router.get('/dergiyonetim', (req,res)=>{
-    const userS= req.session.user;
-    if (userS && userS==='admin') {
-        res.render('admin/dergiyonetim', { userS });
+router.get('/dergiyonetim', async (req, res) => {
+    const userS = req.session.user;
+    if (userS && userS.role === 'admin') {
+        try {
+            const [results, fields] = await db.query('SELECT * FROM dergiler');
+            const dergiler = results;
+            res.render('admin/dergiYonetim', { dergiler, userS });
+        } catch (error) {
+            console.error('Dergi verilerini çekerken bir hata oluştu: ' + error);
+            return res.status(500).send('Internal Server Error');
+        }
     } else {
         res.status(403).send('Bu sayfaya erişim izniniz yok.');
     }
 });
+
+
 
 router.get('/dergiolustur', (req, res) => {
     const userS = req.session.user;

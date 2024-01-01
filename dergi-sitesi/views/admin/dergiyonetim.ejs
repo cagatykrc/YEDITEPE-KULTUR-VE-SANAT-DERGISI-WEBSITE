@@ -2,15 +2,31 @@
 
 <h1>Dergiler</h1>
 
-<ul>
-    <% dergiler.forEach(dergi => { %>
-        <li>
-            <%= dergi.konu %>
-            <a href="/dergiler/<%= dergi.dergi_id %>/duzenle">Düzenle</a>
-            <a href="#" onclick="confirmDelete('<%= dergi.dergi_id %>')">Sil</a>
-        </li>
-    <% }); %>
-</ul>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Başlık</th>
+            <th>Konu</th>
+            <th>Ekleyen Kişi</th>
+            <th>İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% dergiler.forEach(dergi => { %>
+            <tr>
+                <td><%= dergi.dergi_id %></td>
+                <td><%= dergi.dergi_basligi %></td>
+                <td class="admin-panel-mini-1-img"><img src="<%= dergi.resim %>" alt="resim"></td>
+                <td><%= dergi.olusturan_user_id %></td>
+                <td>
+                    <a href="/dergiler/<%= dergi.dergi_id %>/duzenle" class="btn btn-warning">Düzenle</a>
+                    <a href="#" onclick="confirmDelete('<%= dergi.dergi_id %>')" class="btn btn-danger">Sil</a>
+                </td>
+            </tr>
+        <% }); %>
+    </tbody>
+</table>
 
 <script>
     function confirmDelete(dergiId) {
