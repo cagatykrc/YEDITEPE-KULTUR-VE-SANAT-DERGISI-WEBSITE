@@ -7,9 +7,7 @@ const authRoutes = require('./routes/auth');
 const indexRoute = require('./routes/index');
 const dergiRoute = require('./routes/dergi');
 const adminRoutes = require('./routes/admin');
-const adminRouter = express.Router();
 const app = express();
-const adminViewsPath = path.join(__dirname, 'admin', 'views');
 app.use(session({
     secret: 'sa',
     resave: false,
@@ -23,7 +21,6 @@ app.use(session({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.set('views', path.join(__dirname, 'views')); 
-app.set('views', adminViewsPath);
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
 

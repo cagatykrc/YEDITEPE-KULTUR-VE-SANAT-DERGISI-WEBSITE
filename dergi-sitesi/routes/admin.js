@@ -1,10 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../utility/database');
-const adminRouter = express.Router();
-const adminViewsPath = path.join(__dirname, 'admin', 'views');
-app.set('views', adminViewsPath);
-app.set('view engine', 'ejs');
 router.get('/panel', (req, res) => {
     const userS = req.session.user;
 
