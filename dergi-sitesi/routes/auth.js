@@ -75,13 +75,13 @@ router.post('/giris', async (req, res) => {
           return res.status(401).json({ message: 'Kullanıcı bulunamadı veya geçersiz şifre.' });
       }
       // Kullanıcı bilgilerini oturumda sakla
+      
       req.session.user = { 
         id: user.id,
         username: user.username,
         firstName: user.first_name,
         role:user.role
       };
-
 
       // Başarı durumunda kullanıcıya cevap gönder
       res.redirect('/')
