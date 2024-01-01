@@ -1,4 +1,3 @@
-// app.js
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
@@ -7,8 +6,6 @@ const authRoutes = require('./routes/auth');
 const indexRoute = require('./routes/index');
 const dergiRoute = require('./routes/dergi');
 const adminRoutes = require('./routes/admin');
-const hakkimizdaRoute = require('./routes/hakkimizda');
-
 const app = express();
 
 app.use(session({
@@ -31,7 +28,6 @@ app.use('/admin', adminRoutes);
 app.use('/auth', authRoutes);
 app.use('/', indexRoute);
 app.use('/dergiler', dergiRoute);
-app.use('/hakkimizda', hakkimizdaRoute);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
