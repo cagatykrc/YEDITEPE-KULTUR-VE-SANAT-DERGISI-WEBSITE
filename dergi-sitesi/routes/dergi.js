@@ -32,9 +32,15 @@ module.exports = router;
 // Örnek endpoint
 router.post('/:dergiId/yorumEkle', async (req, res) => {
     const dergiId = req.params.dergiId;
-    const kullaniciId = req.session.user.user_id; // Varsayılan olarak giriş yapan kullanıcı alınıyor
-    const yorumMetni = req.body.yorumMetni;
 
+    // Kullanıcının oturum açmış olup olmadığını kontrol et
+    if (!req.session.user) {
+        return res.status(401).send('Giriş yapmalısınız.');
+    }
+
+    const kullaniciId = req.session.user;
+    const yorumMetni = req.body.yorumMetni;
+    console.log(kullaniciId);
     // Yorumu veritabanına eklemek için gerekli sorguyu yapın
     const insertQuery = `
         INSERT INTO yorumlar (dergi_id, kullanici_id, yorum_metni)
@@ -42,12 +48,11 @@ router.post('/:dergiId/yorumEkle', async (req, res) => {
     `;
 
     try {
-        await db.promise().query(insertQuery, [dergiId, kullaniciId, yorumMetni]);
+        await db.query(insertQuery, [dergiId, kullaniciId.id, yorumMetni]);
         res.redirect(`/dergiler/${dergiId}`);
     } catch (error) {
         console.error('Yorum eklenirken bir hata oluştu: ' + error);
         res.status(500).send('Internal Server Error');
     }
 });
-
 module.exports = router;

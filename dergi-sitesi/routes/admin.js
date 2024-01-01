@@ -67,45 +67,56 @@ router.post('/dergiolustur', (req, res) => {
     }
 });
 
-router.get('/:dergiId/duzenle', (req, res) => {
+router.get('/:dergiId/duzenle', async (req, res) => {
     const dergiId = req.params.dergiId;
-    db.query('SELECT * FROM dergiler WHERE dergi_id = ?', [dergiId], (error, results) => {
-        if (error) {
+    const userS = req.session.user;
+
+    if (userS && userS.role === 'admin') {
+        try {
+            const [results] = await db.query('SELECT * FROM dergiler WHERE dergi_id = ?', [dergiId]);
+
+            if (results.length === 0) {
+                return res.status(404).send('Dergi bulunamadı');
+            }
+
+            const dergi = results[0];
+            console.log(dergi);
+            res.render('admin/dergiDuzenle', { dergi, userS });
+
+        } catch (error) {
             console.error('Dergi bilgisi alınırken bir hata oluştu: ' + error);
             return res.status(500).send('Internal Server Error');
         }
-
-        if (results.length === 0) {
-            return res.status(404).send('Dergi bulunamadı');
-        }
-
-        res.render('dergiDuzenle', { dergi: results[0] });
-    });
+    } else {
+        res.render('404', { userS });
+    }
 });
 
 
-router.post('/:dergiId/duzenle', (req, res) => {
+router.post('/:dergiId/duzenle',async (req, res) => {
     const dergiId = req.params.dergiId;
-    const { konu, aciklama, resim } = req.body;
+    const { konu, aciklama, resim, baslik } = req.body;
 
     const updateQuery = `
         UPDATE dergiler
-        SET konu = ?, aciklama = ?, resim = ?
+        SET dergi_basligi = ?, konu = ?, aciklama = ?, resim = ?
         WHERE dergi_id = ?
     `;
-
-    db.query(updateQuery, [konu, aciklama, resim, dergiId], (error, results) => {
-        if (error) {
-            console.error('Dergi güncellenirken bir hata oluştu: ' + error);
-            return res.status(500).send('Internal Server Error');
-        }
-
+    try {
+        await db.query(updateQuery, [baslik, konu, aciklama, resim, dergiId]);
         console.log('Dergi başarıyla güncellendi.');
-        res.redirect('/dergiler/' + dergiId);
-    });
-});
+        res.redirect('/admin/dergiyonetim');
+    } catch (error) {
+        console.error('Dergi güncellenirken bir hata oluştu: ' + error);
+        return res.status(500).send('Internal Server Error');
+    }
 
-router.get('/:dergiId/sil', (req, res) => {
+
+
+    });
+
+
+router.post('/:dergiId/sil', (req, res) => {
     const dergiId = req.params.dergiId;
     db.query('DELETE FROM dergiler WHERE dergi_id = ?', [dergiId], (error, results) => {
         if (error) {

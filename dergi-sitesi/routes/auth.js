@@ -77,7 +77,7 @@ router.post('/giris', async (req, res) => {
       // Kullanıcı bilgilerini oturumda sakla
       
       req.session.user = { 
-        id: user.id,
+        id: user.user_id,
         username: user.username,
         firstName: user.first_name,
         role:user.role

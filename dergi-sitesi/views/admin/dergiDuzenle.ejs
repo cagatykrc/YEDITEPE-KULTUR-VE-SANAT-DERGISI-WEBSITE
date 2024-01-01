@@ -1,24 +1,38 @@
 <%- include('../partials/header.ejs') %>
 
-<h1>Dergi Düzenle</h1>
+<div class="container mt-4">
+    <h1>Dergi Düzenle</h1>
 
-<form action="/dergiler/<%= dergi.dergi_id %>/duzenle" method="POST">
-    <label for="konu">Konu:</label>
-    <input type="text" id="konu" name="konu" value="<%= dergi.konu %>" required>
+    <form action="/admin/<%= dergi.dergi_id %>/duzenle" method="POST">
 
-    <label for="aciklama">Açıklama:</label>
-    <textarea id="aciklama" name="aciklama"><%= dergi.aciklama %></textarea>
+        <div class="mb-3">
+            <label for="konu" class="form-label">Başlık:</label>
+            <input type="text" id="baslik" name="baslik" class="form-control" value="<%= dergi.dergi_basligi %>" required>
+        </div>
 
-    <label for="resim">Resim URL:</label>
-    <input type="text" id="resim" name="resim" value="<%= dergi.resim %>" required>
+        <div class="mb-3">
+            <label for="konu" class="form-label">Konu:</label>
+            <input type="text" id="konu" name="konu" class="form-control" value="<%= dergi.konu %>" required>
+        </div>
 
-    <!-- Diğer bilgileri ekle -->
+        <div class="mb-3">
+            <label for="aciklama" class="form-label">Açıklama:</label>
+            <textarea id="aciklama" name="aciklama" class="form-control"><%= dergi.aciklama %></textarea>
+        </div>
 
-    <button type="submit">Dergiyi Düzenle</button>
-</form>
+        <div class="mb-3">
+            <label for="resim" class="form-label">Resim URL:</label>
+            <input type="text" id="resim" name="resim" class="form-control" value="<%= dergi.resim %>" required>
+        </div>
 
-<div class="resim-goster">
-    <img src="<%= dergi.resim %>" alt="<%= dergi.konu %>">
+        <!-- Diğer bilgileri ekle -->
+
+        <button type="submit" class="btn btn-primary">Dergiyi Düzenle</button>
+    </form>
+
+    <div class="resim-goster mt-4">
+        <img src="<%= dergi.resim %>" alt="<%= dergi.konu %>" class="img-fluid">
+    </div>
 </div>
 
 <%- include('../partials/footer.ejs') %>
