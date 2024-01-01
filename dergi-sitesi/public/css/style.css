@@ -41,6 +41,8 @@ body {
 #toggler,.navbar label{
   color: #ffffff;
   display: none;
+  height: 32px;
+  width: 32px;
 }
 
 @media screen and
