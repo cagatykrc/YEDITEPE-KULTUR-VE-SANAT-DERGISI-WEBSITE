@@ -1,21 +1,36 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../utility/database');
-
-
-router.get('/panel', (req, res)=>{
+const adminRouter = express.Router();
+const adminViewsPath = path.join(__dirname, 'admin', 'views');
+app.set('views', adminViewsPath);
+app.set('view engine', 'ejs');
+router.get('/panel', (req, res) => {
     const userS = req.session.user;
-    if (userS.role) {
+
+    // Kullanıcı admin rolüne sahipse, sayfayı render et
+    if (userS && userS.role === 'admin') {
+        res.render('kontrolPanel',{userS});
+    } else {
+        // Admin değilse, başka bir sayfaya yönlendir veya hata mesajı göster
+        res.status(403).send('Bu sayfaya erişim izniniz yok.');
+    }
+});
+
+
+
+router.get('/dergiolustur', (req,res)=>{
+    const userS = req.session.user;
+    if (userS && userS.role === 'admin') {
+        res.render('dergiOlustur',{userS} )
         
     }
-    res.render('dergiDetay')
-})
+    else{
+        res.redirect('/')
+    }
+});
 
-
-
-
-
-router.post('/olustur', (req, res) => {
+router.post('/dergiolustur', (req, res) => {
     if (req.user && (req.user.role === 'admin')) {
         const { konu, aciklama, resim, indirmeLinki } = req.body;
         const olusturanUserId = req.user.user_id;
@@ -34,10 +49,12 @@ router.post('/olustur', (req, res) => {
                 console.log('Dergi başarıyla oluşturuldu.');
                 console.log(result); // Oluşturulan dergi bilgilerini konsola yazdır
                 // Başarı durumunda bir sayfaya yönlendirme yapabilirsiniz.
-                res.redirect('/');
+                res.redirect('/admin/panel');
             }
         });
     } else {
         res.redirect('/');
     }
 });
+
+module.exports=router;

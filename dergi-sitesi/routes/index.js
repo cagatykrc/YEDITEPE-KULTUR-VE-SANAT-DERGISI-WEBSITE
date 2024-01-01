@@ -6,6 +6,7 @@ const db = require('../utility/database');
 router.get('/hakkimizda', (req, res) =>{
     res.render('hakkimizda', { userS: req.session.user });
 });
+
 router.get('/', async (req, res) => {
     const userS = req.session.user;
     try {
