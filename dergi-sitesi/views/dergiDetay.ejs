@@ -6,13 +6,11 @@
             <img src="<%= dergi.resim %>" class="img-fluid rounded" alt="<%= dergi.konu %>">
         </div>
         <div class="col-md-6">
-            <% var ekleyenkisi = "Anonim"; %>
-            <% if (dergi.olusturan_user_id === 1) { ekleyenkisi = "admin"; } %>
             <div class="detail-info">
                 <h2><%= dergi.dergi_basligi %></h2>
                 <h3 class="text-muted"><%= dergi.konu %></h3>
                 <p class="author-info"><strong>Yazar:</strong> <%= dergi.yazar %></p>
-                <p class="user-info"><strong>Ekleyen:</strong> <%= ekleyenkisi %></p>
+                <p class="user-info"><strong>Ekleyen:</strong>HATA</p>
                 <p class="description"><strong>Açıklama:</strong> <%= dergi.aciklama %></p>
                 <p class="download-link">
                     <strong>İndirme Linki:</strong>
