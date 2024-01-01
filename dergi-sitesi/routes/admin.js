@@ -13,6 +13,15 @@ router.get('/panel', (req, res) => {
     }
 });
 
+router.get('/dergiyonetim', (req,res)=>{
+    const userS= req.session.user;
+    if (userS && userS==='admin') {
+        res.render('admin/dergiyonetim', { userS });
+    } else {
+        res.status(403).send('Bu sayfaya erişim izniniz yok.');
+    }
+});
+
 router.get('/dergiolustur', (req, res) => {
     const userS = req.session.user;
     if (userS && userS.role === 'admin') {
@@ -47,6 +56,57 @@ router.post('/dergiolustur', (req, res) => {
     } else {
         res.redirect('/');
     }
+});
+
+router.get('/:dergiId/duzenle', (req, res) => {
+    const dergiId = req.params.dergiId;
+    db.query('SELECT * FROM dergiler WHERE dergi_id = ?', [dergiId], (error, results) => {
+        if (error) {
+            console.error('Dergi bilgisi alınırken bir hata oluştu: ' + error);
+            return res.status(500).send('Internal Server Error');
+        }
+
+        if (results.length === 0) {
+            return res.status(404).send('Dergi bulunamadı');
+        }
+
+        res.render('dergiDuzenle', { dergi: results[0] });
+    });
+});
+
+
+router.post('/:dergiId/duzenle', (req, res) => {
+    const dergiId = req.params.dergiId;
+    const { konu, aciklama, resim } = req.body;
+
+    const updateQuery = `
+        UPDATE dergiler
+        SET konu = ?, aciklama = ?, resim = ?
+        WHERE dergi_id = ?
+    `;
+
+    db.query(updateQuery, [konu, aciklama, resim, dergiId], (error, results) => {
+        if (error) {
+            console.error('Dergi güncellenirken bir hata oluştu: ' + error);
+            return res.status(500).send('Internal Server Error');
+        }
+
+        console.log('Dergi başarıyla güncellendi.');
+        res.redirect('/dergiler/' + dergiId);
+    });
+});
+
+router.get('/:dergiId/sil', (req, res) => {
+    const dergiId = req.params.dergiId;
+    db.query('DELETE FROM dergiler WHERE dergi_id = ?', [dergiId], (error, results) => {
+        if (error) {
+            console.error('Dergi silinirken bir hata oluştu: ' + error);
+            return res.status(500).send('Internal Server Error');
+        }
+
+        console.log('Dergi başarıyla silindi.');
+        res.redirect('/dergiler');
+    });
 });
 
 module.exports=router;
