@@ -214,8 +214,10 @@ a{
 .c-text{
         background-color: #333;
         color: #fff;
+        margin-top: 50px;
         padding: 10px;
         text-align: center;
+        width: 100%;
 }
 
 .c-text p{
