@@ -20,9 +20,14 @@
             <ul class="navbar-nav ml-auto">
                 <% if (userS && userS.username) { %>
                     <!-- Kullanıcı giriş yapmışsa -->
-                    <li class="text-end nav-item">
+                    <li class="nav-item">
                         <span class="nav-link">Merhaba, <%= userS.firstName %></span>
                     </li>
+                    <% if(userS && userS.role==='admin'){ %>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/Panel">Kontrol Paneli</a>
+                        </li>
+                        <% }else{}%>
                 <% } else { %>
                     <!-- Kullanıcı giriş yapmamışsa -->
                     <li class="text-end nav-item">
@@ -32,11 +37,7 @@
                         <a class="nav-link" href="/auth/kayit">Kayıt Ol</a>
                     </li>
                 <% } %>
-                <% if(userS && userS.role==='admin'){ %>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/admin/Panel">Kontrol Paneli</a>
-                    </li>
-                    <% }else{}%>
+
 
             </ul>
         </div>
