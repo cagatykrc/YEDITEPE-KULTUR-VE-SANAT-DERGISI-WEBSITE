@@ -14,19 +14,19 @@
 <body>
 
     <nav class="navbar">
-        <a href="#" class="logo"><img src="*.jpg" alt="LOGO"></a>
+        <a href="/" class="logo"><img src="/dergi-sitesi/images/logoRemovedBackground.png" alt="LOGO"></a>
         <input type="checkbox" id="toggler">
         <label for="toggler"><i class="fa fa-bars"></i></label>
         <div class="menu">
             <ul class="list">
                 <% if (userS && userS.username) { %>
                     <!-- Kullanıcı giriş yapmışsa -->
-                    <li class="item">
-                        <span class="greeting">Merhaba, <%= userS.firstName %></span>
+                    <li class="navbar">
+                        <span class="item">Merhaba, <%= userS.firstName %></span>
                     </li>
-                    <li class="item"><a href="/">Anasayfa</a></li>
-                    <li class="item"><a href="/hakkimizda">Hakkımızda</a></li>
-                    <li class="item"><a href="#">İletişim</a></li>
+                    <li class="navbar"><a href="/">Anasayfa</a></li>
+                    <li class="navbar"><a href="/hakkimizda">Hakkımızda</a></li>
+                    <li class="navbar"><a href="#">İletişim</a></li>
                     <% if(userS && userS.role==='admin'){ %>
                         <!-- Kullanıcı yöneticiyse -->
                         <li class="item">
@@ -38,8 +38,8 @@
                     <li class="navbar">
                         <a class="item" href="/auth/giris">Giriş Yap</a>
                     </li>
-                    <li class="item">
-                        <a class="nav-link" href="/auth/kayit">Kayıt Ol</a>
+                    <li class="navbar">
+                        <a class="item" href="/auth/kayit">Kayıt Ol</a>
                     </li>
                 <% } %>
             </ul>
