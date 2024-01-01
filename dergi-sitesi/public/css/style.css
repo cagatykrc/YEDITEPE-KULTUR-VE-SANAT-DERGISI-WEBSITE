@@ -211,7 +211,18 @@ a{
     color: white;
 }
 
-.admin-panel-mini-1-img img{
-    width: 120px;
-    height: 120px;
+.c-text{
+        background-color: #333;
+        color: #fff;
+        margin-top: 50px;
+        padding: 10px;
+        text-align: center;
+        width: 100%;
+}
+
+.c-text p{
+    text-decoration: underline;
+    color: pink;
+    text-transform: capitalize;
+    text-overflow: clip;
 }
