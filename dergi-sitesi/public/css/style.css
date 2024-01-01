@@ -8,6 +8,7 @@ body {
 .container {
     margin-top: 50px;
     transition: .5s;
+    height: 100%;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;500&display=swap');
