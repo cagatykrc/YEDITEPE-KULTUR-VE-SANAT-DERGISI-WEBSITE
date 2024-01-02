@@ -8,11 +8,21 @@
                     <h1>Dergi Oluştur</h1>
                 </div>
                 <div class="card-body">
-                    <form action="/admin/dergiolustur" method="POST">
+                    <form action="/admin/dergiolustur" method="POST" enctype="multipart/form-data">
+
+                        <div class="form-group">
+                            <label for="baslik">Başlık:</label>
+                            <input type="text" class="form-control admin-panel-input" id="baslik" name="baslik" required>
+                        </div>
 
                         <div class="form-group">
                             <label for="konu">Konu:</label>
                             <input type="text" class="form-control admin-panel-input" id="konu" name="konu" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="yazar">Yazar:</label>
+                            <input class="form-control admin-panel-input" id="yazar" name="yazar"></input>
                         </div>
 
                         <div class="form-group">
@@ -26,8 +36,8 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="indirmeLinki">İndirme Linki:</label>
-                            <input type="text" class="form-control admin-panel-input" id="indirmeLinki" name="indirmeLinki" required>
+                            <label for="pdfDosya">PDF Dosyası:</label>
+                            <input type="file" class="form-control admin-panel-input" id="pdfDosya" name="pdfDosya" accept=".pdf" required>
                         </div>
 
                         <button type="submit" class="btn btn-primary">Dergiyi Oluştur</button>

@@ -15,7 +15,7 @@
                 <p class="description"><strong>Açıklama:</strong> <%= dergi.aciklama %></p>
                 <p class="download-link">
                     <strong>İndirme Linki:</strong>
-                    <a href="<%= dergi.indirme_linki %>" target="_blank" class="btn btn-primary">İndir</a>
+                    <a href="<%= dergi.indirme_linki %>" target="_blank" class="custom-btn">İndir</a>
                 </p>
             </div>
         </div>
@@ -28,9 +28,9 @@
                 <form action="/dergiler/<%= dergi.dergi_id %>/yorumEkle" method="POST">
                     <div class="form-group">
                         <label for="yorumMetni">Yorumunuz:</label>
-                        <textarea class="form-control" id="yorumMetni" name="yorumMetni" required></textarea>
+                        <textarea class="form-control custom-textarea" id="yorumMetni" name="yorumMetni" required></textarea>
                     </div>
-                    <button type="submit" class="mt-2 btn btn-primary">Yorum Ekle</button>
+                    <button type="submit" class="mt-2 custom-btn">Yorum Ekle</button>
                 </form>
             </div>
         </div>
@@ -38,11 +38,11 @@
         <!-- Dergi yorumları -->
         <div class="mt-4">
             <h3 class="mb-4">Yorumlar</h3>
-            <div class="list-group">
+            <div class="custom-list">
                 <% dergiYorumlari.forEach(yorum => { %>
-                    <div class="list-group-item">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1"><strong><%= yorum.username %>:</strong></h5>
+                    <div class="custom-list-item">
+                        <div class="custom-list-item-header">
+                            <h5><strong><%= yorum.username %>:</strong></h5>
                             <small>
                                 <% if (yorum.created_at) { %>
                                     <%= yorum.created_at.toISOString().slice(0, 19).replace('T', ' ') %>
@@ -51,7 +51,7 @@
                                 <% } %>
                             </small>
                         </div>
-                        <p class="mb-1"><%= yorum.yorum_metni %></p>
+                        <p><%= yorum.yorum_metni %></p>
                     </div>
                 <% }); %>
             </div>

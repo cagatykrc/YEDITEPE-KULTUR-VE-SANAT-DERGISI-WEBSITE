@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../utility/database');
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
+
 router.get('/panel', (req, res) => {
     const userS = req.session.user;
 
@@ -12,6 +16,17 @@ router.get('/panel', (req, res) => {
         res.render('404', { userS });
     }
 });
+const uploadFolder = path.join(__dirname, '..', 'public', 'uploads');
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, uploadFolder); // Dosyaların yükleneceği klasör
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname)); // Dosya adını belirleme
+    }
+});
+
+const upload = multer({ storage: storage });
 
 router.get('/dergiyonetim', async (req, res) => {
     const userS = req.session.user;
@@ -31,7 +46,7 @@ router.get('/dergiyonetim', async (req, res) => {
 
 
 
-router.get('/dergiolustur', (req, res) => {
+router.get('/dergiolustur',  (req, res) => {
     const userS = req.session.user;
     if (userS && userS.role === 'admin') {
         res.render('admin/dergiOlustur', { userS });
@@ -40,31 +55,27 @@ router.get('/dergiolustur', (req, res) => {
     }
 });
 
-router.post('/dergiolustur', (req, res) => {
-    if (req.user && (req.user.role === 'admin')) {
-        const { konu, aciklama, resim, indirmeLinki } = req.body;
-        const olusturanUserId = req.user.user_id;
-
+router.post('/dergiolustur', upload.single('pdfDosya'), async(req, res) => {
+        const { baslik,yazar, konu, aciklama, resim, indirmeLinki } = req.body;
+        const userS = req.session.user
         const insertQuery = `
-            INSERT INTO dergiler (konu, aciklama, resim, indirme_linki, olusturan_user_id)
-            VALUES (?, ?, ?, ?, ?)
+            INSERT INTO dergiler (konu, aciklama, resim, indirme_linki, olusturan_user_id,dergi_basligi, pdf_dosya, yazar )
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         `;
-
-        db.query(insertQuery, [konu, aciklama, resim, indirmeLinki, olusturanUserId], (err, result) => {
-            if (err) {
-                console.error(err);
+        if (!req.file) {
+            console.error('Dosya yüklemesi başarısız oldu.' ,req.fileValidationError);
+            return res.status(400).send('Bad Request');
+        }
+        const pdfDosya = req.file;
+            try {
+                const result = await db.query(insertQuery, [konu, aciklama, resim, indirmeLinki, 1,baslik, pdfDosya.filename, yazar]);
+                console.log('Dergi başarıyla oluşturuldu.'); // Oluşturulan dergi bilgilerini konsola yazdır
+                res.redirect('/admin/panel');
+            } catch (error) {
+                console.log(error);
                 // Hata durumunda bir sayfaya yönlendirme yapabilir veya hatayı kullanıcıya gösterebilirsiniz.
                 res.status(500).send('Internal Server Error');
-            } else {
-                console.log('Dergi başarıyla oluşturuldu.');
-                console.log(result); // Oluşturulan dergi bilgilerini konsola yazdır
-                // Başarı durumunda bir sayfaya yönlendirme yapabilirsiniz.
-                res.redirect('/admin/panel');
             }
-        });
-    } else {
-        res.redirect('/');
-    }
 });
 
 router.get('/:dergiId/duzenle', async (req, res) => {
