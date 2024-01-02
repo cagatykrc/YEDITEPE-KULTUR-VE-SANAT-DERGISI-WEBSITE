@@ -370,3 +370,23 @@ a{
 .custom-list-item p {
     padding: 10px;
 }
+
+
+
+.usercont-table {
+    background-color: #ffffff;
+  }
+
+  .usercont-table th,
+  .usercont-table td {
+    text-align: center;
+  }
+
+  .usercont-table thead th {
+    background-color: #343a40;
+    color: #ffffff;
+  }
+
+  .usercont {
+    overflow-x: auto;
+  }

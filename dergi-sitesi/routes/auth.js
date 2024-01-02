@@ -2,19 +2,6 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const db = require('../utility/database');
-const nodemailer = require('nodemailer');
-const randomstring = require('randomstring');
-
-
-
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-      user: 'nazimkogce@gmail.com', // Gönderici eposta adresi
-      pass: 'iVr00QVpAgXx4Yx' // Eposta hesabının şifresi
-  }
-});
-
 
 router.get('/giris', (req, res) => {
   const userS = req.session.user;
@@ -51,28 +38,19 @@ router.post('/kayit', async (req, res) => {
         
         const result = await db.query('INSERT INTO users (username, email, password, first_name, last_name) VALUES (?, ?, ?, ?, ?)', [username, email, hashedPassword, firstName, lastName]);
 
-        const mailOptions = {
-          from: 'nazimkogce@gmail.com', // Gönderici eposta adresi
-          to: email, // Kullanıcının eposta adresi
-          subject: 'Eposta Doğrulama Kodu',
-          text: `Eposta doğrulama kodunuz: ${verificationCode}`
-      };
       
         // Başarı durumunda kullanıcıya cevap gönder
         res.redirect('/')
-        transporter.sendMail(mailOptions, (error, info) => {
-          if (error) {
-              console.error('Eposta gönderirken hata oluştu:', error);
-              return res.status(500).json({ message: 'Internal Server Error' });
-          }
-          console.log('Eposta gönderildi:', info.response);
-          res.status(200).send('Eposta gönderildi, lütfen doğrulama kodunu girin.');
-        });
       } catch (error) {
           console.error(error);
           res.status(500).json({ message: 'Bir hata oluştu.' });
       }
   });
+
+
+
+
+
 
 router.get('/kayit', (req, res) => {
   const userS = req.session.user;

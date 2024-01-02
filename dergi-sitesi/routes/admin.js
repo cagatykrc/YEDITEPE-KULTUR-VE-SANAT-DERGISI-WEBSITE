@@ -56,26 +56,32 @@ router.get('/dergiolustur',  (req, res) => {
 });
 
 router.post('/dergiolustur', upload.single('pdfDosya'), async(req, res) => {
-        const { baslik,yazar, konu, aciklama, resim, indirmeLinki } = req.body;
         const userS = req.session.user
-        const insertQuery = `
-            INSERT INTO dergiler (konu, aciklama, resim, indirme_linki, olusturan_user_id,dergi_basligi, pdf_dosya, yazar )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        `;
-        if (!req.file) {
-            console.error('Dosya yüklemesi başarısız oldu.' ,req.fileValidationError);
-            return res.status(400).send('Bad Request');
-        }
-        const pdfDosya = req.file;
-            try {
-                const result = await db.query(insertQuery, [konu, aciklama, resim, indirmeLinki, 1,baslik, pdfDosya.filename, yazar]);
-                console.log('Dergi başarıyla oluşturuldu.'); // Oluşturulan dergi bilgilerini konsola yazdır
-                res.redirect('/admin/panel');
-            } catch (error) {
-                console.log(error);
-                // Hata durumunda bir sayfaya yönlendirme yapabilir veya hatayı kullanıcıya gösterebilirsiniz.
-                res.status(500).send('Internal Server Error');
+        if (userS && userS.role==='admin') {
+            const { baslik,yazar, konu, aciklama, resim, indirmeLinki } = req.body;
+            const insertQuery = `
+                INSERT INTO dergiler (konu, aciklama, resim, indirme_linki, olusturan_user_id,dergi_basligi, pdf_dosya, yazar )
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            `;
+            if (!req.file) {
+                console.error('Dosya yüklemesi başarısız oldu.' ,req.fileValidationError);
+                return res.status(400).send('Bad Request');
             }
+            const pdfDosya = req.file;
+                try {
+                    const result = await db.query(insertQuery, [konu, aciklama, resim, indirmeLinki, 1,baslik, pdfDosya.filename, yazar]);
+                    console.log('Dergi başarıyla oluşturuldu.'); // Oluşturulan dergi bilgilerini konsola yazdır
+                    res.redirect('/admin/panel');
+                } catch (error) {
+                    console.log(error);
+                    // Hata durumunda bir sayfaya yönlendirme yapabilir veya hatayı kullanıcıya gösterebilirsiniz.
+                    res.status(500).send('Internal Server Error');
+                }
+        }
+        else{
+            res.redirect('/')
+        }
+
 });
 
 router.get('/:dergiId/duzenle', async (req, res) => {
@@ -105,29 +111,37 @@ router.get('/:dergiId/duzenle', async (req, res) => {
 
 
 router.post('/:dergiId/duzenle',async (req, res) => {
-    const dergiId = req.params.dergiId;
-    const { konu, aciklama, resim, baslik } = req.body;
-
-    const updateQuery = `
-        UPDATE dergiler
-        SET dergi_basligi = ?, konu = ?, aciklama = ?, resim = ?
-        WHERE dergi_id = ?
-    `;
-    try {
-        await db.query(updateQuery, [baslik, konu, aciklama, resim, dergiId]);
-        console.log('Dergi başarıyla güncellendi.');
-        res.redirect('/admin/dergiyonetim');
-    } catch (error) {
-        console.error('Dergi güncellenirken bir hata oluştu: ' + error);
-        return res.status(500).send('Internal Server Error');
+    const userS = req.session.user;
+    if (userS && userS.role==='admin') {
+        const dergiId = req.params.dergiId;
+        const { konu, aciklama, resim, baslik } = req.body;
+    
+        const updateQuery = `
+            UPDATE dergiler
+            SET dergi_basligi = ?, konu = ?, aciklama = ?, resim = ?
+            WHERE dergi_id = ?
+        `;
+        try {
+            await db.query(updateQuery, [baslik, konu, aciklama, resim, dergiId]);
+            console.log('Dergi başarıyla güncellendi.');
+            res.redirect('/admin/dergiyonetim');
+        } catch (error) {
+            console.error('Dergi güncellenirken bir hata oluştu: ' + error);
+            return res.status(500).send('Internal Server Error');
+        }
+    } else {
+        res.redirect('/')
     }
 
 
 
-    });
+
+});
 
 
 router.post('/:dergiId/sil', (req, res) => {
+    const userS = req.session.user;
+if (userS && userS.role==='admin') {
     const dergiId = req.params.dergiId;
     db.query('DELETE FROM dergiler WHERE dergi_id = ?', [dergiId], (error, results) => {
         if (error) {
@@ -138,6 +152,82 @@ router.post('/:dergiId/sil', (req, res) => {
         console.log('Dergi başarıyla silindi.');
         res.redirect('/admin/dergiyonetim');
     });
+} else {
+    res.redirect('/')
+}
+
 });
 
+
+
+router.get('/kullaniciyonetim', async(req,res)=>{
+    const userS = req.session.user;
+    if (userS && userS.role==='admin') {
+
+        try {
+            const [results, fields] = await db.query('SELECT * FROM users');
+
+            console.log(results);
+            const users = results;
+            res.render('admin/kullaniciYonetim', {userS,users})
+        } catch (error) {
+            console.log('Veri tabanından kullanıcıları çekerken hata oluştu: ' + error.message);
+            res.status(500).json({ error: 'Veri tabanından kullanıcıları çekerken hata oluştu' });
+        }
+
+
+    } else {
+        res.render('404', {userS});
+    }
+
+});
+
+
+router.get('/kullanici/:userId', async(req,res)=>{
+    const userId = req.params.userId
+    const userS=req.session.user;
+
+    if (userS && userS.role==='admin') {
+        try {
+            const query = 'SELECT * FROM users WHERE user_id = ?';
+            const result= await db.query(query,[userId]);
+            if (result.length > 0) {
+                const [userl] = result[0];
+                console.log(userl);
+                res.render('admin/kullaniciDetay', { userS,userl});
+              } else {
+                res.status(404).json({ error: 'Kullanıcı bulunamadı' });
+              }
+        } catch (error) {
+            console.log('Kullanıcı detayları alınırken hata oluştu: ' + error.message);
+        }
+    } else {
+        res.render('404', {userS});
+    }
+});
+
+
+router.post('/kullanici/:userId/update', async(req,res)=>{
+    const userId = req.params.userId;
+    const userS= req.session.user;
+    const { newUsername, newEmail, newFirstName, newLastName, newRole } = req.body;
+    if (userS&& userS.role==='admin') {
+        const updateQuery = `
+        UPDATE users 
+        SET username = ?, email = ?, first_name = ?, last_name = ?, role = ?
+        WHERE user_id = ?
+      `;
+      try {
+        await db.query(updateQuery, [newUsername, newEmail, newFirstName, newLastName, newRole, userId])
+        res.redirect('/admin/kullanici/' + userId);
+      } catch (error) {
+        console.error('Kullanıcı güncellenirken hata oluştu: ' + err.message);
+        res.status(500).json({ error: 'Kullanıcı güncellenirken hata oluştu' });
+      }
+    } else {
+        res.render('404', {userS});
+    }
+
+
+}),
 module.exports=router;
