@@ -34,7 +34,7 @@ router.post('/:dergiId/yorumEkle', async (req, res) => {
 
     // Kullanıcının oturum açmış olup olmadığını kontrol et
     if (!req.session.user) {
-        return res.status(401).send('Giriş yapmalısınız.');
+        return ;
     }
 
     const kullaniciId = req.session.user;

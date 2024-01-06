@@ -93,7 +93,7 @@ router.post('/giris', async (req, res) => {
       // Başarı durumunda kullanıcıya cevap gönder
       res.redirect('/')
   } catch (error) {
-      console.error(error);
+      console.log(error);
       res.redirect('/');
   }
 });
