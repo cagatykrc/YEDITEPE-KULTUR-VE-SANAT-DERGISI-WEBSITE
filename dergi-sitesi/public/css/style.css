@@ -125,26 +125,26 @@ body {
     align-items: center;
     justify-content: space-between;
     background-color: #2b2b29;
-    padding: 10px; /* 2px'ten 10px olarak değiştirildi */
+    padding: 10px;
     font-family: 'Oswald', sans-serif;
     font-weight: 300;
 }
 .navbar a {
     text-decoration: none;
     color: #fff;
-    font-size: 18px; /* 20px'den 18px'e düşürüldü */
+    font-size: 18px;
     font-family: 'Oswald', sans-serif;
 }
 .logo {
-    margin-left: 20px; /* 30px'den 20px'e düşürüldü */
+    margin-left: 20px;
     font-weight: 500;
 }
 .list {
     list-style: none;
     display: flex;
-    gap: 20px; /* 30px'den 20px'e düşürüldü */
+    gap: 20px;
     color: #fff;
-    margin-right: 20px; /* 30px'den 20px'e düşürüldü */
+    margin-right: 20px;
 }
 
 #toggler, .navbar label {
@@ -153,9 +153,6 @@ body {
     height: 32px;
     width: 32px;
 }
-
-
-/* Hakkımızda sayfası özel stiller */
 
 .container p {
     color: #495057;
@@ -608,18 +605,27 @@ a{
     }
 }
 
-.menu {
+.k-menu {
     position: relative;
-    display: inline-block;
+    display: block;
     background-color: #2b2b29;
+    text-align: center;
+}
+.k-menu span {
+    color: #fff;
+    font-size: 30px;
+    font-family: 'Oswald', sans-serif;
 }
 
 .acilir-menu {
     display: none;
     position: absolute;
     min-width: 400px;
+    z-index: 9999;
+    background-color: #2b2b29;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
-.menu:hover .acilir-menu {
-    display: block;
+.k-menu:hover .acilir-menu {
+    display: inline-block;
 }
