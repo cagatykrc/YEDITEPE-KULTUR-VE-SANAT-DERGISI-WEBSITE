@@ -79,7 +79,7 @@ router.post('/giris', async (req, res) => {
       const passwordMatch = await bcrypt.compare(password, user.password);
 
       if (!passwordMatch) {
-        res.redirect('/');
+          return res.redirect('/')
       }
       // Kullanıcı bilgilerini oturumda sakla
       
@@ -93,8 +93,8 @@ router.post('/giris', async (req, res) => {
       // Başarı durumunda kullanıcıya cevap gönder
       res.redirect('/')
   } catch (error) {
-      console.log(error);
-      res.redirect('/');
+      console.error(error);
+      return res.redirect('/')
   }
 });
 
@@ -103,9 +103,9 @@ router.post('/logout', (req, res) => {
   req.session.destroy((err) => {
       if (err) {
           console.error(err);
-          res.redirect('/');
+          return res.redirect('/')
       }
-      res.redirect('/');
+      res.status(200).json({ message: 'Çıkış başarılı.' });
   });
 });
 
