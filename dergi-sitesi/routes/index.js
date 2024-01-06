@@ -4,6 +4,7 @@ const db = require('../utility/database');
 
 // Ana sayfa
 router.get('/hakkimizda', (req, res) =>{
+    const notif = ''
     res.render('hakkimizda', { userS: req.session.user });
 });
 
@@ -11,12 +12,13 @@ router.get('/hakkimizda', (req, res) =>{
 
 
 router.get('/', async (req, res) => {
+    const notif =''
     const userS = req.session.user;
     try {
         // MySQL sorgusu ile dergi verilerini çek
         const [rows, fields] = await db.query('SELECT * FROM dergiler');
         const dergiler = rows;
-        res.render('index', { dergiler, userS });
+        res.render('index', { dergiler, userS, notif });
     } catch (error) {
         console.error('Dergi verilerini çekerken bir hata oluştu: ' + error);
         return res.status(500).send('Internal Server Error');

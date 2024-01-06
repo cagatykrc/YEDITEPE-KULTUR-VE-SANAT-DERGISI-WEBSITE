@@ -73,13 +73,13 @@ router.post('/giris', async (req, res) => {
       const user = userArray[0];
       console.log("Gelen user:", user);
       if (!user) {
-          return res.status(401).json({ message: 'Kullanıcı bulunamadı veya geçersiz şifre.' });
+          res.redirect('/');
       }
       // Şifreyi karşılaştır (hashli şifre)
       const passwordMatch = await bcrypt.compare(password, user.password);
 
       if (!passwordMatch) {
-          return res.status(401).json({ message: 'Kullanıcı bulunamadı veya geçersiz şifre.' });
+        res.redirect('/');
       }
       // Kullanıcı bilgilerini oturumda sakla
       
@@ -94,7 +94,7 @@ router.post('/giris', async (req, res) => {
       res.redirect('/')
   } catch (error) {
       console.error(error);
-      res.status(500).json({ message: 'Bir hata oluştu.' });
+      res.redirect('/');
   }
 });
 
@@ -103,9 +103,9 @@ router.post('/logout', (req, res) => {
   req.session.destroy((err) => {
       if (err) {
           console.error(err);
-          return res.status(500).json({ message: 'Bir hata oluştu.' });
+          res.redirect('/');
       }
-      res.status(200).json({ message: 'Çıkış başarılı.' });
+      res.redirect('/');
   });
 });
 

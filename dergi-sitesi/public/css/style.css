@@ -7,6 +7,7 @@
 }
 html{
     height: 100%;
+    transition: .3s ease-in-out;
 }
 body {
     font-family: 'Arial', sans-serif;
@@ -15,13 +16,14 @@ body {
     padding: 0;
     display: flex;
     flex-direction: column;
-    min-height: 100%;
+    height: 110%;
 }
 
-.container {
+
+.container p {
     display: flex;
     flex-wrap: wrap;
-    margin-top: 50px;
+    font-size: 1.1rem;
 }
 .row {
     display: flex;
@@ -97,7 +99,7 @@ body {
 .custom-card-text {
     color: #666;
     font-size: .5rem;
-    margin-bottom: 12px;
+    margin-bottom: 5px;
     line-height: 1.2;
 }
 
@@ -152,78 +154,10 @@ body {
     width: 32px;
 }
 
-@media (max-width: 767px) {
-    /* Ekran genişliği 767px'e kadar olan durumlar için stiller */
-    .container {
-        margin-top: 0; /* Üst boşluğu sıfıra ayarla */
-    }
-    .row {
-        flex-direction: column; /* Sütun düzenine geç */
-        align-items: center; /* Ortala */
-    }
-    .list-group-item {
-        border: none; /* Listeye kenarlık ekleme */
-        border-radius: 8px; /* Köşeleri yumuşat */
-        margin-bottom: 10px; /* Listeler arasına mesafe koy */
-    }
-    .list-group {
-        width: 100%; /* Yorum listesinin genişliğini ayarla */
-    }
-    .col-md-6 {
-        width: 100%; /* Tam genişlik */
-    }
-
-    .detail-info {
-        margin-top: 20px; /* Boşluk ekleyerek resim ile detay bilgileri arasına mesafe koy */
-    }
-
-    .detail-comment-area {
-        margin-top: 20px; /* Boşluk ekleyerek detay bilgileri ile yorumlar arasına mesafe koy */
-    }
-
-    .detail-comment-area form {
-        width: 100%; /* Formun genişliğini ayarla */
-    }
-    .custom-card-container {
-        flex-direction: column; /* Kartları dikey hizala */
-        align-items: flex-start; /* Kartları ortala */
-    }
-
-    .custom-card {
-        width: calc(50% - 40px); /* Ekranın yarısından biraz daha dar, kenar boşluğu ekledik */
-        margin: 10px; /* Kartlar arası boşluk */
-    }
-    .menu {
-        width: 100%;
-        max-height: 0;
-        overflow: hidden;
-    }
-
-    .logo {
-        margin-left: 0px;
-    }
-
-    .list {
-        flex-direction: column;
-        align-items: center;
-        padding: 20px;
-    }
-
-    .navbar label {
-        display: inline-flex;
-        align-items: center;
-        cursor: pointer;
-    }
-
-    #toggler:checked ~ .menu {
-        max-height: 100%;
-    }
-}
 
 /* Hakkımızda sayfası özel stiller */
 
 .container p {
-    font-size: 1.1rem;
     color: #495057;
 }
 
@@ -442,7 +376,6 @@ a{
 /* Yorum ekle stilleri */
 .detail-comment-area {
     background-color: #f8f9fa;
-    border: 1px solid #dee2e6;
     border-radius: 5px;
     margin-top: 20px;
     padding: 20px;
@@ -525,3 +458,139 @@ a{
     padding: 1rem;
 }
 
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.custom-card {
+    animation: fadeIn 0.7s ease-in-out; /* Animasyon süresi ve geçiş efekti ayarları */
+}
+
+/* Filtre menüsü için de animasyon eklendi */
+.filter-menus {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+    /* Ekran genişliği 767px'e kadar olan durumlar için stiller */
+    .container {
+        margin: 0px 0px 0px 0px;
+        padding: 0px; /* Üst boşluğu sıfıra ayarla */
+    }
+    .row {
+        flex-direction: column; /* Sütun düzenine geç */
+        align-items: center; /* Ortala */
+    }
+    .list-group-item {
+        border: none; /* Listeye kenarlık ekleme */
+        border-radius: 8px; /* Köşeleri yumuşat */
+        margin-bottom: 10px; /* Listeler arasına mesafe koy */
+    }
+    .list-group {
+        width: 100%; /* Yorum listesinin genişliğini ayarla */
+    }
+    .col-md-6 {
+        width: 100%; /* Tam genişlik */
+    }
+
+    .detail-info {
+        margin-top: 20px; /* Boşluk ekleyerek resim ile detay bilgileri arasına mesafe koy */
+    }
+
+    .detail-comment-area {
+        margin-top: 20px; /* Boşluk ekleyerek detay bilgileri ile yorumlar arasına mesafe koy */
+    }
+
+    .detail-comment-area form {
+        width: 100%; /* Formun genişliğini ayarla */
+    }
+    .custom-card-container {
+        display: flex;
+        flex-direction: column; /* Kartları dikey hizala */
+        align-items: flex-start;
+        padding: 0px;
+        margin: 0px; /* Kartları ortala */
+    }
+    .container p{
+        font-size: .9rem;
+    }
+
+    .custom-card {
+        width: calc(50% - 10px); /* Ekranın yarısından biraz daha dar, kenar boşluğu ekledik */
+        margin: 8px; /* Kartlar arası boşluk */
+    }
+    .custom-card-content{
+        padding-left: 4px;
+        margin: 0px;
+        height: 185px;
+        box-sizing: border-box;
+    }
+    .custom-card-title{
+        font-size: 1.1rem;
+        color: #333;
+        padding: .1rem;
+    }
+    .menu {
+        width: 100%;
+        max-height: 0;
+        overflow: hidden;
+    }
+
+    .logo {
+        margin-left: 0px;
+    }
+
+    .list {
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .navbar label {
+        display: inline-flex;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    #toggler:checked ~ .menu {
+        max-height: 100%;
+    }
+}
+
+
+.notification-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    display: none;
+    z-index: 9999;
+}
+
+.notification-panel.show {
+    display: block;
+    animation: fadeInOut 5s ease-in-out;
+}
+
+@keyframes fadeInOut {
+    0%, 100% {
+        opacity: 1;
+    }
+    20%, 80% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+}
