@@ -58,10 +58,10 @@ router.get('/dergiolustur',  (req, res) => {
 router.post('/dergiolustur', upload.single('pdfDosya'), async(req, res) => {
         const userS = req.session.user
         if (userS && userS.role==='admin') {
-            const { baslik,yazar, konu, aciklama, resim, indirmeLinki } = req.body;
+            const { baslik,yazar, konu, aciklama, kategorisi, resim, indirmeLinki } = req.body;
             const insertQuery = `
-                INSERT INTO dergiler (konu, aciklama, resim, indirme_linki, olusturan_user_id,dergi_basligi, pdf_dosya, yazar )
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO dergiler (konu, aciklama, resim, indirme_linki, olusturan_user_id,dergi_basligi, pdf_dosya, yazar, kategorisi )
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
             `;
             if (!req.file) {
                 console.error('Dosya yüklemesi başarısız oldu.' ,req.fileValidationError);
@@ -69,7 +69,7 @@ router.post('/dergiolustur', upload.single('pdfDosya'), async(req, res) => {
             }
             const pdfDosya = req.file;
                 try {
-                    const result = await db.query(insertQuery, [konu, aciklama, resim, indirmeLinki, 1,baslik, pdfDosya.filename, yazar]);
+                    const result = await db.query(insertQuery, [konu, aciklama, resim, indirmeLinki, 1,baslik, pdfDosya.filename, yazar, kategorisi]);
                     console.log('Dergi başarıyla oluşturuldu.'); // Oluşturulan dergi bilgilerini konsola yazdır
                     res.redirect('/admin/panel');
                 } catch (error) {
@@ -114,15 +114,15 @@ router.post('/:dergiId/duzenle',async (req, res) => {
     const userS = req.session.user;
     if (userS && userS.role==='admin') {
         const dergiId = req.params.dergiId;
-        const { konu, aciklama, resim, baslik } = req.body;
+        const { konu, aciklama, resim, baslik, kategorisi } = req.body;
     
         const updateQuery = `
             UPDATE dergiler
-            SET dergi_basligi = ?, konu = ?, aciklama = ?, resim = ?
+            SET dergi_basligi = ?, konu = ?, aciklama = ?, resim = ?, kategorisi= ?
             WHERE dergi_id = ?
         `;
         try {
-            await db.query(updateQuery, [baslik, konu, aciklama, resim, dergiId]);
+            await db.query(updateQuery, [baslik, konu, aciklama, resim, kategorisi, dergiId]);
             console.log('Dergi başarıyla güncellendi.');
             res.redirect('/admin/dergiyonetim');
         } catch (error) {

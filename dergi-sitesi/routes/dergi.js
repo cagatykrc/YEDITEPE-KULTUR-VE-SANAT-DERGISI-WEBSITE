@@ -27,7 +27,6 @@ router.get('/:dergiId', async (req, res) => {
     }
 });
 
-module.exports = router;
 
 // Örnek endpoint
 router.post('/:dergiId/yorumEkle', async (req, res) => {
@@ -55,4 +54,6 @@ router.post('/:dergiId/yorumEkle', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
+
+
 module.exports = router;

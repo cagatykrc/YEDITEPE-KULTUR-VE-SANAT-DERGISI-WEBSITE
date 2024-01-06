@@ -1,13 +1,12 @@
 <%- include('./partials/header.ejs') %>
 
 <div class="container mt-4">
-    <!-- Dergi detayları -->
     <div class="row">
         <div class="col-md-6">
             <img src="<%= dergi.resim %>" class="img-fluid rounded" alt="<%= dergi.konu %>">
         </div>
         <div class="col-md-6">
-            <div class="detail-info">
+            <div class="detail-info bg-light p-4 rounded">
                 <h2><%= dergi.dergi_basligi %></h2>
                 <h3 class="text-muted"><%= dergi.konu %></h3>
                 <p class="author-info"><strong>Yazar:</strong> <%= dergi.yazar %></p>
@@ -15,7 +14,7 @@
                 <p class="description"><strong>Açıklama:</strong> <%= dergi.aciklama %></p>
                 <p class="download-link">
                     <strong>İndirme Linki:</strong>
-                    <a href="<%= dergi.indirme_linki %>" target="_blank" class="custom-btn">İndir</a>
+                    <a href="<%= dergi.indirme_linki %>" target="_blank" class="btn btn-primary">İndir</a>
                 </p>
             </div>
         </div>
@@ -30,20 +29,19 @@
                         <label for="yorumMetni">Yorumunuz:</label>
                         <textarea class="form-control custom-textarea" id="yorumMetni" name="yorumMetni" required></textarea>
                     </div>
-                    <button type="submit" class="mt-2 custom-btn">Yorum Ekle</button>
+                    <button type="submit" class="mt-2 btn btn-primary">Yorum Ekle</button>
                 </form>
             </div>
         </div>
 
-        <!-- Dergi yorumları -->
         <div class="mt-4">
             <h3 class="mb-4">Yorumlar</h3>
-            <div class="custom-list">
+            <div class="list-group">
                 <% dergiYorumlari.forEach(yorum => { %>
-                    <div class="custom-list-item">
-                        <div class="custom-list-item-header">
-                            <h5><strong><%= yorum.username %>:</strong></h5>
-                            <small>
+                    <div class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="mb-1"><strong><%= yorum.username %>:</strong></h5>
+                            <small class="text-muted">
                                 <% if (yorum.created_at) { %>
                                     <%= yorum.created_at.toISOString().slice(0, 19).replace('T', ' ') %>
                                 <% } else { %>
@@ -51,7 +49,7 @@
                                 <% } %>
                             </small>
                         </div>
-                        <p><%= yorum.yorum_metni %></p>
+                        <p class="mb-1"><%= yorum.yorum_metni %></p>
                     </div>
                 <% }); %>
             </div>
