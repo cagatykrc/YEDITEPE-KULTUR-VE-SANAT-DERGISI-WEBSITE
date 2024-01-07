@@ -6,7 +6,7 @@
     font-style: normal;
 }
 html{
-    height: 100%;
+    height: 110%;
     transition: .3s ease-in-out;
 }
 body {
@@ -19,6 +19,12 @@ body {
     height: 110%;
 }
 
+footer{
+    width: 100%;
+    margin: auto;
+    position: absolute;
+    bottom: 0;
+}
 
 .container p {
     display: flex;
@@ -61,9 +67,11 @@ body {
 /* Kart stilleri */
 .custom-card-container {
     display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    align-items: flex-start;
+    flex-direction: row; /* Kartları dikey hizala */
+    align-items: start;
+    justify-content: flex-start;
+    padding: 0px;
+    margin: 0px;  
 }
 
 .custom-card {
@@ -379,10 +387,15 @@ a{
     box-sizing: border-box; /* Kutu modelini etkinleştirme */
 }
 
-.detail-comment-area .container {
+.detail-comment-area {
     width: 100%; /* .detail-comment-area içindeki .container'ın genişliği %100 olsun */
     max-width: 100%; /* .container'ın genişliği tarayıcı genişliğini aşmasın */
     margin: 0 auto; /* .container'ı ortala */
+}
+.container {
+    margin: 0px 0px 0px 0px;
+    margin-left: 75px;
+    padding: 0px; /* Üst boşluğu sıfıra ayarla */
 }
 .custom-textarea {
     min-height: 100px;
@@ -454,6 +467,7 @@ a{
     width: 250px;
     padding: 1rem;
 }
+
 
 @keyframes fadeIn {
     from {

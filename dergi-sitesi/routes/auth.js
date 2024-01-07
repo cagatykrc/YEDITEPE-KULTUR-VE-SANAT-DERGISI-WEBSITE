@@ -79,7 +79,7 @@ router.post('/giris', async (req, res) => {
       const passwordMatch = await bcrypt.compare(password, user.password);
 
       if (!passwordMatch) {
-          return res.redirect('/')
+          return res.redirect('/auth/giris')
       }
       // Kullanıcı bilgilerini oturumda sakla
       
@@ -94,7 +94,7 @@ router.post('/giris', async (req, res) => {
       res.redirect('/')
   } catch (error) {
       console.error(error);
-      return res.redirect('/')
+      return res.redirect('/auth/giris')
   }
 });
 
