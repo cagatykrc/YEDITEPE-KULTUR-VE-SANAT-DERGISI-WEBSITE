@@ -1,6 +1,7 @@
 <%- include('./partials/header.ejs') %>
 
 <div class="container mt-4">
+    <div class="dergiId"><%= dergi.dergi_id %></div>
     <div class="row">
         <div class="col-md-6">
             <img src="<%= dergi.resim %>" class="img-fluid rounded" alt="<%= dergi.konu %>">
@@ -36,25 +37,72 @@
 
         <div class="mt-4">
             <h3 class="mb-4">Yorumlar</h3>
-            <div class="list-group border-0">
-                <% dergiYorumlari.forEach(yorum => { %>
-                    <div class="list-group-item">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <h5 class="mb-1"><strong><%= yorum.username %>:</strong></h5>
-                            <small class="text-muted">
-                                <% if (yorum.created_at) { %>
-                                    <%= yorum.created_at.toISOString().slice(0, 19).replace('T', ' ') %>
-                                <% } else { %>
-                                    Tarih bilgisi yok
-                                <% } %>
-                            </small>
+
+            <% if (userS && userS.role === 'admin') { %>
+                <div class="list-group border-0">
+                    <% dergiYorumlari.forEach(yorum => { %>
+                        <div class="list-group-item-admin">
+                            <div name="yorumId" class="yorumId"><%=  yorum.yorum_id%></div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="mb-1"><strong><%= yorum.username %>:</strong></h5>
+                                <small class="text-muted">
+                                    <% if (yorum.created_at) { %>
+                                        <%= yorum.created_at.toISOString().slice(0, 19).replace('T', ' ') %>
+                                    <% } else { %>
+                                        Tarih bilgisi yok
+                                    <% } %>
+                                </small>
+                                <!-- Add the delete button here -->
+                                    <button class="btn btn-sm btn-danger" onclick="confirmDelete('<%=  yorum.yorum_id%>')">Delete</button>
+                            </div>
+                            <p class="mb-1"><%= yorum.yorum_metni %></p>
                         </div>
-                        <p class="mb-1"><%= yorum.yorum_metni %></p>
-                    </div>
-                <% }); %>
-            </div>
+                    <% }); %>
+                </div>
+                <script> 
+                    function confirmDelete(yorumId) {
+                        if (confirm('Emin misiniz?')) {
+                            // Silme işlemi için POST isteği gönder
+                            fetch('/dergiler/' + yorumId + '/yorumsil', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({ yorumId: yorumId }),
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                console.log(data);
+                                // Başarılı bir şekilde silindiğinde sayfayı yenile veya başka bir işlem yapabilirsiniz.
+                                window.location.reload();
+                            })
+                            .catch(error => {
+                                console.error('Silme işlemi sırasında hata oluştu:', error);
+                            });
+                        }
+                    }
+                </script>
+                
+            <% } else { %>
+                <div class="list-group border-0">
+                    <% dergiYorumlari.forEach(yorum => { %>
+                        <div class="list-group-item">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="mb-1"><strong><%= yorum.username %>:</strong></h5>
+                                <small class="text-muted">
+                                    <% if (yorum.created_at) { %>
+                                        <%= yorum.created_at.toISOString().slice(0, 19).replace('T', ' ') %>
+                                    <% } else { %>
+                                        Tarih bilgisi yok
+                                    <% } %>
+                                </small>
+                            </div>
+                            <p class="mb-1"><%= yorum.yorum_metni %></p>
+                        </div>
+                    <% }); %>
+                </div>
+            <% } %>
         </div>
     </div>
 </div>
-
 <%- include('./partials/footer.ejs') %>

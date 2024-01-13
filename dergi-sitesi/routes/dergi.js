@@ -27,6 +27,25 @@ router.get('/:dergiId', async (req, res) => {
     }
 });
 
+router.post('/:dergiId/yorumsil', async (req, res) => {
+    const userS = req.session.user;
+    const yorumId = req.body.yorumId;
+    const dergiId = req.params.dergiId;
+
+    if (userS && userS.role === 'admin') {
+        try {
+            const query = 'DELETE FROM yorumlar WHERE yorum_id = ?';
+            await db.query(query, [yorumId]);
+            console.log( yorumId + 'Yorum silindi.');
+            res.json({ message:  yorumId +' Yorum başarıyla silindi' });
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ error: 'Yorum silinirken bir hata oluştu' });
+        }
+    } else {
+        res.status(403).json({ error: 'Yetkisiz erişim' });
+    }
+});
 
 // Örnek endpoint
 router.post('/:dergiId/yorumEkle', async (req, res) => {
