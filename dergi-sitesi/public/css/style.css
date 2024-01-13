@@ -10,14 +10,9 @@ html{
     transition: .3s ease-in-out;
 }
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f8f9fa;
-    margin: 0;
-    padding: 0;
     display: flex;
     flex-direction: column;
-    height: 110%;
-    width: 100%;
+    min-height: 100vh;
 }
 
 
@@ -49,7 +44,7 @@ body {
 .filter-li {
     text-decoration: none;
     font-size: 1.2rem;
-    color: #5c5b5b;
+    color: #fff;
     transition: .3s ease-in-out;
     cursor: pointer;
     margin-bottom: 5px;
@@ -91,6 +86,7 @@ body {
 .custom-card-content {
     padding: 20px;
     height: 205px;
+    margin-top: 12px
 }
 
 .custom-card-title {
@@ -316,13 +312,13 @@ a{
     color: white;
 }
 
-.c-text{
-        background-color: #333;
-        color: #fff;
-        margin-top: 50px;
-        padding: 10px;
-        text-align: center;
-        width: 100%;
+.c-text {
+    margin-top: auto; /* Push the footer to the bottom */
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    width: 100%;
 }
 
 .c-text p{
@@ -351,6 +347,7 @@ a{
 .custom-card-title {
     font-size: 1.5rem;
     margin-bottom: 10px;
+    color: #404040;
 }
 
 
@@ -390,7 +387,8 @@ a{
 .container {
     margin: 0px 0px 0px 0px;
     margin-left: 75px;
-    padding: 0px; /* Üst boşluğu sıfıra ayarla */
+    padding: 0px;
+    flex: 1; /* Üst boşluğu sıfıra ayarla */
 }
 .custom-textarea {
     min-height: 100px;
@@ -528,14 +526,17 @@ a{
     display: block;
     background-color: #2b2b29;
     text-align: center;
+    color: white;
+    display: inline-block;
 }
 .k-menu span {
-    color: #fff;
+    color: white;
     font-size: 30px;
     font-family: 'Oswald', sans-serif;
 }
 
 .acilir-menu {
+
     display: none;
     position: absolute;
     min-width: 400px;
@@ -598,7 +599,7 @@ a{
     .custom-card-content {
         padding-left: 4px;
         margin: 0px;
-        height: 185px;
+        height: 200px;
         box-sizing: border-box;
     }
     .custom-card-title {
