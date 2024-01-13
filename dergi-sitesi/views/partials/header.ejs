@@ -23,7 +23,15 @@
             <ul class="list">
                 <% if (userS && userS.username) { %>
                     <!-- Kullanıcı giriş yapmışsa -->
-                    
+                    <li class="navbar dropdown">
+                        <li class="navbar dropdown-toggle" href="#" data-bs-toggle="dropdown"aria-expanded="false">
+                            Merhaba, <%= userS.firstName %>
+                        </li>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Hesap Detayları</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Çıkış Yap</a></li>
+                        </ul>
                     </li>
                     <li class="navbar"><a href="/">Anasayfa</a></li>
                     <li class="navbar"><a href="/hakkimizda">Hakkımızda</a></li>

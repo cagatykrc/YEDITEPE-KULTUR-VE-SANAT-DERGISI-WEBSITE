@@ -521,41 +521,114 @@ a{
     }
 }
 
-.kategori {
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 16px;
-    display: block; 
+.k-menu {
+    position: relative;
+    display: block;
+    background-color: #2b2b29;
+    text-align: center;
+    color: white;
+    display: inline-block;
+}
+.k-menu span {
+    color: white;
+    font-size: 30px;
+    font-family: 'Oswald', sans-serif;
 }
 
-.kategori > li {
-    position: relative;
+.acilir-menu {
+
+    display: none;
+    position: absolute;
+    min-width: 400px;
+    z-index: 9999;
+    background-color: #2b2b29;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.k-menu:hover .acilir-menu {
     display: inline-block;
 }
 
-.kategori > li > a {
-    color: 
-#fff;
-    background: 
-#e21346;
-    padding: 20px 25px;
-  }
+@media (min-width: 320px) and (max-width: 700px) {
+    /* Ekran genişliği 767px'e kadar olan durumlar için stiller */
+    .container {
+        margin: 0px 0px 0px 0px;
+        padding: 0px; /* Üst boşluğu sıfıra ayarla */
+    }
+    .row {
+        flex-direction: column; /* Sütun düzenine geç */
+        align-items: center; /* Ortala */
+    }
+    .list-group-item {
+        border: none; /* Listeye kenarlık ekleme */
+        border-radius: 8px; /* Köşeleri yumuşat */
+        margin-bottom: 10px; 
+        background-color: #fff;/* Listeler arasına mesafe koy */
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    }
+    .list-group {
+        width: 100%; /* Yorum listesinin genişliğini ayarla */
+    }
+    .col-md-6 {
+        width: 100%; /* Tam genişlik */
+    }
 
-  .kategori > li ul {
-    position: absolute; 
-    display: none;
-    top: 100%;
-    left: 0; 
-    width: 250px;
-    border: 2px solid 
-#e2e2e2;
-    background-color: 
-#fff;
-  }
-  .kategori > li ul li a {
-    color: 
-#333;
-    padding: 10px 15px;
-    border-bottom: 1px solid 
-#e2e2e2;
-  }
+    .detail-info {
+        margin-top: 20px; /* Boşluk ekleyerek resim ile detay bilgileri arasına mesafe koy */
+    }
+
+    .detail-comment-area {
+        margin-top: 20px; /* Boşluk ekleyerek detay bilgileri ile yorumlar arasına mesafe koy */
+    }
+
+    .detail-comment-area form {
+        width: 100%; /* Formun genişliğini ayarla */
+    }
+    .custom-card-container {
+        flex-wrap: wrap; /* Allow cards to wrap to the next line */
+        justify-content: space-between; /* Evenly space cards in the container */
+    }
+    .container p{
+        font-size: .9rem;
+    }
+
+    .custom-card {
+        width: calc(50% - 20px); /* Two cards per row with some margin */
+        margin: 10px; /* Add margin between cards */
+    }
+    .custom-card-content {
+        padding-left: 4px;
+        margin: 0px;
+        height: 200px;
+        box-sizing: border-box;
+    }
+    .custom-card-title {
+        font-size: 1.1rem;
+        color: #333;
+        padding: .1rem;
+    }
+    .menu {
+        width: 100%;
+        max-height: 0;
+        overflow: hidden;
+    }
+    .logo {
+        margin-left: 0px;
+    }
+
+    .list {
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .navbar label {
+        display: inline-flex;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    #toggler:checked ~ .menu {
+        max-height: 100%;
+    }
+}
