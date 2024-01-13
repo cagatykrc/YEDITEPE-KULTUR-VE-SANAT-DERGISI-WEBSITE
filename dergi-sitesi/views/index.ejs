@@ -1,9 +1,8 @@
 <%- include('./partials/header.ejs') %>
 <%- include('./partials/loader.ejs') %>
 
-<div class="k-menu">
-    <button class="k-button">Kategoriler</button>
-    <div class="acilir-menu">
+<ul class="kategori">
+    <li><a href="#">Kategoriler</a>
         <ul class="filter-categorys">
             <li data-kategori="kultur" class="filter-li">Kültür Dergileri</li>
             <li data-kategori="edebiyat" class="filter-li">Edebiyat Dergileri</li>
@@ -14,8 +13,8 @@
             <li data-kategori="sinema" class="filter-li">Sinema & TV Dergileri</li>
             <li data-kategori="hukuk" class="filter-li">Hukuk Dergileri</li>
         </ul>
-    </div>
-</div>
+    </li>
+    </ul>
 <div class="container">
     <!-- Kategori Filtreleme Butonu -->
     <div class="custom-row">

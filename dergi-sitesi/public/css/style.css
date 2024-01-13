@@ -619,27 +619,41 @@ a{
     }
 }
 
-.k-menu {
+.kategori {
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
+    display: block; 
+}
+
+.kategori > li {
     position: relative;
-    display: block;
-    background-color: #2b2b29;
-    text-align: center;
-}
-.k-menu span {
-    color: #fff;
-    font-size: 30px;
-    font-family: 'Oswald', sans-serif;
-}
-
-.acilir-menu {
-    display: none;
-    position: absolute;
-    min-width: 400px;
-    z-index: 9999;
-    background-color: #2b2b29;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-}
-
-.k-menu:hover .acilir-menu {
     display: inline-block;
 }
+
+.kategori > li > a {
+    color: 
+#fff;
+    background: 
+#e21346;
+    padding: 20px 25px;
+  }
+
+  .kategori > li ul {
+    position: absolute; 
+    display: none;
+    top: 100%;
+    left: 0; 
+    width: 250px;
+    border: 2px solid 
+#e2e2e2;
+    background-color: 
+#fff;
+  }
+  .kategori > li ul li a {
+    color: 
+#333;
+    padding: 10px 15px;
+    border-bottom: 1px solid 
+#e2e2e2;
+  }
