@@ -1,27 +1,28 @@
 <%- include('./partials/header.ejs') %>
 <%- include('./partials/loader.ejs') %>
 
-<ul class="kategori">
-    <li><i id="kategori-toggle" class="fa-solid fa-filter"></i>
-        <ul class="filter-categorys">
-            <li data-kategori="kultur" class="filter-li">Kültür Dergileri</li>
-            <li data-kategori="edebiyat" class="filter-li">Edebiyat Dergileri</li>
-            <li data-kategori="tarih" class="filter-li">Tarih Dergileri</li>
-            <li data-kategori="bilim" class="filter-li">Bilim Dergileri</li>
-            <li data-kategori="sanat" class="filter-li">Sanat Dergileri</li>
-            <li data-kategori="saglik" class="filter-li">Sağlık Dergileri</li>
-            <li data-kategori="sinema" class="filter-li">Sinema & TV Dergileri</li>
-            <li data-kategori="hukuk" class="filter-li">Hukuk Dergileri</li>
-        </ul>
-    </li>
-    </ul>
 <div class="container">
+    <ul class="kategori">
+        <li><i id="kategori-toggle" class="fa-solid fa-filter"></i>
+            <ul class="filter-categorys">
+                <li data-kategori="kultur"   class="filter-li">Kültür Dergileri</li>
+                <li data-kategori="edebiyat"  class="filter-li">Edebiyat Dergileri</li>
+                <li data-kategori="tarih"  class="filter-li">Tarih Dergileri</li>
+                <li data-kategori="bilim"  class="filter-li">Bilim Dergileri</li>
+                <li data-kategori="sanat"  class="filter-li">Sanat Dergileri</li>
+                <li data-kategori="saglik"  class="filter-li">Sağlık Dergileri</li>
+                <li data-kategori="sinema"  class="filter-li">Sinema & TV Dergileri</li>
+                <li data-kategori="hukuk"  class="filter-li">Hukuk Dergileri</li>
+            </ul>
+        </li>
+        </ul>
     <!-- Kategori Filtreleme Butonu -->
+    <span class="cat-span h3">Yeni Eklenenler</span>
     <div class="custom-row">
         <div class="custom-card-container">
         <% dergiler.forEach(dergi => { %>
-            <a class="custom-card" href="/dergiler/<%= dergi.dergi_id %>">
-                <div class="<%= dergi.kategorisi %>">
+            <a class="custom-card <%= dergi.kategorisi %> " href="/dergiler/<%= dergi.dergi_id %>">
+                <div class="">
                     <img src="<%= dergi.resim %>" alt="<%= dergi.baslik %>">
                     <span class="<%= dergi.kategorisi %>"></span>
                     <div class="custom-card-content">
@@ -37,11 +38,21 @@
 
 <script>
     document.getElementById('kategori-toggle').addEventListener('click', function () {
-    // Kategorilerin görünürlüğünü değiştir
-    var kategoriListesi = document.querySelector('.filter-categorys');
-    kategoriListesi.classList.toggle('active');
-});
+        // Kategorilerin görünürlüğünü değiştir
+        var kategoriListesi = document.querySelector('.filter-categorys');
+        kategoriListesi.classList.toggle('active');
+    });
+
     // Filtreleme fonksiyonu
+    document.querySelectorAll('.filter-li').forEach(function (kategoriItem) {
+        kategoriItem.addEventListener('click', function () {
+            // Seçilen kategori adını al
+            var secilenKategori = kategoriItem.getAttribute('data-kategori');
+
+            // Filtreleme fonksiyonunu çağır
+            filtrele(secilenKategori);
+        });
+    });
     function filtrele(kategori) {
         // Tüm kartları gizle
         document.querySelectorAll('.custom-card').forEach(function (dergiKarti) {
@@ -52,18 +63,13 @@
         document.querySelectorAll('.' + kategori).forEach(function (dergiKarti) {
             dergiKarti.style.display = 'block';
         });
+
+        // Kategorilerin görünürlüğünü kapat
+        var kategoriListesi = document.querySelector('.filter-categorys');
+        kategoriListesi.classList.remove('active');
     }
 
     // Kategori seçildiğinde filtreleme yap
-    document.querySelectorAll('.filter-li').forEach(function (kategoriItem) {
-        kategoriItem.addEventListener('click', function () {
-            // Seçilen kategori adını al
-            var secilenKategori = kategoriItem.getAttribute('data-kategori');
-
-            // Filtreleme fonksiyonunu çağır
-            filtrele(secilenKategori);
-        });
-    });
 </script>
 
 <%- include('./partials/footer.ejs') %>
