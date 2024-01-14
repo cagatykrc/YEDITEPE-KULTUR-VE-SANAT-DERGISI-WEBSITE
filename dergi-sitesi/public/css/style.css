@@ -36,22 +36,22 @@ body {
     padding: 10px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
 }
-.filter-categorys {
-    list-style: none;
-    padding: 0;
+
+.kategori {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .filter-li {
-    text-decoration: none;
-    font-size: 1.2rem;
-    color: #fff;
-    transition: .3s ease-in-out;
     cursor: pointer;
-    margin-bottom: 5px;
 }
 
 .filter-li:hover {
     color: black;
+}
+.filter-categorys.active {
+    display: block;
 }
 
 /* Kart stilleri */
@@ -646,3 +646,42 @@ a{
         max-height: 100%;
     }
 }
+
+ul{
+    list-style: none;
+}
+
+.fa-filter{
+    font-size: 1.5rem;
+    margin-top: 10px;
+}
+@keyframes OutInFade {
+    0% {
+        opacity: 0;
+    }
+    1%, 100% {
+        opacity: 1;
+    }
+}
+
+.filter-categorys.active{
+    opacity: 1;
+    animation: OutInFade .5s ease-in-out;
+
+}
+
+.filter-categorys {
+    font-size: 2rem;
+    color: #363635;
+    position: absolute;
+    top: 160px; /* İhtiyaca bağlı olarak ayarlayabilirsiniz */
+    left: 0;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+    width: 100%;
+    padding: 10px;
+    z-index: 999;
+    display: none;
+}
+

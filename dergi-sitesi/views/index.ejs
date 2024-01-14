@@ -2,7 +2,7 @@
 <%- include('./partials/loader.ejs') %>
 
 <ul class="kategori">
-    <li><a href="#">Kategoriler</a>
+    <li><i id="kategori-toggle" class="fa-solid fa-filter"></i>
         <ul class="filter-categorys">
             <li data-kategori="kultur" class="filter-li">Kültür Dergileri</li>
             <li data-kategori="edebiyat" class="filter-li">Edebiyat Dergileri</li>
@@ -36,6 +36,11 @@
 </div>
 
 <script>
+    document.getElementById('kategori-toggle').addEventListener('click', function () {
+    // Kategorilerin görünürlüğünü değiştir
+    var kategoriListesi = document.querySelector('.filter-categorys');
+    kategoriListesi.classList.toggle('active');
+});
     // Filtreleme fonksiyonu
     function filtrele(kategori) {
         // Tüm kartları gizle

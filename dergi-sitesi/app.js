@@ -9,6 +9,7 @@ const adminRoutes = require('./routes/admin');
 const app = express();
 const crypto = require('crypto');
 const secretKey = crypto.randomBytes(32).toString('hex');
+require('dotenv').config()
 
 console.log(secretKey);
 app.use(session({
@@ -32,7 +33,7 @@ app.use('/auth', authRoutes);
 app.use('/', indexRoute);
 app.use('/dergiler', dergiRoute);
 
-const PORT = process.env.PORT || 3000;
+const PORT =  3000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });

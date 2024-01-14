@@ -48,13 +48,12 @@ router.post('/kayit', async (req, res) => {
   });
 
 
-
-
-
-
-router.get('/kayit', (req, res) => {
-  const userS = req.session.user;
-  if (userS) {
+  
+  
+  
+  router.get('/kayit', (req, res) => {
+    const userS = req.session.user;
+    if (userS) {
     res.redirect('/')
   }else{
     res.render('kayit', {userS});
@@ -64,7 +63,7 @@ router.get('/kayit', (req, res) => {
 
 router.post('/giris', async (req, res) => {
   const { username, password } = req.body;
-
+  
   try {
       console.log(username, password);
       // Kullanıcıyı veritabanından kontrol et
@@ -73,13 +72,13 @@ router.post('/giris', async (req, res) => {
       const user = userArray[0];
       console.log("Gelen user:", user);
       if (!user) {
-          res.redirect('/');
+        res.redirect('/');
       }
       // Şifreyi karşılaştır (hashli şifre)
       const passwordMatch = await bcrypt.compare(password, user.password);
-
+      
       if (!passwordMatch) {
-          return res.redirect('/auth/giris')
+        return res.redirect('/auth/giris')
       }
       // Kullanıcı bilgilerini oturumda sakla
       
@@ -89,24 +88,24 @@ router.post('/giris', async (req, res) => {
         firstName: user.first_name,
         role:user.role
       };
-
+      
       // Başarı durumunda kullanıcıya cevap gönder
       res.redirect('/')
-  } catch (error) {
+    } catch (error) {
       console.error(error);
       return res.redirect('/auth/giris')
-  }
-});
-
-router.post('/logout', (req, res) => {
-  // Oturumu sonlandır
-  req.session.destroy((err) => {
-      if (err) {
-          console.error(err);
-          return res.redirect('/')
-      }
-      res.status(200).json({ message: 'Çıkış başarılı.' });
+    }
   });
-});
-
+  
+  
+  router.post('/cikis', (req, res) => {
+    const userS = req.session.user;
+    if (userS){
+    req.session.destroy()
+    res.redirect('/');
+    }
+    else{
+          window.alert('Zaten Oturumunuz Yok');
+        }
+  });
 module.exports = router;

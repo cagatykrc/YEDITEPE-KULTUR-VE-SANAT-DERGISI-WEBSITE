@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300&family=Lato:wght@300&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/favicon/favicon2.ico" />
     <title>YEDİTEPE KÜLTÜR VE SANAT DERGİSİ</title>
 </head>
 <body>
@@ -23,15 +24,10 @@
             <ul class="list">
                 <% if (userS && userS.username) { %>
                     <!-- Kullanıcı giriş yapmışsa -->
-                    <li class="navbar dropdown">
-                        <li class="navbar dropdown-toggle" href="#" data-bs-toggle="dropdown"aria-expanded="false">
+                    <li class="navbar">
+                        <li class="navbar" href="#" data-bs-toggle="dropdown"aria-expanded="false">
                             Merhaba, <%= userS.firstName %>
                         </li>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Hesap Detayları</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Çıkış Yap</a></li>
-                        </ul>
                     </li>
                     <li class="navbar"><a href="/">Anasayfa</a></li>
                     <li class="navbar"><a href="/hakkimizda">Hakkımızda</a></li>
@@ -42,6 +38,7 @@
                             <a class="navbar" href="/admin/Panel">Kontrol Paneli</a>
                         </li>
                     <% } %>
+                    <li class="navbar"><form action="/auth/cikis" method="POST"><button class="btn bg-none text-white">Çıkış yap</button></form></li>
                 <% } else { %>
                     <!-- Kullanıcı giriş yapmamışsa -->
                     <li class="navbar">
