@@ -11,11 +11,18 @@
                 <h2><%= dergi.dergi_basligi %></h2>
                 <h3 class="text-muted"><%= dergi.konu %></h3>
                 <p class="author-info"><strong>Yazar:</strong> <%= dergi.yazar %></p>
-                <p class="user-info"><strong>Ekleyen:</strong> <%= dergi.ekleyen_username %></p>
+                <%  if(dergi.olusturan_user_id === 1) { %>
+                    <p class="user-info"><strong>Ekleyen:</strong>Nazım Köğçe</p>
+                    <% } else { %>
+                <p class="user-info"><strong>Ekleyen:</strong> Belirtilmedi</p>
+                <% } %>
                 <p class="description"><strong>Açıklama:</strong> <%= dergi.aciklama %></p>
                 <p class="download-link">
                     <strong>İndirme Linki:</strong>
-                    <a href="<%= dergi.indirme_linki %>" target="_blank" class="btn btn-primary">İndir</a>
+                    <form action="/dergiler/<%= dergi.dergi_id%>/indir" method="POST">
+                        <input type="hidden" name="pdf_dosya" value="<%= dergi.pdf_dosya %>">
+                        <button name="<%=dergi.pdf_dosya%>" class="btn btn-primary"><%=  dergi.pdf_dosya%></button>
+                    </form>
                 </p>
             </div>
         </div>

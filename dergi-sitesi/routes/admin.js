@@ -59,6 +59,7 @@ router.post('/dergiolustur', upload.single('pdfDosya'), async(req, res) => {
         const userS = req.session.user
         if (userS && userS.role==='admin') {
             const { baslik,yazar, konu, aciklama, kategorisi, resim, indirmeLinki } = req.body;
+            const olusturan_user_id = userS.userid
             const insertQuery = `
                 INSERT INTO dergiler (konu, aciklama, resim, indirme_linki, olusturan_user_id,dergi_basligi, pdf_dosya, yazar, kategorisi )
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -69,7 +70,7 @@ router.post('/dergiolustur', upload.single('pdfDosya'), async(req, res) => {
             }
             const pdfDosya = req.file;
                 try {
-                    const result = await db.query(insertQuery, [konu, aciklama, resim, indirmeLinki, 1,baslik, pdfDosya.filename, yazar, kategorisi]);
+                    const result = await db.query(insertQuery, [konu, aciklama, resim, indirmeLinki, olusturan_user_id,baslik, pdfDosya.filename, yazar, kategorisi]);
                     console.log('Dergi başarıyla oluşturuldu.'); // Oluşturulan dergi bilgilerini konsola yazdır
                     res.redirect('/admin/panel');
                 } catch (error) {

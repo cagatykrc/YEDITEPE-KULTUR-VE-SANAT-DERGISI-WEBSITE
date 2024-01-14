@@ -74,5 +74,17 @@ router.post('/:dergiId/yorumEkle', async (req, res) => {
     }
 });
 
+router.post('/:dergiId/indir',(req, res) => {
+    try {
+        const dergiId = req.params.dergiId;
+        const pdfDosya = req.body.pdf_dosya;
+        console.log(pdfDosya);
+        res.download("./public/uploads/"+pdfDosya);
+        
+    } catch (error) {
+        console.log(error);
+    }
+});
+
 
 module.exports = router;
