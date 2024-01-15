@@ -714,5 +714,25 @@ ul{
     display: inline-block;
 }
 
+.loginPage {
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+    width: 250px;
+    padding: 10px;
+    border-radius: 5px solid gray;
+    margin: auto;
+}
 
-
+.loginBtn {
+margin-top: 10px;
+background-color: #ddd;
+border: none;
+color: black;
+padding: 10px 20px;
+text-align: center;
+text-decoration: none;
+display: inline-block;
+margin: 4px 2px;
+cursor: pointer;
+border-radius: 16px;
+}

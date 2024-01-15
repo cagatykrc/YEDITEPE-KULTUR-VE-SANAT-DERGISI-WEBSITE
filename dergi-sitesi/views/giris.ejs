@@ -2,8 +2,8 @@
 
 <%- include('./partials/header.ejs',) %>
  
-<div class="container">
-    <h2>Giriş Yap</h2>
+<div class="loginPage">
+    <h2 style="font-family: 'Times New Roman', Times, serif;">Giriş Yap</h2>
     <form action="/auth/giris" method="post">
         <div class="form-group">
             <label for="username">Kullanıcı Adı:</label>
@@ -13,7 +13,7 @@
             <label for="password">Şifre:</label>
             <input type="password" class="form-control" id="password" name="password" placeholder="Şifrenizi girin" required>
         </div>
-        <button type="submit" class="btn btn-primary">Giriş Yap</button>
+        <button type="submit" class="loginBtn">Giriş Yap</button>
     </form>
 </div>
 

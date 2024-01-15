@@ -1,7 +1,7 @@
 <!-- views/kayit.ejs -->
 <%- include('./partials/header.ejs',) %>
 
-<div class="container mt-4">
+<div class="loginPage">
     <h2>Kayıt Ol</h2>
     <form action="/auth/kayit" method="post">
         <div class="form-group">
@@ -24,7 +24,7 @@
             <label for="password">Şifre:</label>
             <input type="password" class="form-control" name="password" id="password" placeholder="Şifrenizi girin">
         </div>
-        <button type="submit" class="btn btn-primary">Kayıt Ol</button>
+        <button type="submit" class="loginBtn">Kayıt Ol</button>
     </form>
 </div>
 
