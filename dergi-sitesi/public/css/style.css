@@ -689,25 +689,29 @@ ul{
     }
 }
 
-.filter-categorys.active{
-    opacity: 1;
-    animation: OutInFade .5s ease-in-out;
-    display: inline-block;
-}
+
 
 .filter-categorys {
     font-size: 2rem;
     color: #363635;
     position: absolute;
     top: 215px; /* İhtiyaca bağlı olarak ayarlayabilirsiniz */
-    left: 0;
+    left: 20px;
     background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
     border: 1px solid #ddd;
     width: 100%;
     padding: 10px;
     z-index: 999;
     display: none;
+    width: 350px;
+    border-radius: 12px;
+}
+
+.filter-categorys.active{
+    opacity: 1;
+    animation: OutInFade .5s ease-in-out;
+    display: inline-block;
 }
 
 
