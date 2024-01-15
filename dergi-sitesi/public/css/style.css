@@ -45,6 +45,7 @@ body {
 
 .filter-li {
     cursor: pointer;
+    color: #373d3f;
 }
 
 .filter-li:hover {
@@ -669,6 +670,14 @@ ul{
 .fa-filter{
     font-size: 2rem;
     margin-top: 10px;
+    margin-right: 5px;
+}
+.filter-system-s{
+    background-color: #101820;
+    padding: 9px;
+    border-radius: 12px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    color: white;
 }
 @keyframes OutInFade {
     0% {
