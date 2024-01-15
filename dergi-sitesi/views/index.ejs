@@ -23,7 +23,7 @@
         <% dergiler.forEach(dergi => { %>
             <a class="custom-card <%= dergi.kategorisi %> tumu" href="/dergiler/<%= dergi.dergi_id %>">
                 <div class="">
-                    <img src="<%= dergi.resim %>" alt="<%= dergi.baslik %>">
+                    <img src="./uploads/<%= dergi.resim %>" alt="<%= dergi.baslik %>">
                     <span class="<%= dergi.kategorisi %>"></span>
                     <div class="custom-card-content">
                         <h5 class="custom-card-title"><%= dergi.dergi_basligi %></h5>
