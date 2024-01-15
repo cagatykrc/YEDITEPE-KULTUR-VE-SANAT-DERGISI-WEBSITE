@@ -673,6 +673,7 @@ ul{
     margin-right: 5px;
 }
 .filter-system-s{
+    cursor: pointer;
     background-color: #101820;
     padding: 9px;
     border-radius: 12px;
