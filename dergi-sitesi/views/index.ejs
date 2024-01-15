@@ -1,10 +1,11 @@
 <%- include('./partials/header.ejs') %>
 <%- include('./partials/loader.ejs') %>
 
-<div class="container">
+<div class="custom-container">
     <ul class="kategori">
         <li><i id="kategori-toggle" class="fa-solid fa-filter"></i>
             <ul class="filter-categorys">
+                <li data-kategori="tumu"   class="filter-li">Tümünü göster</li>
                 <li data-kategori="kultur"   class="filter-li">Kültür Dergileri</li>
                 <li data-kategori="edebiyat"  class="filter-li">Edebiyat Dergileri</li>
                 <li data-kategori="tarih"  class="filter-li">Tarih Dergileri</li>
@@ -17,11 +18,10 @@
         </li>
         </ul>
     <!-- Kategori Filtreleme Butonu -->
-    <span class="cat-span h3">Yeni Eklenenler</span>
     <div class="custom-row">
         <div class="custom-card-container">
         <% dergiler.forEach(dergi => { %>
-            <a class="custom-card <%= dergi.kategorisi %> " href="/dergiler/<%= dergi.dergi_id %>">
+            <a class="custom-card <%= dergi.kategorisi %> tumu" href="/dergiler/<%= dergi.dergi_id %>">
                 <div class="">
                     <img src="<%= dergi.resim %>" alt="<%= dergi.baslik %>">
                     <span class="<%= dergi.kategorisi %>"></span>
