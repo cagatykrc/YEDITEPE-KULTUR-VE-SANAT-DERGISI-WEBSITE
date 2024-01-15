@@ -1,10 +1,10 @@
 <%- include('./partials/header.ejs') %>
 
-<div class="container mt-4">
-    <div class="dergiId"><%= dergi.dergi_id %></div>
-    <div class="row">
-        <div class="col-md-6">
-            <img src="<%= dergi.resim %>" class="img-fluid rounded" alt="<%= dergi.konu %>">
+<div class="custom-container">
+    <div class="dergiId <%= dergi.dergi_id %> "><%= dergi.dergi_id %></div>
+    <div class="custom-row">
+        <div class="detail-image">
+            <img src="../uploads/<%= dergi.resim %> " class="rounded img-fluid" alt="<%= dergi.baslik %>">
         </div>
         <div class="col-md-6">
             <div class="detail-info bg-light p-4 rounded">
@@ -29,7 +29,7 @@
     </div>
 
     <div class="detail-comment-area rounded p-4 mt-3">
-        <div class="row mt-4">
+        <div class="custom-row mt-4">
             <div class="col-md-6">
                 <h3 class="mb-3">Yorum Ekle</h3>
                 <form action="/dergiler/<%= dergi.dergi_id %>/yorumEkle" method="POST">
