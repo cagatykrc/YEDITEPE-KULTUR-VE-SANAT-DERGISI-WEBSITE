@@ -144,6 +144,7 @@ router.post('/:dergiId/sil', (req, res) => {
     const userS = req.session.user;
 if (userS && userS.role==='admin') {
     const dergiId = req.params.dergiId;
+    db.query('DELETE FROM yorumlar WHERE dergi_id = ?', [dergiId]);
     db.query('DELETE FROM dergiler WHERE dergi_id = ?', [dergiId], (error, results) => {
         if (error) {
             console.error('Dergi silinirken bir hata oluştu: ' + error);
@@ -153,6 +154,7 @@ if (userS && userS.role==='admin') {
         console.log('Dergi başarıyla silindi.');
         res.redirect('/admin/dergiyonetim');
     });
+
 } else {
     res.redirect('/')
 }
