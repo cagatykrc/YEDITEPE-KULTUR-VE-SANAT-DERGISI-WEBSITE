@@ -8,6 +8,11 @@ router.get('/hakkimizda', (req, res) =>{
     res.render('hakkimizda', { userS: req.session.user });
 });
 
+router.get('/iletisim', (req, res) =>{
+    const notif = ''
+    res.render('iletisim', { userS: req.session.user });
+});
+
 
 
 

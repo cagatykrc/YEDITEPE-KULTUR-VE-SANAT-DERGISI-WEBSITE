@@ -9,8 +9,8 @@
                 <tr>
                     <th>ID</th>
                     <th>Başlık</th>
+                    <th>Kapak</th>
                     <th>Konu</th>
-                    <th>Ekleyen Kişi</th>
                     <th>İşlemler</th>
                 </tr>
             </thead>
@@ -19,7 +19,7 @@
                     <tr>
                         <td><%= dergi.dergi_id %></td>
                         <td><%= dergi.dergi_basligi %></td>
-                        <td class="admin-panel-mini-1-img img"><img src="<%= dergi.resim %>" alt="resim" class="img-fluid"></td>
+                        <td class="admin-panel-mini-1-img img"><img src="../uploads/<%= dergi.resim %>" alt="./uploads/<%= dergi.resim %>" class="img-fluid"></td>
                         <td><%= dergi.olusturan_user_id %></td>
                         <td>
                             <a href="/admin/<%= dergi.dergi_id %>/duzenle" class="btn btn-warning">Düzenle</a>

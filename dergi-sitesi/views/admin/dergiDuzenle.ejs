@@ -34,7 +34,7 @@
         </div>
 
         <div class="mb-3">
-            <label for="resim" class="form-label">Resim URL:</label>
+            <label for="resim" class="form-label">Kapak Adı:</label>
             <input type="text" id="resim" name="resim" class="form-control" value="<%= dergi.resim %>" required>
         </div>
 
@@ -42,9 +42,9 @@
 
         <button type="submit" class="btn btn-primary">Dergiyi Düzenle</button>
     </form>
-
+        <a class="btn btn-secondary mt-1" href="/admin/dergiyonetim">Geri</a>
     <div class="resim-goster mt-4">
-        <img src="<%= dergi.resim %>" alt="<%= dergi.konu %>" class="img-fluid">
+        <img src="../uploads/<%= dergi.resim %>" alt="<%= dergi.resim %>" class="img-fluid">
     </div>
 </div>
 

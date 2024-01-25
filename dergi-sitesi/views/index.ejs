@@ -18,7 +18,8 @@
         </li>
         </ul>
     <!-- Kategori Filtreleme Butonu -->
-    <div class="custom-row">
+    <div class="custom-row card-panel">
+        <h2>Yeni Çıkan Dergilerimiz</h2>
         <div class="custom-card-container">
         <% dergiler.forEach(dergi => { %>
             <a class="custom-card <%= dergi.kategorisi %> tumu" href="/dergiler/<%= dergi.dergi_id %>">

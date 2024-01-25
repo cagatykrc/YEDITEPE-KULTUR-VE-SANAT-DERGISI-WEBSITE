@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300&family=Lato:wght@300&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300&display=swap" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="/favicon/favicon2.ico" />
+    <link href="https://fonts.googleapis.com/css2?family=Lato&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
     <title>YEDİTEPE KÜLTÜR VE SANAT DERGİSİ</title>
 </head>
 <body>
@@ -31,7 +32,7 @@
                     </li>
                     <li class="navbar"><a href="/">Anasayfa</a></li>
                     <li class="navbar"><a href="/hakkimizda">Hakkımızda</a></li>
-                    <li class="navbar"><a href="#">İletişim</a></li>
+                    <li class="navbar"><a href="/iletisim">İletişim</a></li>
                     <% if(userS && userS.role==='admin'){ %>
                         <!-- Kullanıcı yöneticiyse -->
                         <li class="item">
@@ -41,6 +42,9 @@
                     <li class="navbar"><form action="/auth/cikis" method="POST"><button class="btn bg-none text-white">Çıkış yap</button></form></li>
                 <% } else { %>
                     <!-- Kullanıcı giriş yapmamışsa -->
+                    <li class="navbar"><a href="/">Anasayfa</a></li>
+                    <li class="navbar"><a href="/hakkimizda">Hakkımızda</a></li>
+                    <li class="navbar"><a href="/iletisim">İletişim</a></li>
                     <li class="navbar">
                         <a class="item" href="/auth/giris">Giriş Yap</a>
                     </li>

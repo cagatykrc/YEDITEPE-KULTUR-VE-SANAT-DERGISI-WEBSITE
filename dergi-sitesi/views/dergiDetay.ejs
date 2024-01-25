@@ -1,22 +1,28 @@
 <%- include('./partials/header.ejs') %>
 
-<div class=".custom-detailpage-container">
+<div class="custom-detailpage-container">
     <div class="dergiId <%= dergi.dergi_id %> "></div>
-    <div class=".custom-detailpage-row">
+    <div class="custom-detailpage-row">
         <div class="detail-image">
             <img src="../uploads/<%= dergi.resim %> " class="rounded img-fluid" alt="<%= dergi.baslik %>">
         </div>
         <div class="col-md-6">
             <div class="detail-info bg-light p-4 rounded">
+
                 <h2><%= dergi.dergi_basligi %></h2>
+
                 <h3 class="text-muted"><%= dergi.konu %></h3>
+
+                
+                
+                <p class="description"><strong>Açıklama:</strong> <%= dergi.aciklama %></p>
                 <p class="author-info"><strong>Yazar:</strong> <%= dergi.yazar %></p>
+                
                 <%  if(dergi.olusturan_user_id === 1) { %>
                     <p class="user-info"><strong>Ekleyen:</strong>Nazım Köğçe</p>
                     <% } else { %>
                 <p class="user-info"><strong>Ekleyen:</strong> Belirtilmedi</p>
                 <% } %>
-                <p class="description"><strong>Açıklama:</strong> <%= dergi.aciklama %></p>
                 <p class="download-link">
                     <strong>İndirme Linki:</strong>
                     <form action="/dergiler/<%= dergi.dergi_id%>/indir" method="POST">

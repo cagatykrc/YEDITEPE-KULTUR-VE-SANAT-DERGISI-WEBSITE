@@ -3,8 +3,8 @@
 <%- include('./partials/header.ejs',) %>
  
 <div class="loginPage">
-    <h2 style="font-family: 'Times New Roman', Times, serif;">Giriş Yap</h2>
     <form action="/auth/giris" method="post">
+        <h2>Giriş Yap</h2>
         <div class="form-group">
             <label for="username">Kullanıcı Adı:</label>
             <input type="text" class="form-control" id="username" name="username" placeholder="Kullanıcı adınızı girin" required>
@@ -14,6 +14,7 @@
             <input type="password" class="form-control" id="password" name="password" placeholder="Şifrenizi girin" required>
         </div>
         <button type="submit" class="loginBtn">Giriş Yap</button>
+        <a style="color: #28c4d8" href="/auth/kayit">Zaten bir hesabınız var mı?</a>
     </form>
 </div>
 

@@ -12,8 +12,11 @@ html{
 body {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    min-height: 170vh;
+    background-color: #dde5f4;
 }
+
+
 
 
 .container p {
@@ -24,12 +27,40 @@ body {
 .row {
     display: flex;
     flex-wrap: wrap;
+    margin-top: 64px;
+}
+.detail-image{
+    display: inline-block;
 }
 
 .detail-image img{
-    width: 400px;
-    height: 500px;
+    width: 600px;
+    margin-right: 32px;
+    height: 700px;
     padding: 0;
+}
+.custom-detailpage-row{
+    display: flex;
+    align-items: start;
+    padding: 0;
+    margin: 0;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 50px;
+}
+.custom-detail-page-container{
+    display: flex;
+    align-items: start;
+    padding: 0;
+    margin: 0;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 50px;
+}
+.form-group{
+    margin-bottom: 12px;
 }
 
 .filter-menus {
@@ -42,6 +73,14 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+.about-us,
+.social-media {
+    margin-bottom: 40px;
+}
+.social-icons a{
+    color: #333;
+    margin-left: 5px;
 }
 
 .filter-li {
@@ -140,11 +179,16 @@ body {
 }
 .list {
     list-style: none;
-    display: flex;
-    gap: 20px;
-    color: #fff;
-    margin-right: 20px;
+    display: flex; /* Liste öğelerini yatay hizada göster */
+    gap: 20px; /* Öğeler arasında boşluk bırak */
+    align-items: center; 
+    margin-right: 30px;/* Öğeleri dikey olarak ortala */
+    font-family: 'Poppins', sans-serif;
 }
+.list a {
+
+}
+
 
 #toggler, .navbar label {
     color: #ffffff;
@@ -158,11 +202,11 @@ body {
 }
 
 .container h2 {
-    color: #007bff;
+    color: #333333;
 }
 
 .container a:hover {
-    color: #0056b3;
+    color: #ff6f61;
 }
 
 /* Kart stilleri */
@@ -652,6 +696,16 @@ a{
         align-items: center;
         padding: 20px;
     }
+    .list a {
+        text-decoration: none;
+        color: #fff;
+        font-size: 18px;
+        font-family: 'Oswald', sans-serif;
+        transition: color 0.3s ease-in-out; /* Renk değişimini animasyonlu yap */
+    }
+    .list a:hover {
+        color: #0056b3; /* Hover durumunda renk değiştir */
+    }
 
     .navbar label {
         display: inline-flex;
@@ -678,10 +732,10 @@ ul{
 }
 .filter-system-s{
     cursor: pointer;
-    background-color: #101820;
+    background-color: #2b2b29;
     padding: 9px;
     border-radius: 12px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     color: white;
 }
 @keyframes OutInFade {
@@ -718,25 +772,44 @@ ul{
     display: inline-block;
 }
 
+.loginPage form{
+    background-color:  #f2f2f2;
+    width: 400px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    padding: 1rem;
+    min-height: 300px;
+    border-radius: 12px;
+}
+
 .loginPage {
-    text-align: center;
-    font-family: 'Courier New', Courier, monospace;
-    width: 250px;
-    padding: 10px;
-    border-radius: 5px solid gray;
-    margin: auto;
+    color: #333333;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    margin-top: 64px;
 }
 
 .loginBtn {
-margin-top: 10px;
-background-color: #ddd;
-border: none;
-color: black;
-padding: 10px 20px;
-text-align: center;
-text-decoration: none;
-display: inline-block;
-margin: 4px 2px;
-cursor: pointer;
-border-radius: 16px;
+    background-color: #4caf50;
+    color: #ffffff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.loginPage label{
+    display: block;
+    margin-bottom: 5px;
+    color: #333333;
+}
+
+.contact{
+    margin-top: 64px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    padding: 1rem;
 }
