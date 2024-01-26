@@ -57,7 +57,7 @@
                         <div class="list-group-item-admin">
                             <div name="yorumId" class="yorumId"></div>
                             <div  style="padding: 5px;" class=" d-flex justify-content-between align-items-center">
-                                <h5 class="mb-1"><strong><%= yorum.username %>:</strong></h5>
+                                <h5 class="mb-1"><strong><%= yorum.first_name %>:</strong></h5>
                                 <small class="text-muted">
                                     <%
                                     const rawDate = yorum.tarih; // Bu, veritabanından gelen tarih string'i olabilir
@@ -79,7 +79,7 @@
                                 <!-- Add the delete button here -->
                                     <button class="btn btn-sm btn-danger" onclick="confirmDelete('<%=  yorum.yorum_id%>')">Delete</button>
                             </div>
-                            <p style="" class="mb-1"><%= yorum.yorum_metni %></p>
+                            <p class="mb-1"><%= yorum.yorum_metni %></p>
                         </div>
                     <% }); %>
                 </div>
@@ -112,7 +112,7 @@
                     <% dergiYorumlari.forEach(yorum => { %>
                         <div class="list-group-item">
                             <div class="d-flex justify-content-between align-items-center">
-                                <h5 class="mb-1"><strong><%= yorum.username %>:</strong></h5>
+                                <h5 class="mb-1"><strong><%= yorum.first_name %>:</strong></h5>
                                 <small class="text-muted">
                                     <%
                                     const rawDate = yorum.tarih; // Bu, veritabanından gelen tarih string'i olabilir

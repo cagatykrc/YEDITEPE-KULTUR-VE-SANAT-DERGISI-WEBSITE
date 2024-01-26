@@ -757,8 +757,8 @@ ul{
     cursor: pointer;
     background-color: #3498db;
     padding: 9px;
-    margin-top: 12px;
     border-radius: 12px;
+    display: inline;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     color: white;
 }

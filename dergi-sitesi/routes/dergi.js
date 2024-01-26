@@ -14,7 +14,7 @@ router.get('/:dergiId', async (req, res) => {
         const dergi = dergiResults[0];
 
         // Dergi yorumlarını çek
-        const yorumSorgu = 'SELECT y.*, u.username FROM yorumlar y JOIN users u ON y.kullanici_id = u.user_id WHERE y.dergi_id = ?';
+        const yorumSorgu = 'SELECT y.*, u.first_name FROM yorumlar y JOIN users u ON y.kullanici_id = u.user_id WHERE y.dergi_id = ?';
         const [yorumResults] = await db.query(yorumSorgu, [dergiId]);
         const dergiYorumlari = yorumResults;
 
