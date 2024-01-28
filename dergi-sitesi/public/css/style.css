@@ -629,120 +629,6 @@ a{
 .filter-categorys{
     top: 200;
 }
-@media (min-width: 320px) and (max-width: 700px) {
-    body{
-        background-color: #f5f5f5;
-    }
-    .custom-row{
-        width: 100%;
-        background-color: #f5f5f5;
-        box-shadow: none;
-    }
-    /* Ekran genişliği 767px'e kadar olan durumlar için stiller */
-    .container {
-        margin: 0px 0px 0px 0px;
-        padding: 0px; /* Üst boşluğu sıfıra ayarla */
-    }
-    .row {
-        flex-direction: column; /* Sütun düzenine geç */
-        align-items: center; /* Ortala */
-    }
-    .list-group-item {
-        border: none; /* Listeye kenarlık ekleme */
-        border-radius: 8px; /* Köşeleri yumuşat */
-        margin-bottom: 10px; 
-        background-color: #fff;/* Listeler arasına mesafe koy */
-        box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-    }
-    .list-group-item-admin {
-        border: none; /* Listeye kenarlık ekleme */
-        border-radius: 8px; /* Köşeleri yumuşat */
-        margin-bottom: 10px; 
-        background-color: #fff;/* Listeler arasına mesafe koy */
-        box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-    }
-    .list-group {
-        width: 100%; /* Yorum listesinin genişliğini ayarla */
-    }
-    .col-md-6 {
-        width: 100%; /* Tam genişlik */
-    }
-
-    .detail-info {
-        margin-top: 20px; /* Boşluk ekleyerek resim ile detay bilgileri arasına mesafe koy */
-    }
-
-    .detail-comment-area {
-        margin-top: 20px; /* Boşluk ekleyerek detay bilgileri ile yorumlar arasına mesafe koy */
-    }
-
-    .detail-comment-area form {
-        width: 100%; /* Formun genişliğini ayarla */
-    }
-    .custom-card-container {
-        flex-wrap: wrap; /* Allow cards to wrap to the next line */
-        justify-content: space-between;
-        width: 100%; /* Evenly space cards in the container */
-    }
-    .container p{
-        font-size: .9rem;
-    }
-
-    .custom-card {
-        width: calc(50% - 5px); /* Two cards per row with some margin */
-        margin: 2px; /* Add margin between cards */
-    }
-    .custom-card-content {
-        padding-left: 4px;
-        margin: 0px;
-        height: 200px;
-        box-sizing: border-box;
-    }
-    .custom-card-title {
-        font-size: 1.1rem;
-        color: #333;
-        padding: .1rem;
-    }
-    .menu {
-        width: 100%;
-        max-height: 0;
-        overflow: hidden;
-    }
-    .logo {
-        margin-left: 0px;
-    }
-
-    .list {
-        flex-direction: column;
-        align-items: center;
-        padding: 20px;
-        margin: 0;
-    }
-    .list a {
-        text-decoration: none;
-        color: #fff;
-        font-size: 18px;
-        font-family: 'Oswald', sans-serif;
-        transition: color 0.3s ease-in-out; /* Renk değişimini animasyonlu yap */
-    }
-    .list a:hover {
-        color: #0056b3; /* Hover durumunda renk değiştir */
-    }
-
-    .navbar label {
-        display: inline-flex;
-        align-items: center;
-        cursor: pointer;
-    }
-
-    #toggler:checked ~ .menu {
-        max-height: 100%;
-    }
-    .detail-image img{
-        margin-left: 0px;
-        height: 600px;
-    }
-}
 
 ul{
     list-style: none;
@@ -836,4 +722,136 @@ ul{
     border-radius: 12px;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     padding: 1rem;
+}
+
+@media (min-width: 320px) and (max-width: 700px) {
+    .filter-categorys{
+        left: 20px;
+        top: 295px;
+    }
+    body{
+        background-color: #f5f5f5;
+    }
+    .custom-row{
+        width: 100%;
+        background-color: #f5f5f5;
+        box-shadow: none;
+    }
+    /* Ekran genişliği 767px'e kadar olan durumlar için stiller */
+    .container {
+        margin: 0px 0px 0px 0px;
+        padding: 0px; /* Üst boşluğu sıfıra ayarla */
+    }
+    .row {
+        flex-direction: column; /* Sütun düzenine geç */
+        align-items: center; /* Ortala */
+    }
+    .list-group-item {
+        border: none; /* Listeye kenarlık ekleme */
+        border-radius: 8px; /* Köşeleri yumuşat */
+        margin-bottom: 10px; 
+        background-color: #fff;/* Listeler arasına mesafe koy */
+        box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    }
+    .list-group-item-admin {
+        border: none; /* Listeye kenarlık ekleme */
+        border-radius: 8px; /* Köşeleri yumuşat */
+        margin-bottom: 10px; 
+        background-color: #fff;/* Listeler arasına mesafe koy */
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    }
+    .list-group {
+        width: 100%; /* Yorum listesinin genişliğini ayarla */
+    }
+    .col-md-6 {
+        width: 100%; /* Tam genişlik */
+    }
+
+    .detail-info {
+        margin-top: 20px; /* Boşluk ekleyerek resim ile detay bilgileri arasına mesafe koy */
+    }
+
+    .detail-comment-area {
+        margin-top: 20px; /* Boşluk ekleyerek detay bilgileri ile yorumlar arasına mesafe koy */
+    }
+
+    .detail-comment-area form {
+        width: 100%; /* Formun genişliğini ayarla */
+    }
+    .custom-card-container {
+        flex-wrap: wrap; /* Allow cards to wrap to the next line */
+        justify-content: space-between;
+        width: 100%; /* Evenly space cards in the container */
+    }
+    .container p{
+        font-size: .9rem;
+    }
+
+    .custom-card {
+        width: calc(50% - 5px); /* Two cards per row with some margin */
+        margin: 2px; /* Add margin between cards */
+        margin-top: 8px;
+    }
+    .custom-card-content {
+        padding-left: 4px;
+        margin: 0px;
+        height: 200px;
+        box-sizing: border-box;
+    }
+    .custom-card-title {
+        font-size: 1.1rem;
+        color: #333;
+        padding: .1rem;
+    }
+    .menu {
+        width: 100%;
+        max-height: 0;
+        overflow: hidden;
+    }
+    .logo {
+        margin-left: 0px;
+    }
+
+    .list {
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+        margin: 0;
+    }
+    .list a {
+        text-decoration: none;
+        color: #fff;
+        font-size: 18px;
+        font-family: 'Oswald', sans-serif;
+        transition: color 0.3s ease-in-out; /* Renk değişimini animasyonlu yap */
+    }
+    .list a:hover {
+        color: #0056b3; /* Hover durumunda renk değiştir */
+    }
+
+    .navbar label {
+        display: inline-flex;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    #toggler:checked ~ .menu {
+        max-height: 100%;
+    }
+    .detail-image img{
+        margin-left: 0px;
+        height: 600px;
+        margin-right: 0px;
+    }
+    .kategori{
+        padding-left: 0px;
+    }
+    .filter-system-s{
+        margin-top: 20px;
+        display: inline-block;
+
+    }
+    h2{
+        display: inline-block;
+    }
 }

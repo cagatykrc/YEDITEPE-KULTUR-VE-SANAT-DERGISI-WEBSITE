@@ -1,7 +1,7 @@
 const mysql = require('mysql2/promise');
 require('dotenv').config();
 const db = mysql.createPool({
-  host: '172.31.43.129',
+  host: 'localhost',
   user: 'root',
   password: 'XLIE4244hGW-TV',
   database: 'ykvs_books',
