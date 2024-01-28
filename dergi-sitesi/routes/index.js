@@ -22,7 +22,8 @@ router.get('/', async (req, res) => {
         // MySQL sorgusu ile dergi verilerini çek
         const [rows, fields] = await db.query('SELECT * FROM dergiler');
         const dergiler = rows;
-        res.render('index', { dergiler, userS });
+        const announcement = {title:'Site test aşamasındadır!',description:'Bu site şuan test aşamasındadır lütfen hiç bir içeriği dikkate almayınız.'}
+        res.render('index', { announcement,dergiler, userS });
     } catch (error) {
         console.error('Dergi verilerini çekerken bir hata oluştu: ' + error);
         return res.status(500).send('Internal Server Error');

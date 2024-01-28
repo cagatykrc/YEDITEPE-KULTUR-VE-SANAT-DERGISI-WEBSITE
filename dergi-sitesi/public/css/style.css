@@ -723,6 +723,16 @@ ul{
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     padding: 1rem;
 }
+.announcement-panel{
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    margin-bottom: 12px;
+    width: 80%;
+    border-radius: 12px;
+    padding: 5px;
+}
+.announcement-panel h2{
+    color: #cc3333;
+}
 
 @media (min-width: 320px) and (max-width: 700px) {
     .filter-categorys{
