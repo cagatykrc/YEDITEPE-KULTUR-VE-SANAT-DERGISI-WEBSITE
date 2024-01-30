@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../utility/database');
-
 // Dergi Detayı
 
 router.get('/:dergiId', async (req, res) => {
@@ -53,7 +52,8 @@ router.post('/:dergiId/yorumEkle', async (req, res) => {
 
     // Kullanıcının oturum açmış olup olmadığını kontrol et
     if (!req.session.user) {
-        return ;
+        res.redirect('/auth/giris');
+        return;    
     }
 
     const kullaniciId = req.session.user;
