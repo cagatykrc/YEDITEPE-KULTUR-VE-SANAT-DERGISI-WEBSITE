@@ -1,7 +1,7 @@
 <!-- views/giris.ejs -->
 
 <%- include('./partials/header.ejs',) %>
- 
+<div class="lgncustom-container">
 <div class="loginPage">
     <form action="/auth/giris" method="post">
         <h2>Giriş Yap</h2>
@@ -17,6 +17,7 @@
         <button type="submit" class="loginBtn">Giriş Yap</button>
         <a style="color: #28c4d8" href="/auth/kayit">Bir hesabınız yok mu?</a>
     </form>
+</div>
 </div>
 
 <%- include('./partials/footer.ejs') %>

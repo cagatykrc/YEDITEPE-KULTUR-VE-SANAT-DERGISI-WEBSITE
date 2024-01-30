@@ -110,6 +110,9 @@ body {
     min-height: 170vh;
 
 }
+.lgncustom-container{
+    min-height: 170vh;
+}
 
 /* Kart stilleri */
 .custom-card-container {
@@ -689,10 +692,10 @@ ul{
 
 .loginPage form{
     background-color:  #f2f2f2;
-    width: 400px;
+    width: 450px;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     padding: 1rem;
-    min-height: 300px;
+    min-height: 350px;
     border-radius: 12px;
 }
 
