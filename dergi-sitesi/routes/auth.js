@@ -105,7 +105,7 @@ router.post('/giris', async (req, res) => {
     res.redirect('/');
     }
     else{
-          window.alert('Zaten Oturumunuz Yok');
+          res.redirect('/');
         }
   });
 module.exports = router;

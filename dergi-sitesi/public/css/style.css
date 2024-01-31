@@ -375,6 +375,7 @@ a{
     padding: 10px;
     text-align: center;
     width: 100%;
+    margin-top: auto;
 }
 
 .c-text p{
