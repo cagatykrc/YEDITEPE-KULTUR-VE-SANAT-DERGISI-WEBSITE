@@ -1,0 +1,105 @@
+<%- include('../partials/header.ejs') %>
+<div class="custom-category-container">
+<div class="custom-category-panel">
+    <div class="category-create-panel">
+    <h2 class="text-center mb-4">Kategori Ekle</h2>
+    <form action="/admin/kategoriekle" method="POST">
+
+        <div class="form-group">
+            <label for="baslik">Kategori Adı:</label>
+            <input type="text" class="form-control admin-panel-input" id="kategori_ad" maxlength="45" name="kategori_ad" required>
+        </div>
+        <div class="form-group">
+            <label for="baslik">Kategori Adı(Küçük, boşluksuz ve yabancı karakterlerle):</label>
+            <input type="text" class="form-control admin-panel-input" id="kategori_low" maxlength="45" name="kategori_low" required>
+        </div>
+
+
+                <!-- <div class="form-group">
+                    <label for="kategori">Kategoriler</label>
+                    <select name="kategorisi" id="kategorisi" class="form-control admin-panel-input">
+                        <option value="kultur">Kültür</option>
+                        <option value="tarih">Tarih</option>
+                        <option value="edebiyat">Edebiyat</option>
+                        <option value="bilim">Bilim</option>
+                        <option value="sanat">Sanat</option>
+                        <option value="saglik">Sağlık</option>
+                        <option value="sinematv">Sinema & TV</option>
+                        <option value="hukuk">Hukuk</option>
+                    </select>
+                </div> -->
+
+
+                <button type="submit" class="btn addbookbtn btn-primary">Kategoriyi Oluştur</button>
+            </form>
+        </div>
+        <div class="category-management-panel">
+                <h1>Kategori yönetim</h1>
+            
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>Başlık</th>
+                                <th>data</th>
+                                <th>İşlemler</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% kategoriler.forEach(kategori => { %>
+                                <tr>
+                                    <div name="<%= kategori.kategori_id %>" class="categoryid"></div>
+                                    <td name="<%= kategori.kategori_id %>"><%= kategori.kategori_id %></td>
+                                    <td><%= kategori.kategori_ad %></td>
+                                    <td><%= kategori.kategori_low %></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-danger" onclick="confirmDelete('<%=  kategori.kategori_id%>')">Delete</button>
+                                    </td>
+                                </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <a href="/admin/panel"><button class="btn btn-secondary">Geri</button></a>
+
+
+
+
+
+
+
+
+
+
+
+<script> 
+    function confirmDelete(kategoriId) {
+        if (confirm('Emin misiniz?')) {
+            // Silme işlemi için POST isteği gönder
+            fetch('/admin/' + kategoriId + '/kategorisil', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ kategoriId: kategoriId }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                // Başarılı bir şekilde silindiğinde sayfayı yenile veya başka bir işlem yapabilirsiniz.
+                window.location.reload();
+            })
+            .catch(error => {
+                console.error('Silme işlemi sırasında hata oluştu:', error);
+            });
+        }
+    }
+</script>
+
+
+<%- include('../partials/footer.ejs') %>

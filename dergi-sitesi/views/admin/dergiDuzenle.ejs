@@ -17,14 +17,9 @@
         <div class="form-group">
             <label for="kategori">Kategoriler</label>
             <select name="kategorisi" id="kategorisi" class="form-control admin-panel-input">
-                <option value="kultur">Kültür</option>
-                <option value="tarih">Tarih</option>
-                <option value="edebiyat">Edebiyat</option>
-                <option value="bilim">Bilim</option>
-                <option value="sanat">Sanat</option>
-                <option value="saglik">Sağlık</option>
-                <option value="sinematv">Sinema & TV</option>
-                <option value="hukuk">Hukuk</option>
+                <% kategoriler.forEach(kategori => {%>
+                    <option value="<%= kategori.kategori_low%>"><%= kategori.kategori_ad%></option>
+                <%});%>
             </select>
         </div>
 

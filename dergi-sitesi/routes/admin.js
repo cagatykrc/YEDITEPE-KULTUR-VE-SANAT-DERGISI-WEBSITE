@@ -46,10 +46,18 @@ router.get('/dergiyonetim', async (req, res) => {
 
 
 
-router.get('/dergiolustur',  (req, res) => {
+router.get('/dergiolustur',  async(req, res) => {
     const userS = req.session.user;
     if (userS && userS.role === 'admin') {
-        res.render('admin/dergiOlustur', { userS });
+        try {
+            const [categorys] = await db.query('SELECT * FROM kategoriler');
+            const kategoriler = categorys;
+            res.render('admin/dergiOlustur', { userS, kategoriler });
+        } catch (error) {
+            console.log(error);
+        }
+
+
     } else {
         res.render('404', { userS });
     }
@@ -94,6 +102,8 @@ router.get('/:dergiId/duzenle', async (req, res) => {
 
     if (userS && userS.role === 'admin') {
         try {
+            const [categorys] = await db.query('SELECT * FROM kategoriler');
+            const kategoriler = categorys;
             const [results] = await db.query('SELECT * FROM dergiler WHERE dergi_id = ?', [dergiId]);
 
             if (results.length === 0) {
@@ -102,7 +112,7 @@ router.get('/:dergiId/duzenle', async (req, res) => {
 
             const dergi = results[0];
             console.log(dergi);
-            res.render('admin/dergiDuzenle', { dergi, userS });
+            res.render('admin/dergiDuzenle', { dergi, userS, kategoriler });
 
         } catch (error) {
             console.error('Dergi bilgisi alınırken bir hata oluştu: ' + error);
@@ -237,4 +247,55 @@ router.post('/kullanici/:userId/update', async(req,res)=>{
 
 
 }),
+
+router.get('/kategoriyonetim',async(req,res) => {
+    const userS = req.session.user;
+    try {
+        if (userS && userS.role === 'admin') {
+            const [categorys] = await db.query('SELECT * FROM kategoriler');
+            const kategoriler = categorys;
+            res.render('admin/kategoriOlustur', {userS,kategoriler});
+            
+        } else {
+            res.render('404', {userS});
+        }
+    }catch(error){console.log(error);}
+
+})
+
+router.post('/kategoriekle', async(req,res) => {
+    const userS = req.session.user;
+    if (userS && userS.role === 'admin') {
+        const {kategori_ad,kategori_low} = req.body;
+        const insertQuery = `
+            INSERT INTO kategoriler (kategori_ad, kategori_low)
+            VALUES (?, ?)
+        `;
+    
+        try {
+            await db.query(insertQuery, [kategori_ad,kategori_low]);
+            console.log('Kategori başarıyla oluşturuldu.');
+            res.redirect('/admin/kategoriyonetim'); // Gerekirse yönlendirme yapabilirsiniz.
+        } catch (error) {
+            console.log(error);
+            res.status(500).send('Internal Server Error');
+        }
+    } else {
+        res.redirect('/');
+    }
+
+});
+
+router.post('/:kategoriId/kategorisil', async (req, res) => {
+    const userS = req.session.user;
+    const kategoriId = req.body.kategoriId;
+    if (userS && userS.role=='admin') {
+        const query = 'DELETE FROM kategoriler WHERE kategori_id = ?';
+        await db.query(query, [kategoriId]);
+        res.redirect('/admin/kategoriyonetim');
+        
+    } else {
+        res.redirect('/');
+    }
+});
 module.exports=router;
