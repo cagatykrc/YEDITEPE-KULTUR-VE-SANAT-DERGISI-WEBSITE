@@ -4,8 +4,26 @@ const db = require('../utility/database');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const jwt = require('jsonwebtoken');
 
-router.get('/panel', (req, res) => {
+function verifyToken(req, res, next) {
+    const token = req.cookies.token;
+
+    if (!token) {
+        return res.status(403).json({ message: 'Token not provided' });
+    }
+
+    jwt.verify(token, 'your-secret-key', (err, decoded) => {
+        if (err) {
+            return res.status(401).json({ message: 'Invalid token' });
+        }
+
+        req.user = decoded; // Kullanıcı bilgilerini talep nesnesine ekle
+        next();
+    });
+}
+
+router.get('/panel', verifyToken,(req, res) => {
     const userS = req.session.user;
 
     // Kullanıcı admin rolüne sahipse, sayfayı render et
@@ -28,7 +46,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-router.get('/dergiyonetim', async (req, res) => {
+router.get('/dergiyonetim', verifyToken,async (req, res) => {
     const userS = req.session.user;
     if (userS && userS.role === 'admin') {
         try {
@@ -46,7 +64,7 @@ router.get('/dergiyonetim', async (req, res) => {
 
 
 
-router.get('/dergiolustur',  async(req, res) => {
+router.get('/dergiolustur',  verifyToken,async(req, res) => {
     const userS = req.session.user;
     if (userS && userS.role === 'admin') {
         try {
@@ -63,7 +81,7 @@ router.get('/dergiolustur',  async(req, res) => {
     }
 });
 
-router.post('/dergiolustur', upload.fields([
+router.post('/dergiolustur', verifyToken,upload.fields([
     { name: 'pdfDosya', maxCount: 1 },
     { name: 'resim', maxCount: 1 }
 ]), async (req, res) => {
@@ -96,7 +114,7 @@ router.post('/dergiolustur', upload.fields([
     }
 });
 
-router.get('/:dergiId/duzenle', async (req, res) => {
+router.get('/:dergiId/duzenle', verifyToken,async (req, res) => {
     const dergiId = req.params.dergiId;
     const userS = req.session.user;
 
@@ -124,7 +142,7 @@ router.get('/:dergiId/duzenle', async (req, res) => {
 });
 
 
-router.post('/:dergiId/duzenle',async (req, res) => {
+router.post('/:dergiId/duzenle',verifyToken,async (req, res) => {
     const userS = req.session.user;
     if (userS && userS.role==='admin') {
         const dergiId = req.params.dergiId;
@@ -153,7 +171,7 @@ router.post('/:dergiId/duzenle',async (req, res) => {
 });
 
 
-router.post('/:dergiId/sil', (req, res) => {
+router.post('/:dergiId/sil',verifyToken, (req, res) => {
     const userS = req.session.user;
 if (userS && userS.role==='admin') {
     const dergiId = req.params.dergiId;
@@ -177,7 +195,7 @@ if (userS && userS.role==='admin') {
 
 
 
-router.get('/kullaniciyonetim', async(req,res)=>{
+router.get('/kullaniciyonetim',verifyToken,async(req,res)=>{
     const userS = req.session.user;
     if (userS && userS.role==='admin') {
 
@@ -200,7 +218,7 @@ router.get('/kullaniciyonetim', async(req,res)=>{
 });
 
 
-router.get('/kullanici/:userId', async(req,res)=>{
+router.get('/kullanici/:userId',verifyToken, async(req,res)=>{
     const userId = req.params.userId
     const userS=req.session.user;
 
@@ -224,7 +242,7 @@ router.get('/kullanici/:userId', async(req,res)=>{
 });
 
 
-router.post('/kullanici/:userId/update', async(req,res)=>{
+router.post('/kullanici/:userId/update',verifyToken, async(req,res)=>{
     const userId = req.params.userId;
     const userS= req.session.user;
     const { newUsername, newEmail, newFirstName, newLastName, newRole } = req.body;
@@ -248,7 +266,7 @@ router.post('/kullanici/:userId/update', async(req,res)=>{
 
 }),
 
-router.get('/kategoriyonetim',async(req,res) => {
+router.get('/kategoriyonetim',verifyToken,async(req,res) => {
     const userS = req.session.user;
     try {
         if (userS && userS.role === 'admin') {
@@ -263,7 +281,7 @@ router.get('/kategoriyonetim',async(req,res) => {
 
 })
 
-router.post('/kategoriekle', async(req,res) => {
+router.post('/kategoriekle',verifyToken, async(req,res) => {
     const userS = req.session.user;
     if (userS && userS.role === 'admin') {
         const {kategori_ad,kategori_low} = req.body;
@@ -286,7 +304,7 @@ router.post('/kategoriekle', async(req,res) => {
 
 });
 
-router.post('/:kategoriId/kategorisil', async (req, res) => {
+router.post('/:kategoriId/kategorisil',verifyToken, async (req, res) => {
     const userS = req.session.user;
     const kategoriId = req.body.kategoriId;
     if (userS && userS.role=='admin') {

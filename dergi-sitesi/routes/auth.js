@@ -2,7 +2,9 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const db = require('../utility/database');
-
+const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
+const secretKey = crypto.randomBytes(32).toString('hex');
 router.get('/giris', (req, res) => {
   const userS = req.session.user;
   if (userS) {
@@ -81,7 +83,7 @@ router.post('/giris', async (req, res) => {
         return res.redirect('/auth/giris')
       }
       // Kullanıcı bilgilerini oturumda sakla
-      
+      const token = jwt.sign({ userId: user.user_id, username: user.username, role: user.role }, secretKey );
       req.session.user = { 
         id: user.user_id,
         username: user.username,
@@ -90,6 +92,7 @@ router.post('/giris', async (req, res) => {
       };
       
       // Başarı durumunda kullanıcıya cevap gönder
+      res.cookie('token', token, { httpOnly: true, secure:true });
       res.redirect('/')
     } catch (error) {
       console.error(error);
@@ -101,8 +104,9 @@ router.post('/giris', async (req, res) => {
   router.post('/cikis', (req, res) => {
     const userS = req.session.user;
     if (userS){
-    req.session.destroy()
-    res.redirect('/');
+      req.session.destroy();
+      res.clearCookie('token'); // Token cookie'sini temizle
+      res.redirect('/');
     }
     else{
           res.redirect('/');

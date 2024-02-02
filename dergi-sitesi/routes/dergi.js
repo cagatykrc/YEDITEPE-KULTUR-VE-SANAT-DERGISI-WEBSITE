@@ -2,7 +2,25 @@ const express = require('express');
 const router = express.Router();
 const db = require('../utility/database');
 // Dergi Detayı
+const jwt = require('jsonwebtoken');
 
+
+function verifyToken(req, res, next) {
+    const token = req.cookies.token;
+
+    if (!token) {
+        return res.status(403).json({ message: 'Token not provided' });
+    }
+
+    jwt.verify(token, 'your-secret-key', (err, decoded) => {
+        if (err) {
+            return res.status(401).json({ message: 'Invalid token' });
+        }
+
+        req.user = decoded; // Kullanıcı bilgilerini talep nesnesine ekle
+        next();
+    });
+}
 router.get('/:dergiId', async (req, res) => {
     const dergiId = req.params.dergiId;
     const userS = req.session.user;
@@ -26,7 +44,7 @@ router.get('/:dergiId', async (req, res) => {
     }
 });
 
-router.post('/:dergiId/yorumsil', async (req, res) => {
+router.post('/:dergiId/yorumsil', verifyToken,async (req, res) => {
     const userS = req.session.user;
     const yorumId = req.body.yorumId;
     const dergiId = req.params.dergiId;
