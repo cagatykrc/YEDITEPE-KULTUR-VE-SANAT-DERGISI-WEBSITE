@@ -1,39 +1,27 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../utility/database');
-// Dergi Detayı
-const jwt = require('jsonwebtoken');
-
-
-function verifyToken(req, res, next) {
-    const token = req.cookies.token;
-
-    if (!token) {
-        return res.status(403).json({ message: 'Token not provided' });
-    }
-
-    jwt.verify(token, 'your-secret-key', (err, decoded) => {
-        if (err) {
-            return res.status(401).json({ message: 'Invalid token' });
-        }
-
-        req.user = decoded; // Kullanıcı bilgilerini talep nesnesine ekle
-        next();
-    });
-}
+const Dergiler = require('../models/Dergiler');
+const Yorumlar = require('../models/Yorumlar');
+const Users = require('../models/Users');
+const verifyToken= require('../utility/verifyToken');
 router.get('/:dergiId', async (req, res) => {
     const dergiId = req.params.dergiId;
     const userS = req.session.user;
 
     try {
-        // Dergi bilgilerini çek
-        const [dergiResults] = await db.query('SELECT * FROM dergiler WHERE dergi_id = ?', [dergiId]);
-        const dergi = dergiResults[0];
+        // Sequelize ile dergi bilgilerini çek
+        const dergi = await Dergiler.findByPk(dergiId);
 
-        // Dergi yorumlarını çek
-        const yorumSorgu = 'SELECT y.*, u.first_name FROM yorumlar y JOIN users u ON y.kullanici_id = u.user_id WHERE y.dergi_id = ?';
-        const [yorumResults] = await db.query(yorumSorgu, [dergiId]);
-        const dergiYorumlari = yorumResults;
+        // Sequelize ile dergi yorumlarını çek
+        const dergiYorumlari = await Yorumlar.findAll({
+            where: {
+                dergi_id: dergiId
+            },
+            include: [{
+                model: Users,
+                attributes: ['first_name'],
+            }]
+        });
 
         // Dergi sayfasını render et
         res.render('dergiDetay', { dergi, userS, dergiYorumlari });
@@ -44,17 +32,22 @@ router.get('/:dergiId', async (req, res) => {
     }
 });
 
-router.post('/:dergiId/yorumsil', verifyToken,async (req, res) => {
+router.post('/:dergiId/yorumsil', verifyToken, async (req, res) => {
     const userS = req.session.user;
     const yorumId = req.body.yorumId;
     const dergiId = req.params.dergiId;
 
     if (userS && userS.role === 'admin') {
         try {
-            const query = 'DELETE FROM yorumlar WHERE yorum_id = ?';
-            await db.query(query, [yorumId]);
-            console.log( yorumId + 'Yorum silindi.');
-            res.json({ message:  yorumId +' Yorum başarıyla silindi' });
+            // Sequelize ile yorumu bul ve sil
+            const yorum = await Yorumlar.findByPk(yorumId);
+            if (!yorum) {
+                return res.status(404).json({ error: 'Yorum bulunamadı' });
+            }
+
+            await yorum.destroy();
+            console.log(yorumId + ' Yorum silindi.');
+            res.json({ message: yorumId + ' Yorum başarıyla silindi' });
         } catch (error) {
             console.log(error);
             res.status(500).json({ error: 'Yorum silinirken bir hata oluştu' });
@@ -74,17 +67,17 @@ router.post('/:dergiId/yorumEkle', async (req, res) => {
         return;    
     }
 
-    const kullaniciId = req.session.user;
+    const kullaniciId = req.session.user.id;
     const yorumMetni = req.body.yorumMetni;
-    console.log(kullaniciId);
-    // Yorumu veritabanına eklemek için gerekli sorguyu yapın
-    const insertQuery = `
-        INSERT INTO yorumlar (dergi_id, kullanici_id, yorum_metni)
-        VALUES (?, ?, ?)
-    `;
 
     try {
-        await db.query(insertQuery, [dergiId, kullaniciId.id, yorumMetni]);
+        // Sequelize ile yorumu oluştur
+        const yorum = await Yorumlar.create({
+            dergi_id: dergiId,
+            kullanici_id: kullaniciId,
+            yorum_metni: yorumMetni
+        });
+
         res.redirect(`/dergiler/${dergiId}`);
     } catch (error) {
         console.error('Yorum eklenirken bir hata oluştu: ' + error);

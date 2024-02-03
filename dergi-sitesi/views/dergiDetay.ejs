@@ -57,7 +57,7 @@
                         <div class="list-group-item-admin">
                             <div name="yorumId" class="yorumId"></div>
                             <div  style="padding: 5px;" class=" d-flex justify-content-between align-items-center">
-                                <h5 class="mb-1"><strong><%= yorum.first_name %>:</strong></h5>
+                                <h5 class="mb-1"><strong><%= yorum.User.first_name %>:</strong></h5>
                                 <small class="text-muted">
                                     <%
                                     const rawDate = yorum.tarih; // Bu, veritabanından gelen tarih string'i olabilir
@@ -112,24 +112,28 @@
                     <% dergiYorumlari.forEach(yorum => { %>
                         <div class="list-group-item">
                             <div class="d-flex justify-content-between align-items-center">
-                                <h5 class="mb-1"><strong><%= yorum.first_name %>:</strong></h5>
+                                <h5 class="mb-1"><strong><%= yorum.User.first_name %>:</strong></h5>
                                 <small class="text-muted">
                                     <%
                                     const rawDate = yorum.tarih; // Bu, veritabanından gelen tarih string'i olabilir
                                     let formattedDate;
                                   
-                                    if (rawDate instanceof Date) {
-                                      // Eğer rawDate bir tarih nesnesi ise, direkt olarak kullanabilirsiniz
-                                      formattedDate = rawDate.toLocaleDateString('tr-TR');
-                                    } else if (typeof rawDate === 'string') {
-                                      // Eğer rawDate bir string ise, Date objesine çevirin
-                                      const dateObject = new Date(rawDate);
-                                      formattedDate = dateObject.toLocaleDateString('tr-TR');
+                                    if (rawDate) { // Eğer tarih değeri mevcutsa
+                                        if (rawDate instanceof Date) {
+                                            // Eğer rawDate bir tarih nesnesi ise, direkt olarak kullanabilirsiniz
+                                            formattedDate = rawDate.toLocaleDateString('tr-TR');
+                                        } else if (typeof rawDate === 'string') {
+                                            // Eğer rawDate bir string ise, Date objesine çevirin
+                                            const dateObject = new Date(rawDate);
+                                            formattedDate = dateObject.toLocaleDateString('tr-TR');
+                                        } else {
+                                            // Eğer rawDate ne bir tarih nesnesi ne de bir string değilse
+                                            formattedDate = 'Tarih bilgisi yok';
+                                        }
                                     } else {
-                                      // Eğer rawDate ne bir tarih nesnesi ne de bir string değilse
-                                      formattedDate = 'Tarih bilgisi yok';
+                                        formattedDate = 'Tarih bilgisi yok';
                                     }
-                                  %>
+                                    %>
                                 </small>
                             </div>
                             <p class="mb-1"><%= yorum.yorum_metni %></p>

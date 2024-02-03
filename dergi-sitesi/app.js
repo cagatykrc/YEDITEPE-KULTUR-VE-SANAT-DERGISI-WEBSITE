@@ -1,15 +1,25 @@
 const express = require('express');
 const session = require('express-session');
+const crypto = require('crypto');
+const dotenv = require('dotenv');
+const limiter = require('./utility/limiter');
 const path = require('path');
-const db = require('./utility/database');
+const secretKey = crypto.randomBytes(32).toString('hex');
+const sequelize = require('./utility/database');
+const Users = require('./models/Users');
+const Yorumlar = require('./models/Yorumlar');
+const Dergiler = require('./models/Dergiler');
+const Kategoriler = require('./models/Kategoriler');
+console.log(process.env.ACCES_TOKEN_SECRET);
 const authRoutes = require('./routes/auth');
 const indexRoute = require('./routes/index');
 const dergiRoute = require('./routes/dergi');
 const adminRoutes = require('./routes/admin');
+
 const app = express();
-const crypto = require('crypto');
-const secretKey = crypto.randomBytes(32).toString('hex');
-require('dotenv').config()
+
+
+require('dotenv').config();
 
 console.log(secretKey);
 app.use(session({
@@ -17,31 +27,34 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     cookie: {
-        secure: true,
-        maxAge: 30 * 24 * 60 * 60 * 1000,
+        secure: false,
+        maxAge: 1 * 24 * 60 * 60 * 1000,
     },
 }));
-
-// const privateKey = fs.readFileSync('path/to/private-key.pem', 'utf8');
-// const certificate = fs.readFileSync('path/to/certificate.pem', 'utf8');
-// const ca = fs.readFileSync('path/to/ca.pem', 'utf8'); // Opsiyonel, sertifika otoritesinin (CA) sertifikası
-
-// const credentials = { key: privateKey, cert: certificate, ca: ca };
-
-// const server = https.createServer(credentials, app);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.set('views', path.join(__dirname, 'views')); 
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(limiter);
+
+// Sequelize modellerini senkronize et
+(async () => {
+    try {
+        await sequelize.sync();
+        console.log('Veritabanı modelleri senkronize edildi');
+        
+        const PORT = 3000;
+        app.listen(PORT, "0.0.0.0", () => {
+            console.log(`Server is running on port ${PORT}`);
+        });
+    } catch (error) {
+        console.error('Veritabanı modelleri senkronize edilirken bir hata oluştu:', error);
+    }
+})();
 
 app.use('/admin', adminRoutes);
 app.use('/auth', authRoutes);
 app.use('/', indexRoute);
 app.use('/dergiler', dergiRoute);
-
-const PORT =  3000;
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});

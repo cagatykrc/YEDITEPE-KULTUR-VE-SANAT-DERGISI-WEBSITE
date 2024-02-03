@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../utility/database');
-
+const Dergiler = require('../models/Dergiler');
+const Kategoriler = require('../models/Kategoriler');
+const verifyToken = require('../utility/verifyToken');
 // Ana sayfa
 router.get('/hakkimizda', (req, res) =>{
     const notif = ''
@@ -18,18 +20,19 @@ router.get('/iletisim', (req, res) =>{
 
 router.get('/', async (req, res) => {
     const userS = req.session.user;
+    console.log(userS);
     try {
-        // MySQL sorgusu ile dergi verilerini çek
-        const [rows, fields] = await db.query('SELECT * FROM dergiler');
-        const [categorys] = await db.query('SELECT * FROM kategoriler');
-        const kategoriler = categorys;
-        const dergiler = rows;
+        // Sequelize ile dergi verilerini çek
+        const dergiler = await Dergiler.findAll();
+        
+        // Sequelize ile kategori verilerini çek
+        const kategoriler = await Kategoriler.findAll();
+        
         const announcement = {title:'Site test aşamasındadır!',description:'Bu site şuan test aşamasındadır lütfen hiç bir içeriği dikkate almayınız.'}
-        res.render('index', { announcement,dergiler, userS, kategoriler });
+        res.render('index', { announcement, dergiler, userS, kategoriler });
     } catch (error) {
         console.error('Dergi verilerini çekerken bir hata oluştu: ' + error);
         return res.status(500).send('Internal Server Error');
     }
 });
-
 module.exports = router;

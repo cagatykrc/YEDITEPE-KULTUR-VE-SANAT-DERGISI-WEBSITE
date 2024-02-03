@@ -1,13 +1,8 @@
 const mysql = require('mysql2/promise');
+const { Sequelize } = require('sequelize');
 require('dotenv').config();
-const db = mysql.createPool({
+const sequelize = new Sequelize('ykvs_books', 'root', 'XLIE4244hGW-TV', {
   host: 'localhost',
-  user: 'root',
-  password: 'XLIE4244hGW-TV',
-  database: 'ykvs_books',
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0
+  dialect:'mysql' /* one of 'mysql' | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
 });
-
-module.exports = db;  
+module.exports = sequelize;  

@@ -5,34 +5,18 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const jwt = require('jsonwebtoken');
-
-function verifyToken(req, res, next) {
-    const token = req.cookies.token;
-
-    if (!token) {
-        return res.status(403).json({ message: 'Token not provided' });
-    }
-
-    jwt.verify(token, 'your-secret-key', (err, decoded) => {
-        if (err) {
-            return res.status(401).json({ message: 'Invalid token' });
-        }
-
-        req.user = decoded; // Kullanıcı bilgilerini talep nesnesine ekle
-        next();
-    });
-}
+const Users = require('../models/Users');
+const Yorumlar = require('../models/Yorumlar');
+const Dergiler = require('../models/Dergiler');
+const Kategoriler = require('../models/Kategoriler');
+const verifyToken = require('../utility/verifyToken');
 
 router.get('/panel', verifyToken,(req, res) => {
     const userS = req.session.user;
-
     // Kullanıcı admin rolüne sahipse, sayfayı render et
-    if (userS && userS.role === 'admin') {
         res.render('admin/kontrolPanel', { userS });
-    } else {
         // Admin değilse, başka bir sayfaya yönlendir veya hata mesajı göster
-        res.render('404', { userS });
-    }
+
 });
 const uploadFolder = path.join(__dirname, '..', 'public', 'uploads');
 const storage = multer.diskStorage({
@@ -50,7 +34,7 @@ router.get('/dergiyonetim', verifyToken,async (req, res) => {
     const userS = req.session.user;
     if (userS && userS.role === 'admin') {
         try {
-            const [results, fields] = await db.query('SELECT * FROM dergiler');
+            const results = await Dergiler.findAll();
             const dergiler = results;
             res.render('admin/dergiYonetim', { dergiler, userS });
         } catch (error) {
@@ -68,8 +52,8 @@ router.get('/dergiolustur',  verifyToken,async(req, res) => {
     const userS = req.session.user;
     if (userS && userS.role === 'admin') {
         try {
-            const [categorys] = await db.query('SELECT * FROM kategoriler');
-            const kategoriler = categorys;
+            const categories = await Kategoriler.findAll();
+            const kategoriler = categories;
             res.render('admin/dergiOlustur', { userS, kategoriler });
         } catch (error) {
             console.log(error);
@@ -86,15 +70,11 @@ router.post('/dergiolustur', verifyToken,upload.fields([
     { name: 'resim', maxCount: 1 }
 ]), async (req, res) => {
     // Your existing code
+    const userS = req.session.user;
+if (userS && userS.role ==='admin') {
 
     const { baslik, yazar, konu, aciklama, kategorisi, resim, indirmeLinki } = req.body;
-    const userS = req.session.user;
-    const olusturan_user_id = userS.userid;
-
-    const insertQuery = `
-        INSERT INTO dergiler (konu, aciklama, resim, indirme_linki, olusturan_user_id, dergi_basligi, pdf_dosya, yazar, kategorisi)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `;
+    const olusturan_user_id = userS.user_id;
 
     if (!req.files || !req.files['pdfDosya'] || !req.files['resim']) {
         console.error('Dosya yüklemesi başarısız oldu.');
@@ -105,56 +85,49 @@ router.post('/dergiolustur', verifyToken,upload.fields([
     const resimDosya = req.files['resim'][0];
 
     try {
-        const result = await db.query(insertQuery, [konu, aciklama, resimDosya.filename, indirmeLinki, olusturan_user_id, baslik, pdfDosya.filename, yazar, kategorisi]);
+        const result = await Dergiler.create({
+            konu,
+            aciklama,
+            resim: resimDosya.filename,
+            indirme_linki: indirmeLinki,
+            olusturan_user_id: 1,
+            dergi_basligi: baslik,
+            pdf_dosya: pdfDosya.filename,
+            yazar,
+            kategorisi,
+        });
         console.log('Dergi başarıyla oluşturuldu.');
         res.redirect('/admin/panel');
     } catch (error) {
         console.log(error);
         res.status(500).send('Internal Server Error');
     }
+}
+else {
+    res.redirect('/');
+}
 });
-
-router.get('/:dergiId/duzenle', verifyToken,async (req, res) => {
-    const dergiId = req.params.dergiId;
-    const userS = req.session.user;
-
-    if (userS && userS.role === 'admin') {
-        try {
-            const [categorys] = await db.query('SELECT * FROM kategoriler');
-            const kategoriler = categorys;
-            const [results] = await db.query('SELECT * FROM dergiler WHERE dergi_id = ?', [dergiId]);
-
-            if (results.length === 0) {
-                return res.status(404).send('Dergi bulunamadı');
-            }
-
-            const dergi = results[0];
-            console.log(dergi);
-            res.render('admin/dergiDuzenle', { dergi, userS, kategoriler });
-
-        } catch (error) {
-            console.error('Dergi bilgisi alınırken bir hata oluştu: ' + error);
-            return res.status(500).send('Internal Server Error');
-        }
-    } else {
-        res.render('404', { userS });
-    }
-});
-
 
 router.post('/:dergiId/duzenle',verifyToken,async (req, res) => {
     const userS = req.session.user;
     if (userS && userS.role==='admin') {
         const dergiId = req.params.dergiId;
         const { konu, aciklama, resim, baslik, kategorisi } = req.body;
-    
-        const updateQuery = `
-            UPDATE dergiler
-            SET dergi_basligi = ?, konu = ?, aciklama = ?, resim = ?, kategorisi= ?
-            WHERE dergi_id = ?
-        `;
         try {
-            await db.query(updateQuery, [baslik, konu, aciklama, resim, kategorisi, dergiId]);
+            const dergi = await Dergiler.findByPk(dergiId);
+
+            if (!dergi) {
+                return res.status(404).send('Dergi bulunamadı');
+            }
+
+            // Sequelize'nin update metodunu kullanarak dergiyi güncelle
+            await dergi.update({
+                dergi_basligi: baslik,
+                konu: konu,
+                aciklama: aciklama,
+                resim: resim,
+                kategorisi: kategorisi,
+            });
             console.log('Dergi başarıyla güncellendi.');
             res.redirect('/admin/dergiyonetim');
         } catch (error) {
@@ -162,7 +135,7 @@ router.post('/:dergiId/duzenle',verifyToken,async (req, res) => {
             return res.status(500).send('Internal Server Error');
         }
     } else {
-        res.redirect('/')
+        res.redirect('/');
     }
 
 
@@ -171,26 +144,41 @@ router.post('/:dergiId/duzenle',verifyToken,async (req, res) => {
 });
 
 
-router.post('/:dergiId/sil',verifyToken, (req, res) => {
+router.post('/:dergiId/sil', verifyToken, async (req, res) => {
     const userS = req.session.user;
-if (userS && userS.role==='admin') {
-    const dergiId = req.params.dergiId;
-    db.query('DELETE FROM yorumlar WHERE dergi_id = ?', [dergiId]);
-    db.query('DELETE FROM dergiler WHERE dergi_id = ?', [dergiId], (error, results) => {
-        if (error) {
+
+    if (userS && userS.role === 'admin') {
+        const dergiId = req.params.dergiId;
+
+        try {
+            // Sequelize ile dergiyi bul ve sil
+            const dergi = await Dergiler.findByPk(dergiId);
+
+            if (!dergi) {
+                return res.status(404).send('Dergi bulunamadı');
+            }
+
+            // Sequelize ile dergiyi sil
+            await dergi.destroy();
+
+            // Sequelize ile ilgili dergiye ait yorumları sil
+            await Yorumlar.destroy({
+                where: {
+                    dergi_id: dergiId
+                }
+            });
+
+            console.log('Dergi başarıyla silindi.');
+            res.redirect('/admin/dergiyonetim');
+        } catch (error) {
             console.error('Dergi silinirken bir hata oluştu: ' + error);
             return res.status(500).send('Internal Server Error');
         }
-
-        console.log('Dergi başarıyla silindi.');
-        res.redirect('/admin/dergiyonetim');
-    });
-
-} else {
-    res.redirect('/')
-}
-
+    } else {
+        res.redirect('/');
+    }
 });
+
 
 
 
@@ -200,8 +188,7 @@ router.get('/kullaniciyonetim',verifyToken,async(req,res)=>{
     if (userS && userS.role==='admin') {
 
         try {
-            const [results, fields] = await db.query('SELECT * FROM users');
-
+            const results = await Users.findAll()
             console.log(results);
             const users = results;
             res.render('admin/kullaniciYonetim', {userS,users})
@@ -218,100 +205,118 @@ router.get('/kullaniciyonetim',verifyToken,async(req,res)=>{
 });
 
 
-router.get('/kullanici/:userId',verifyToken, async(req,res)=>{
-    const userId = req.params.userId
-    const userS=req.session.user;
+router.get('/kullanici/:userId', verifyToken, async (req, res) => {
+    const userId = req.params.userId;
+    const userS = req.session.user;
 
-    if (userS && userS.role==='admin') {
+    if (userS && userS.role === 'admin') {
         try {
-            const query = 'SELECT * FROM users WHERE user_id = ?';
-            const result= await db.query(query,[userId]);
-            if (result.length > 0) {
-                const [userl] = result[0];
-                console.log(userl);
-                res.render('admin/kullaniciDetay', { userS,userl});
-              } else {
+            const user = await Users.findByPk(userId); // Sequelize ile kullanıcıyı çekiyoruz
+            if (user) {
+                console.log(user);
+                res.render('admin/kullaniciDetay', { userS, user });
+            } else {
                 res.status(404).json({ error: 'Kullanıcı bulunamadı' });
-              }
+            }
         } catch (error) {
             console.log('Kullanıcı detayları alınırken hata oluştu: ' + error.message);
         }
     } else {
-        res.render('404', {userS});
+        res.render('404', { userS });
     }
 });
 
 
-router.post('/kullanici/:userId/update',verifyToken, async(req,res)=>{
+router.post('/kullanici/:userId/update', verifyToken, async (req, res) => {
     const userId = req.params.userId;
-    const userS= req.session.user;
-    const { newUsername, newEmail, newFirstName, newLastName, newRole } = req.body;
-    if (userS&& userS.role==='admin') {
-        const updateQuery = `
-        UPDATE users 
-        SET username = ?, email = ?, first_name = ?, last_name = ?, role = ?
-        WHERE user_id = ?
-      `;
-      try {
-        await db.query(updateQuery, [newUsername, newEmail, newFirstName, newLastName, newRole, userId])
-        res.redirect('/admin/kullanici/' + userId);
-      } catch (error) {
-        console.error('Kullanıcı güncellenirken hata oluştu: ' + err.message);
-        res.status(500).json({ error: 'Kullanıcı güncellenirken hata oluştu' });
-      }
-    } else {
-        res.render('404', {userS});
-    }
-
-
-}),
-
-router.get('/kategoriyonetim',verifyToken,async(req,res) => {
     const userS = req.session.user;
+    const { newUsername, newEmail, newFirstName, newLastName, newRole } = req.body;
+
+    if (userS && userS.role === 'admin') {
+        try {
+            const userToUpdate = await Users.findByPk(userId);
+            
+            if (userToUpdate) {
+                userToUpdate.username = newUsername;
+                userToUpdate.email = newEmail;
+                userToUpdate.first_name = newFirstName;
+                userToUpdate.last_name = newLastName;
+                userToUpdate.role = newRole;
+
+                await userToUpdate.save();
+
+                res.redirect('/admin/kullanici/' + userId);
+            } else {
+                res.status(404).json({ error: 'Kullanıcı bulunamadı' });
+            }
+        } catch (error) {
+            console.error('Kullanıcı güncellenirken hata oluştu: ' + error.message);
+            res.status(500).json({ error: 'Kullanıcı güncellenirken hata oluştu' });
+        }
+    } else {
+        res.render('404', { userS });
+    }
+});
+
+router.get('/kategoriyonetim', verifyToken, async (req, res) => {
+    const userS = req.session.user;
+
     try {
         if (userS && userS.role === 'admin') {
-            const [categorys] = await db.query('SELECT * FROM kategoriler');
-            const kategoriler = categorys;
-            res.render('admin/kategoriOlustur', {userS,kategoriler});
-            
+            const kategoriler = await Kategoriler.findAll();
+
+            res.render('admin/kategoriOlustur', { userS, kategoriler });
         } else {
-            res.render('404', {userS});
+            res.render('404', { userS });
         }
-    }catch(error){console.log(error);}
+    } catch (error) {
+        console.error('Kategoriler alınırken bir hata oluştu: ' + error.message);
+        res.status(500).send('Internal Server Error');
+    }
+});
 
-})
-
-router.post('/kategoriekle',verifyToken, async(req,res) => {
+router.post('/kategoriekle', verifyToken, async (req, res) => {
     const userS = req.session.user;
+
     if (userS && userS.role === 'admin') {
-        const {kategori_ad,kategori_low} = req.body;
-        const insertQuery = `
-            INSERT INTO kategoriler (kategori_ad, kategori_low)
-            VALUES (?, ?)
-        `;
-    
+        const { kategori_ad, kategori_low } = req.body;
+
         try {
-            await db.query(insertQuery, [kategori_ad,kategori_low]);
+            const yeniKategori = await Kategoriler.create({
+                kategori_ad,
+                kategori_low,
+            });
+
             console.log('Kategori başarıyla oluşturuldu.');
             res.redirect('/admin/kategoriyonetim'); // Gerekirse yönlendirme yapabilirsiniz.
         } catch (error) {
-            console.log(error);
+            console.error('Kategori oluşturulurken bir hata oluştu: ' + error.message);
             res.status(500).send('Internal Server Error');
         }
     } else {
         res.redirect('/');
     }
-
 });
 
-router.post('/:kategoriId/kategorisil',verifyToken, async (req, res) => {
+router.post('/:kategoriId/kategorisil', verifyToken, async (req, res) => {
     const userS = req.session.user;
-    const kategoriId = req.body.kategoriId;
-    if (userS && userS.role=='admin') {
-        const query = 'DELETE FROM kategoriler WHERE kategori_id = ?';
-        await db.query(query, [kategoriId]);
-        res.redirect('/admin/kategoriyonetim');
-        
+    const kategoriId = req.params.kategoriId;
+
+    if (userS && userS.role === 'admin') {
+        try {
+            // Kategori silme işlemi
+            await Kategoriler.destroy({
+                where: {
+                    kategori_id: kategoriId,
+                },
+            });
+
+            console.log('Kategori başarıyla silindi.');
+            res.redirect('/admin/kategoriyonetim');
+        } catch (error) {
+            console.error('Kategori silinirken bir hata oluştu: ' + error.message);
+            res.status(500).send('Internal Server Error');
+        }
     } else {
         res.redirect('/');
     }
