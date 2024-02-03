@@ -42,7 +42,7 @@ app.use(limiter);
 // Sequelize modellerini senkronize et
 (async () => {
     try {
-        await sequelize.sync();
+        await sequelize.sync({force: true});
         console.log('Veritabanı modelleri senkronize edildi');
         
         const PORT = 3000;
