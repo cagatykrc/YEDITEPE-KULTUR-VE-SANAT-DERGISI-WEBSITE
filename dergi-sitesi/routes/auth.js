@@ -83,7 +83,7 @@ router.post('/giris', async (req, res) => {
         return res.redirect('/auth/giris')
       }
       // Kullanıcı bilgilerini oturumda sakla
-      const token = jwt.sign({ userId: user.user_id, username: user.username, role: user.role }, secretKey );
+      // const token = jwt.sign({ userId: user.user_id, username: user.username, role: user.role }, secretKey );
       req.session.user = { 
         id: user.user_id,
         username: user.username,
@@ -92,7 +92,7 @@ router.post('/giris', async (req, res) => {
       };
       
       // Başarı durumunda kullanıcıya cevap gönder
-      res.cookie('token', token, { httpOnly: true, secure:true });
+      // res.cookie('token', token, { httpOnly: true, secure:true });
       res.redirect('/')
     } catch (error) {
       console.error(error);
@@ -105,7 +105,7 @@ router.post('/giris', async (req, res) => {
     const userS = req.session.user;
     if (userS){
       req.session.destroy();
-      res.clearCookie('token'); // Token cookie'sini temizle
+      // res.clearCookie('token'); // Token cookie'sini temizle
       res.redirect('/');
     }
     else{
