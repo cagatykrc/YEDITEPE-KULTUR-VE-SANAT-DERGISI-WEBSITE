@@ -2,7 +2,7 @@ const express = require('express');
 const session = require('express-session');
 const crypto = require('crypto');
 const dotenv = require('dotenv');
-const limiter = require('./utility/limiter');
+const createLimiter = require('./utility/limiter');
 const path = require('path');
 const secretKey = crypto.randomBytes(32).toString('hex');
 const sequelize = require('./utility/database');
@@ -37,7 +37,7 @@ app.use(express.urlencoded({ extended: true }));
 app.set('views', path.join(__dirname, 'views')); 
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(limiter);
+app.use(createLimiterlimiter);
 
 // Sequelize modellerini senkronize et
 (async () => {
