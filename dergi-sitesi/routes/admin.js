@@ -8,9 +8,11 @@ const jwt = require('jsonwebtoken');
 const Users = require('../models/Users');
 const Yorumlar = require('../models/Yorumlar');
 const Dergiler = require('../models/Dergiler');
+const createLimiter= require('../utility/limiter');
 const Kategoriler = require('../models/Kategoriler');
 const verifyToken = require('../utility/verifyToken');
-
+const limiterDefaultRequests = createLimiter(15)
+const limiterTwoRequests = createLimiter(1)
 router.get('/panel', verifyToken,(req, res) => {
     const userS = req.session.user;
     // Kullanıcı admin rolüne sahipse, sayfayı render et
@@ -141,6 +143,36 @@ router.post('/:dergiId/duzenle',verifyToken,async (req, res) => {
 
 
 
+});
+
+router.get('/:dergiId/duzenle', async (req, res) => {
+    const dergiId = req.params.dergiId;
+    const userS = req.session.user;
+
+    if (userS && userS.role === 'admin') {
+        try {
+            // Kategorileri çek
+            const kategoriler = await Kategoriler.findAll();
+
+            // Dergiyi çek
+            const dergi = await Dergiler.findByPk(dergiId);
+
+            if (!dergi) {
+                return res.status(404).send('Dergi bulunamadı');
+            }
+
+            console.log(dergi);
+
+            // DergiDuzenle view'ine dergi ve kategorileri gönder
+            res.render('admin/dergiDuzenle', { dergi, userS, kategoriler });
+
+        } catch (error) {
+            console.error('Dergi bilgisi alınırken bir hata oluştu: ' + error);
+            return res.status(500).send('Internal Server Error');
+        }
+    } else {
+        res.render('404', { userS });
+    }
 });
 
 

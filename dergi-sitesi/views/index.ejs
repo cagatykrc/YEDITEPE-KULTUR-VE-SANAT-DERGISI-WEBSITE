@@ -1,11 +1,12 @@
 <%- include('./partials/header.ejs') %>
 <%- include('./partials/loader.ejs') %>
-
+    <% if (announcement > 0) {%>
 <div class="custom-container">
     <div class="announcement-panel">
         <h2 class="announcement-title"><%= announcement.title %></h2>
         <p class="announcement-description"><%= announcement.description %></p>
     </div>
+    <%} else{}%>
     <!-- Kategori Filtreleme Butonu -->
     <div class="custom-row card-panel">
         <h2>Yeni Çıkan Dergilerimiz</h2>
