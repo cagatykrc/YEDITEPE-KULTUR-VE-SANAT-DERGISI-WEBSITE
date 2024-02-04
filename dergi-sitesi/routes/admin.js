@@ -11,8 +11,8 @@ const Dergiler = require('../models/Dergiler');
 const createLimiter= require('../utility/limiter');
 const Kategoriler = require('../models/Kategoriler');
 const verifyToken = require('../utility/verifyToken');
-const limiterDefaultRequests = createLimiter(15)
-const limiterTwoRequests = createLimiter(1)
+// const limiterDefaultRequests = createLimiter(15)
+// const limiterTwoRequests = createLimiter(1)
 router.get('/panel', verifyToken,(req, res) => {
     const userS = req.session.user;
     // Kullanıcı admin rolüne sahipse, sayfayı render et

@@ -5,8 +5,8 @@ const Yorumlar = require('../models/Yorumlar');
 const Users = require('../models/Users');
 const verifyToken= require('../utility/verifyToken');
 const createLimiter= require('../utility/limiter');
-const limiterTwoRequests = createLimiter(2);
-const limiterDefaultRequests = createLimiter(15);
+// const limiterTwoRequests = createLimiter(2);
+// const limiterDefaultRequests = createLimiter(15);
 router.get('/:dergiId', async (req, res) => {
     const dergiId = req.params.dergiId;
     const userS = req.session.user;
@@ -61,7 +61,7 @@ router.post('/:dergiId/yorumsil', verifyToken, async (req, res) => {
 });
 
 // Örnek endpoint
-router.post('/:dergiId/yorumEkle', limiterTwoRequests,async (req, res) => {
+router.post('/:dergiId/yorumEkle', async (req, res) => {
     const dergiId = req.params.dergiId;
 
     // Kullanıcının oturum açmış olup olmadığını kontrol et

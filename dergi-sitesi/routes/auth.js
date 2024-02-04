@@ -6,8 +6,8 @@ const jwt = require('jsonwebtoken');
 const Users = require('../models/Users');
 const dotenv = require('dotenv');
 require('dotenv').config();
-const limiterTwoRequests = createLimiter(2);
-const limiterDefaultRequests = createLimiter(15);
+// const limiterTwoRequests = createLimiter(2);
+// const limiterDefaultRequests = createLimiter(15);
 router.get('/giris', (req, res) => {
   const userS = req.session.user;
   if (userS) {
@@ -18,7 +18,7 @@ router.get('/giris', (req, res) => {
   }
 });
 
-router.post('/kayit', limiterTwoRequests, async (req, res) => {
+router.post('/kayit',  async (req, res) => {
   const { username, firstName, lastName, email, password } = req.body;
 
   try {
@@ -67,7 +67,7 @@ router.post('/kayit', limiterTwoRequests, async (req, res) => {
 });
 
 
-router.post('/giris', limiterTwoRequests, async (req, res) => {
+router.post('/giris',  async (req, res) => {
   const { username, password } = req.body; // Token'ı req.body üzerinden al
   console.log(process.env.ACCESS_TOKEN_SECRET);
   try {
