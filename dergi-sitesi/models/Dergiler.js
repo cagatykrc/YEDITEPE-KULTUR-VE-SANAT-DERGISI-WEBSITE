@@ -43,6 +43,10 @@ const Dergiler = sequelize.define('Dergiler', {
         type: DataTypes.STRING,
         allowNull: true,
     },
+    dergi_turu: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
 }, {
     // Modelin ayarlarını belirle
     tableName: 'dergiler', // Veritabanında kullanılacak tablo adı

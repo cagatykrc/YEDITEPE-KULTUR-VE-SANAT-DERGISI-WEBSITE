@@ -11,6 +11,7 @@ const Dergiler = require('../models/Dergiler');
 const createLimiter= require('../utility/limiter');
 const Kategoriler = require('../models/Kategoriler');
 const verifyToken = require('../utility/verifyToken');
+const Kategorilertab = require('../models/Kategorilertab');
 // const limiterDefaultRequests = createLimiter(15)
 // const limiterTwoRequests = createLimiter(1)
 router.get('/panel', verifyToken,(req, res) => {
@@ -75,7 +76,7 @@ router.post('/dergiolustur', verifyToken,upload.fields([
     const userS = req.session.user;
 if (userS && userS.role ==='admin') {
 
-    const { baslik, yazar, konu, aciklama, kategorisi, resim, indirmeLinki } = req.body;
+    const { baslik, yazar, konu, aciklama, kategorisi, resim, indirmeLinki, turu } = req.body;
     const olusturan_user_id = userS.user_id;
 
     if (!req.files || !req.files['pdfDosya'] || !req.files['resim']) {
@@ -97,6 +98,7 @@ if (userS && userS.role ==='admin') {
             pdf_dosya: pdfDosya.filename,
             yazar,
             kategorisi,
+            dergi_turu: turu,
         });
         console.log('Dergi başarıyla oluşturuldu.');
         res.redirect('/admin/panel');
@@ -114,7 +116,7 @@ router.post('/:dergiId/duzenle',verifyToken,async (req, res) => {
     const userS = req.session.user;
     if (userS && userS.role==='admin') {
         const dergiId = req.params.dergiId;
-        const { konu, aciklama, resim, baslik, kategorisi } = req.body;
+        const { konu, aciklama, resim, baslik, kategorisi, turu } = req.body;
         try {
             const dergi = await Dergiler.findByPk(dergiId);
 
@@ -129,6 +131,7 @@ router.post('/:dergiId/duzenle',verifyToken,async (req, res) => {
                 aciklama: aciklama,
                 resim: resim,
                 kategorisi: kategorisi,
+                dergi_turu: turu,
             });
             console.log('Dergi başarıyla güncellendi.');
             res.redirect('/admin/dergiyonetim');
@@ -295,9 +298,11 @@ router.get('/kategoriyonetim', verifyToken, async (req, res) => {
 
     try {
         if (userS && userS.role === 'admin') {
-            const kategoriler = await Kategoriler.findAll();
-
-            res.render('admin/kategoriOlustur', { userS, kategoriler });
+            const kategoriler = await Kategoriler.findAll({
+                include: { model: Kategorilertab, as: 'kategoriler_tab' },
+            });
+            const kategoriTabs = await Kategorilertab.findAll();
+            res.render('admin/kategoriOlustur', { userS, kategoriler, kategoriTabs  });
         } else {
             res.render('404', { userS });
         }
@@ -311,18 +316,41 @@ router.post('/kategoriekle', verifyToken, async (req, res) => {
     const userS = req.session.user;
 
     if (userS && userS.role === 'admin') {
-        const { kategori_ad, kategori_low } = req.body;
+        const { kategori_ad, kategori_low, kategori_tab_id } = req.body;
 
         try {
             const yeniKategori = await Kategoriler.create({
                 kategori_ad,
                 kategori_low,
+                kategori_tab_id,
             });
 
             console.log('Kategori başarıyla oluşturuldu.');
             res.redirect('/admin/kategoriyonetim'); // Gerekirse yönlendirme yapabilirsiniz.
         } catch (error) {
             console.error('Kategori oluşturulurken bir hata oluştu: ' + error.message);
+            res.status(500).send('Internal Server Error');
+        }
+    } else {
+        res.redirect('/');
+    }
+});
+
+router.post('/kategoritabekle', verifyToken, async (req, res) => {
+    const userS = req.session.user;
+
+    if (userS && userS.role === 'admin') {
+        const { kategori_tab_ad } = req.body;
+
+        try {
+            const yeniKategoriTab = await Kategorilertab.create({
+                kategori_tab_ad,
+            });
+
+            console.log('KategoriTab başarıyla oluşturuldu.');
+            res.redirect('/admin/kategoriyonetim'); // Gerekirse yönlendirme yapabilirsiniz.
+        } catch (error) {
+            console.error('KategoriTab oluşturulurken bir hata oluştu: ' + error.message);
             res.status(500).send('Internal Server Error');
         }
     } else {

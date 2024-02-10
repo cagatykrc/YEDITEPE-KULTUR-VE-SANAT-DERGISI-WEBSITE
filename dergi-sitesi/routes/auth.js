@@ -44,7 +44,7 @@ router.post('/kayit',  async (req, res) => {
       });
 
       // Başarı durumunda kullanıcıya cevap gönder
-      res.redirect('/');
+      res.redirect('/auth/giris');
   } catch (error) {
       console.error(error);
 
