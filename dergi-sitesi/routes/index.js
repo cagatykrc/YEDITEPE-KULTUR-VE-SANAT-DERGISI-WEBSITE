@@ -28,12 +28,16 @@ router.get('/', async (req, res) => {
         // Sequelize ile dergi verilerini çek
         const dergiler = await Dergiler.findAll();
         // Sequelize ile kategori verilerini çek
-        const kategorilers = await Kategoriler.findAll();
         const kategoriTabs = await Kategorilertab.findAll({
             include: [{
                 model: Kategoriler,
                 as: 'kategoriler'
-            }]
+            }],
+            order: [
+
+                [{ model: Kategoriler, as: 'kategoriler' }, 'kategori_ad', 'ASC']
+        
+              ]
         });
         console.log(kategoriTabs.kategoriler);
         // const kategorilers = await Kategoriler.findAll({
@@ -45,7 +49,7 @@ router.get('/', async (req, res) => {
         //     }]
         // });
         const announcement = {title:'Site test aşamasındadır!',description:'Bu site şuan test aşamasındadır lütfen hiç bir içeriği dikkate almayınız.'}
-        res.render('index', { announcement, dergiler, userS, kategoritabs: kategoriTabs, kategorilers });
+        res.render('index', { announcement, dergiler, userS, kategoriTabs: kategoriTabs});
     } catch (error) {
         console.error('Dergi verilerini çekerken bir hata oluştu: ' + error);
         return res.status(500).send('Internal Server Error');

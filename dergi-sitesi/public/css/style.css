@@ -847,7 +847,7 @@ ul{
     .custom-card-content {
         padding-left: 4px;
         margin: 0px;
-        height: 200px;
+        height: 185px;
         box-sizing: border-box;
     }
     .custom-card-title {
@@ -926,6 +926,7 @@ a{
 }
 .sidebar.close{
   width: 78px;
+  transition: all 0.5s ease;
 }
 .sidebar .logo-details{
   height: 60px;
@@ -1152,4 +1153,20 @@ a{
   .sidebar.close .nav-links li .sub-menu{
     display: none;
   }
+}
+
+.sidebar-closebtn i{
+    color: #f5f5f5;
+    position: absolute;
+    left: calc(100% - -2px);
+    top: 20vh;
+    font-size: 24px;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: #2b2b29;
+}
+
+a {
+    cursor: pointer;
 }

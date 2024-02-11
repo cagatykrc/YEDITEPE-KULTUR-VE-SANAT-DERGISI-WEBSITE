@@ -5,10 +5,12 @@
         <h2 class="announcement-title"><%= announcement.title %></h2>
         <p class="announcement-description"><%= announcement.description %></p>
     </div>
-    
     <!-- Kategori Filtreleme Butonu -->
     <div class="custom-row card-panel">
         <div class="sidebar close">
+          <div class="sidebar-closebtn">
+            <i class="fa-solid fa-arrow-left"></i>
+          </div>
             <div class="logo-details">
                 <img src="/images/logoRemovedBackground.png" alt="" width="100px" height="100px">
             </div>
@@ -16,57 +18,28 @@
               <li>
                 <a href="/">
                   <i class='bx bx-grid-alt' ></i>
-                  <span class="link_name">Anasayfa</span>
+                  <span class="link_name">Kategoriler</span>
                 </a>
-                <ul class="sub-menu blank">
-                  <li><a class="link_name" href="#">Kategoriler</a></li>
-                </ul>
-              </li>
-              <li>
-                <div class="iocn-link">
-                  <a href="#">
-                    <i class='bx bx-collection' ></i>
-                    <span class="link_name">Kategoriler</span>
-                  </a>
-                  <i class='bx bxs-chevron-down arrow' ></i>
-                </div>
-                <ul class="sub-menu">
-                  <li><a class="link_name" href="#">Kategoriler</a></li>
-                  <li><a href="#">HTML & CSS</a></li>
-                  <li><a href="#">JavaScript</a></li>
-                  <li><a href="#">PHP & MySQL</a></li>
-                </ul>
-                
-                
-                <% kategoritabs.forEach(kategoritab => { %>
+                <% kategoriTabs.forEach(category => { %>
                     <ul class="sub-menu blank">
-                        <li><a class="link_name" href="#"><%= kategoritab.kategori_tab_ad %></a></li>
+                        <li><a class="link_name"><%= category.kategori_tab_ad %></a></li>
                       </ul>
                     </li>
                     <li>
                       <div class="iocn-link">
                         <a href="#">
                           <i class='bx bx-collection' ></i>
-                          <span class="link_name"><%= kategoritab.kategori_tab_ad %></span>
+                          <span class="link_name"><%= category.kategori_tab_ad %></span>
                         </a>
                         <i class='bx bxs-chevron-down arrow' ></i>
                       </div>
                       <ul class="sub-menu">
                           <li><a class="link_name"></a></li>
-                          <% kategoritab.kategoriler.forEach(kategori => { %>
-                            <% if (kategori.kategoriler_tab && Array.isArray(kategori.kategoriler_tab)) { %>
-                                <% kategori.kategoriler_tab.forEach(altKategori => { %>
-                                    <li data-kategori="<%=altKategori.kategori_low %>"><a><%= altKategori.kategori_ad %></a></li>
+                              <% category.kategoriler.forEach(subcategory => { %>
+                                    <li data-kategori="<%=subcategory.kategori_low %>"><a><%= subcategory.kategori_ad %></a></li>
                                 <% }); %>
-                            <% } else { %>
-                                <li>No subcategories found</li>
-                            <% } %>
-                        <% }); %>
                       </ul>
                 <% }); %>
-              
-              
-    
         </ul>
           </div>
           <section class="home-section">
@@ -105,8 +78,12 @@
             }
             let sidebar = document.querySelector(".sidebar");
             let sidebarBtn = document.querySelector(".bx-menu");
+            let closebtn = document.querySelector(".sidebar-closebtn");
             console.log(sidebarBtn);
             sidebarBtn.addEventListener("click", ()=>{
+                sidebar.classList.toggle("close");
+            });
+            closebtn.addEventListener("click", ()=>{
                 sidebar.classList.toggle("close");
             });
     document.getElementById('kategori-toggle').addEventListener('click', function () {

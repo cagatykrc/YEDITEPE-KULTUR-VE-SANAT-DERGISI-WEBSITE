@@ -24,6 +24,7 @@ const Kategoriler = sequelize.define('Kategoriler', {
     tableName: 'kategoriler', // Veritabanında kullanılacak tablo adı
     timestamps: true, // Oluşturma ve güncelleme tarih alanları ekler
 });
+
 Kategoriler.belongsTo(Kategorilertab, { foreignKey: 'kategori_tab_id', as: 'kategoriler_tab' });
 Kategorilertab.hasMany(Kategoriler, { foreignKey: 'kategori_tab_id', as: 'kategoriler' });
 
