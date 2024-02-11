@@ -21,9 +21,6 @@
                   <span class="link_name">Kategoriler</span>
                 </a>
                 <% kategoriTabs.forEach(category => { %>
-                    <ul class="sub-menu blank">
-                        <li><a class="link_name"><%= category.kategori_tab_ad %></a></li>
-                      </ul>
                     </li>
                     <li>
                       <div class="iocn-link">
@@ -34,9 +31,9 @@
                         <i class='bx bxs-chevron-down arrow' ></i>
                       </div>
                       <ul class="sub-menu">
-                          <li><a class="link_name"></a></li>
+                          <li><a class="link_name filter-categoryss"></a></li>
                               <% category.kategoriler.forEach(subcategory => { %>
-                                    <li data-kategori="<%=subcategory.kategori_low %>"><a><%= subcategory.kategori_ad %></a></li>
+                                    <li class="filter-lis" data-kategori="<%=subcategory.kategori_low %>"><a><%= subcategory.kategori_ad %></a></li>
                                 <% }); %>
                       </ul>
                 <% }); %>
@@ -69,31 +66,26 @@
 
 <script>
 
-             let arrow = document.querySelectorAll(".arrow");
-          for (var i = 0; i < arrow.length; i++) {
-              arrow[i].addEventListener("click", (e)=>{
-                  let arrowParent = e.target.parentElement.parentElement;//selecting main parent of arrow
-                  arrowParent.classList.toggle("showMenu");
-                });
-            }
-            let sidebar = document.querySelector(".sidebar");
-            let sidebarBtn = document.querySelector(".bx-menu");
-            let closebtn = document.querySelector(".sidebar-closebtn");
-            console.log(sidebarBtn);
-            sidebarBtn.addEventListener("click", ()=>{
-                sidebar.classList.toggle("close");
-            });
-            closebtn.addEventListener("click", ()=>{
-                sidebar.classList.toggle("close");
-            });
-    document.getElementById('kategori-toggle').addEventListener('click', function () {
-        // Kategorilerin görünürlüğünü değiştir
-        var kategoriListesi = document.querySelector('.filter-categorys');
-        kategoriListesi.classList.toggle('active');
-    });
+    let arrow = document.querySelectorAll(".arrow");
+for (var i = 0; i < arrow.length; i++) {
+    arrow[i].addEventListener("click", (e)=>{
+        let arrowParent = e.target.parentElement.parentElement;//selecting main parent of arrow
+        arrowParent.classList.toggle("showMenu");
+      });
+  }
+  let sidebar = document.querySelector(".sidebar");
+  let sidebarBtn = document.querySelector(".bx-menu");
+  let closebtn = document.querySelector(".sidebar-closebtn");
+  console.log(sidebarBtn);
+  sidebarBtn.addEventListener("click", ()=>{
+      sidebar.classList.toggle("close");
+  });
+  closebtn.addEventListener("click", ()=>{
+      sidebar.classList.toggle("close");
+  });
 
     // Filtreleme fonksiyonu
-    document.querySelectorAll('.filter-li').forEach(function (kategoriItem) {
+    document.querySelectorAll('.filter-lis').forEach(function (kategoriItem) {
         kategoriItem.addEventListener('click', function () {
             // Seçilen kategori adını al
             var secilenKategori = kategoriItem.getAttribute('data-kategori');
@@ -114,7 +106,7 @@
         });
 
         // Kategorilerin görünürlüğünü kapat
-        var kategoriListesi = document.querySelector('.filter-categorys');
+        var kategoriListesi = document.querySelector('.filter-categoryss');
         kategoriListesi.classList.remove('active');
     }
 

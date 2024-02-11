@@ -1,13 +1,7 @@
 <%- include('../partials/header.ejs') %>
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 mx-auto">
-            <div class="card">
-                <div class="card-header">
+<div style="padding: 12px;" class="container mt-4">
                     <h1>Dergi Oluştur</h1>
-                </div>
-                <div class="card-body">
                     <form action="/admin/dergiolustur" method="POST" enctype="multipart/form-data">
 
                         <div class="form-group">
@@ -58,9 +52,6 @@
                     </form>
                     <a href="/admin/panel"><button class="btn btn-danger">Geri</button></a>
                 </div>
-            </div>
-        </div>
-    </div>
 </div>
 
 <%- include('../partials/footer.ejs') %>

@@ -16,8 +16,12 @@ const Kategorilertab = require('../models/Kategorilertab');
 // const limiterTwoRequests = createLimiter(1)
 router.get('/panel', verifyToken,(req, res) => {
     const userS = req.session.user;
+    if (userS && userS.role === 'admin') {
     // Kullanıcı admin rolüne sahipse, sayfayı render et
         res.render('admin/kontrolPanel', { userS });
+    }else{
+        res.render('404', { userS });
+    }
         // Admin değilse, başka bir sayfaya yönlendir veya hata mesajı göster
 
 });
@@ -381,4 +385,34 @@ router.post('/:kategoriId/kategorisil', verifyToken, async (req, res) => {
         res.redirect('/');
     }
 });
+router.post('/:kategoritabId/kategoritabsil', verifyToken, async (req, res) => {
+    const userS = req.session.user;
+    const kategoritabId = req.params.kategoritabId;
+    
+    if (userS && userS.role === 'admin') {
+        try {
+            console.log('deneniyor');
+            // Kategori silme işlemi
+            await Kategoriler.destroy({
+                where: {
+                    kategori_tab_id: kategoritabId,
+                },
+            });
+            await Kategorilertab.destroy({
+                where: {
+                    kategori_tab_id: kategoritabId,
+                },
+            });
+
+            console.log('Kategori Tab başarıyla silindi.');
+            res.redirect('/admin/kategoriyonetim');
+        } catch (error) {
+            console.error('Kategori Tab silinirken bir hata oluştu: ' + error.message);
+            res.status(500).send('Internal Server Error');
+        }
+    } else {
+        res.redirect('/');
+    }
+});
+
 module.exports=router;

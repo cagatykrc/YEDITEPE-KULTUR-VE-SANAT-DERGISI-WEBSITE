@@ -45,6 +45,7 @@ body {
     align-items: start;
     padding: 0;
     margin: 0;
+
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
@@ -56,7 +57,7 @@ body {
     align-items: start;
     padding: 0;
     margin: 0;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: wrap;
     justify-content: center;
     margin-top: 50px;
@@ -243,6 +244,8 @@ body {
     overflow: hidden;
     padding: 20px;
     background-color: #e2e2e2;
+    min-width: calc(100% - 50px);
+    min-height: calc(100% - 60px);
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
 }
 .detail-info h2 {
@@ -253,6 +256,18 @@ body {
 }
 .index-img img{
     height: 576px;
+}
+
+.detail-page-pdf-review{
+    margin-top: 24px;
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.detail-page-pdf-review iframe{
+    min-height: 70vh;
+    min-width: 190vh;
 }
 
 .index-img img,
@@ -818,12 +833,26 @@ ul{
 
     .detail-info {
         margin-top: 20px; /* Boşluk ekleyerek resim ile detay bilgileri arasına mesafe koy */
+        width: 99%;
+        min-height: 60vh;
+
     }
 
     .detail-comment-area {
         margin-top: 20px; /* Boşluk ekleyerek detay bilgileri ile yorumlar arasına mesafe koy */
-    }
 
+    }
+    .detail-page-pdf-review{
+        margin-top: 24px;
+        width: calc(100% -0px);
+        margin: 0;
+        padding: 0;
+    }
+    .detail-page-pdf-review iframe{
+        min-height: 90vh;
+        width: calc(100% -0px);
+        box-sizing: border-box;
+    }
     .detail-comment-area form {
         width: 100%; /* Formun genişliğini ayarla */
     }
@@ -935,6 +964,7 @@ a{
   align-items: center;
   margin-left: 12px;
   padding: 12px;
+  margin-top: 40px;
 }
 .sidebar .logo-details i{
   font-size: 30px;
@@ -1025,7 +1055,7 @@ a{
 }
 .sidebar .nav-links li .sub-menu a{
   color: #fff;
-  font-size: 15px;
+  font-size: 18px;
   padding: 5px 0;
   white-space: nowrap;
   opacity: 0.6;

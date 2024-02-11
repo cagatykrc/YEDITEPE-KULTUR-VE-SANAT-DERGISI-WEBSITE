@@ -6,18 +6,47 @@ const Kategoriler = require('../models/Kategoriler');
 const Kategorilertab = require('../models/Kategorilertab');
 const verifyToken = require('../utility/verifyToken');
 const { getKategorilerWithTabs } = require('../models/Kategoriler');
+const nodemailer = require('nodemailer');
 // Ana sayfa
 router.get('/hakkimizda', (req, res) =>{
     const notif = ''
     res.render('hakkimizda', { userS: req.session.user });
 });
 
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'nazimkogce@gmail.com', // E-posta adresinizi buraya girin
+      pass: 'your-password' // E-posta şifrenizi buraya girin
+    }
+  });
+
+
 router.get('/iletisim', (req, res) =>{
     const notif = ''
     res.render('iletisim', { userS: req.session.user });
 });
 
+app.post('/contact', (req, res) => {
+  const { name, email, message } = req.body;
 
+  // E-posta gönderilecek ayarlar
+  const mailOptions = {
+    from: 'your-email@gmail.com', // Gönderen e-posta adresi
+    to: 'recipient-email@example.com', // Alıcı e-posta adresi
+    subject: 'İletişim Formu Mesajı',
+    text: `Ad: ${name}\nE-posta: ${email}\nMesaj: ${message}`
+  };
+
+  // E-posta gönderme işlemi
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      return console.log('E-posta gönderilemedi:', error);
+    }
+    console.log('E-posta gönderildi:', info.response);
+    res.send('Mesajınız başarıyla gönderildi.');
+  });
+});
 
 
 router.get('/', async (req, res) => {

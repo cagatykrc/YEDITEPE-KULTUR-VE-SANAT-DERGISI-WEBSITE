@@ -8,7 +8,11 @@
                 </div>
                 <div class="card-body">
                     <div class="title">
-                    <p>Merhaba, <%= userS.firstName %> Kontrol paneline hoş geldiniz.</p>
+                        <% if(userS && userS.firstName){ %>
+                            <p>Merhaba, <%= userS.firstName %> Kontrol paneline hoş geldiniz.</p>
+                        <% } else { %>
+                            <p>Merhaba, Anonim Kontrol paneline hoş geldiniz.</p>
+                        <% } %>
                 </div>
                 <div class="admin-panel-bottom-body">
                     <a href="/admin/dergiolustur"><button class="mb-1 btn btn-primary">Dergi Oluştur</button></a>

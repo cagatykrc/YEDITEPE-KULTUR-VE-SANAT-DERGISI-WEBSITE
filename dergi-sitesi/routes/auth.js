@@ -1,10 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const createLimiter = require('../utility/limiter');
+const postlimiter = require('../utility/limiter');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Users = require('../models/Users');
 const dotenv = require('dotenv');
+const { default: rateLimit } = require('express-rate-limit');
+const { Sequelize, Op } = require('sequelize');
 require('dotenv').config();
 // const limiterTwoRequests = createLimiter(2);
 // const limiterDefaultRequests = createLimiter(15);
@@ -18,10 +20,25 @@ router.get('/giris', (req, res) => {
   }
 });
 
-router.post('/kayit',  async (req, res) => {
+router.post('/kayit', postlimiter, async (req, res) => {
   const { username, firstName, lastName, email, password } = req.body;
 
   try {
+      // Kullanıcı adı ve e-posta adresi var mı kontrol et
+      const existingUser = await Users.findOne({
+          where: {
+              [Op.or]: [
+                  { username: username },
+                  { email: email }
+              ]
+          }
+      });
+
+      if (existingUser) {
+          // Kullanıcı adı veya e-posta zaten kullanılmışsa hata gönder
+          return res.status(400).json({ message: 'Bu kullanıcı adı veya e-posta adresi zaten kullanılmaktadır.' });
+      }
+
       // Salt değerini oluştur
       const saltRounds = 10;
       const salt = await bcrypt.genSalt(saltRounds);
@@ -54,6 +71,7 @@ router.post('/kayit',  async (req, res) => {
 });
 
 
+
   
   
   
@@ -67,7 +85,7 @@ router.post('/kayit',  async (req, res) => {
 });
 
 
-router.post('/giris',  async (req, res) => {
+router.post('/giris', postlimiter,  async (req, res) => {
   const { username, password } = req.body; // Token'ı req.body üzerinden al
   console.log(process.env.ACCESS_TOKEN_SECRET);
   try {

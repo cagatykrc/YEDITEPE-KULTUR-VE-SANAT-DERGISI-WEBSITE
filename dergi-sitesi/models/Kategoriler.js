@@ -25,7 +25,7 @@ const Kategoriler = sequelize.define('Kategoriler', {
     timestamps: true, // Oluşturma ve güncelleme tarih alanları ekler
 });
 
-Kategoriler.belongsTo(Kategorilertab, { foreignKey: 'kategori_tab_id', as: 'kategoriler_tab' });
-Kategorilertab.hasMany(Kategoriler, { foreignKey: 'kategori_tab_id', as: 'kategoriler' });
+Kategoriler.belongsTo(Kategorilertab, { foreignKey: 'kategori_tab_id', as: 'kategoriler_tab'});
+Kategorilertab.hasMany(Kategoriler, { foreignKey: 'kategori_tab_id', as: 'kategoriler' , onDelete: 'CASCADE' });
 
 module.exports = Kategoriler;

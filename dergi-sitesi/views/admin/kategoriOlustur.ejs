@@ -79,7 +79,7 @@
                                 <td><%= kategoritab.kategori_tab_id %></td>
                                 <td><%= kategoritab.kategori_tab_ad %></td>
                                 <td>
-                                    <button class="btn btn-sm btn-danger" onclick="confirmDelete('<%= kategoritab.kategori_tab_id %>')">Delete</button>
+                                    <button class="btn btn-sm btn-danger" onclick="confirmDeletetab('<%= kategoritab.kategori_tab_id %>')">Delete</button>
                                 </td>
                             </tr>
                         <% }); %>
@@ -111,8 +111,9 @@
             });
         }
     }
-    function confirmDelete(kategoritabId) {
+    function confirmDeletetab(kategoritabId) {
         if (confirm('Emin misiniz?')) {
+            console.log(kategoritabId);
             fetch('/admin/' + kategoritabId + '/kategoritabsil', {
                 method: 'POST',
                 headers: {
@@ -122,12 +123,14 @@
             })
             .then(response => response.json())
             .then(data => {
-                console.log(data);
-                window.location.reload();
-            })
-            .catch(error => {
-                console.error('Silme işlemi sırasında hata oluştu:', error);
-            });
+    console.log(data);
+    if (data.success) {
+        alert(data.message); // İsteğin başarılı olduğuna dair mesajı göster
+        window.location.reload(); // Sayfayı yeniden yükle
+    } else {
+        console.error('Silme işlemi sırasında bir hata oluştu:', data.message);
+    }
+})
         }
     }
 </script>
