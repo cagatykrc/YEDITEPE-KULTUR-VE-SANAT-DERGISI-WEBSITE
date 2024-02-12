@@ -7,6 +7,7 @@ const Kategorilertab = require('../models/Kategorilertab');
 const verifyToken = require('../utility/verifyToken');
 const { getKategorilerWithTabs } = require('../models/Kategoriler');
 const nodemailer = require('nodemailer');
+const Duyurular = require('../models/Duyurular');
 // Ana sayfa
 router.get('/hakkimizda', (req, res) =>{
     const notif = ''
@@ -27,7 +28,7 @@ router.get('/iletisim', (req, res) =>{
     res.render('iletisim', { userS: req.session.user });
 });
 
-app.post('/contact', (req, res) => {
+router.post('/contact', (req, res) => {
   const { name, email, message } = req.body;
 
   // E-posta gönderilecek ayarlar
@@ -56,6 +57,7 @@ router.get('/', async (req, res) => {
     try {
         // Sequelize ile dergi verilerini çek
         const dergiler = await Dergiler.findAll();
+        const duyurular = await Duyurular.findAll();
         // Sequelize ile kategori verilerini çek
         const kategoriTabs = await Kategorilertab.findAll({
             include: [{
@@ -78,7 +80,7 @@ router.get('/', async (req, res) => {
         //     }]
         // });
         const announcement = {title:'Site test aşamasındadır!',description:'Bu site şuan test aşamasındadır lütfen hiç bir içeriği dikkate almayınız.'}
-        res.render('index', { announcement, dergiler, userS, kategoriTabs: kategoriTabs});
+        res.render('index', { duyurular, dergiler, userS, kategoriTabs: kategoriTabs});
     } catch (error) {
         console.error('Dergi verilerini çekerken bir hata oluştu: ' + error);
         return res.status(500).send('Internal Server Error');

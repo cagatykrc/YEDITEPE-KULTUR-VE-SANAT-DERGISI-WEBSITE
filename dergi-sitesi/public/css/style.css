@@ -492,6 +492,21 @@ a{
     margin-left: 75px;
     padding: 0px;
     flex: 1; /* Üst boşluğu sıfıra ayarla */
+
+}
+
+.create-dergi{
+    background-color: #f5f5f5;
+border-radius: 12px;
+box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+padding: 12px;
+}
+
+.card-body{
+    background-color: #f5f5f5;
+    border-radius: 12px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    padding: 12px;
 }
 .custom-textarea {
     min-height: 100px;
@@ -598,27 +613,6 @@ a{
     background-color: #fff;/* Listeler arasına mesafe koy */
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
-
-
-
-.notification-panel {
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px;
-    text-align: center;
-    display: none;
-    z-index: 9999;
-}
-
-.notification-panel.show {
-    display: block;
-    animation: fadeInOut 5s ease-in-out;
-}
-
 @keyframes fadeInOut {
     0%, 100% {
         opacity: 1;
@@ -630,6 +624,44 @@ a{
         opacity: 0;
     }
 }
+
+@keyframes fadeInOutB { 
+    0%{
+        top: -999;
+        bottom: 0%;
+        opacity: 0;
+    }
+    10%{
+        bottom: 75%;
+
+    }
+    50% {
+        opacity: 1;
+    }
+    100%{
+        bottom: 75%;
+        opacity: 0;
+    }
+}
+
+
+
+
+.notification-panel {
+    position: absolute;
+    left: 76%;
+    z-index: 9999;
+    color: black;
+    padding: 10px;
+    background-color: #f5f5f5;
+    border-radius: 12px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    animation: fadeInOutB 5s;
+    opacity: 0;
+    min-width: 200px;
+    text-align: center;
+}
+
 
 .k-menu {
     position: relative;
@@ -786,9 +818,22 @@ ul{
 }
 .category-create-panel{
     margin-bottom: 48px;
+
 }
 
 @media (min-width: 320px) and (max-width: 700px) {
+    .notification-panel {
+        position: absolute;
+        left: 30%;
+        z-index: 9999;
+        color: black;
+        padding: 10px;
+        background-color: #f5f5f5;
+        border-radius: 12px;
+        box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+        animation: fadeInOutB 5s;
+        opacity: 0;
+    }
     .filter-categorys{
         left: 5px;
         top: 50vh;

@@ -46,7 +46,7 @@
                 <form action="/dergiler/<%= dergi.dergi_id %>/yorumEkle" method="POST">
                     <div class="form-group">
                         <label for="yorumMetni">Yorumunuz:</label>
-                        <textarea class="form-control custom-textarea" id="yorumMetni" name="yorumMetni" required></textarea>
+                        <textarea class="form-control custom-textarea" id="yorumMetni" name="yorumMetni" required maxlength="245"></textarea>
                     </div>
                     <button type="submit" class="mt-2 btn btn-primary">Yorum Ekle</button>
                 </form>

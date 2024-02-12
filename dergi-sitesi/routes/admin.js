@@ -12,6 +12,7 @@ const createLimiter= require('../utility/limiter');
 const Kategoriler = require('../models/Kategoriler');
 const verifyToken = require('../utility/verifyToken');
 const Kategorilertab = require('../models/Kategorilertab');
+const Duyurular = require('../models/Duyurular');
 // const limiterDefaultRequests = createLimiter(15)
 // const limiterTwoRequests = createLimiter(1)
 router.get('/panel', verifyToken,(req, res) => {
@@ -25,6 +26,21 @@ router.get('/panel', verifyToken,(req, res) => {
         // Admin değilse, başka bir sayfaya yönlendir veya hata mesajı göster
 
 });
+
+router.get('/duyuruolustur', async(req,res)=>{
+    const userS = req.session.user;
+    if (userS && userS.role === 'admin') {
+        const duyurulars = await Duyurular.findAll();
+
+        const duyurular = duyurulars;
+    // Kullanıcı admin rolüne sahipse, sayfayı render et
+        res.render('admin/duyuruOlustur', { userS,duyurular });
+    }else{
+        res.render('404', { userS });
+    }
+        // Admin değilse, başka bir sayfaya yönlendir veya hata mesajı göster
+
+})
 const uploadFolder = path.join(__dirname, '..', 'public', 'uploads');
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -69,6 +85,24 @@ router.get('/dergiolustur',  verifyToken,async(req, res) => {
 
     } else {
         res.render('404', { userS });
+    }
+});
+
+router.post('/duyuruolustur', verifyToken,async(req,res) => {
+    const userS = req.session.user;
+    const {duyuru_baslik, duyuru_metin} = req.body;
+    
+    if (userS && userS.role === 'admin') {
+        const duyurutemizle = await Duyurular.destroy({
+            truncate:true
+        });
+        const duyuruOlustur = await Duyurular.create({
+            duyuru_baslik: duyuru_baslik,
+            duyuru_metin: duyuru_metin,
+        });
+        res.redirect('/admin/duyuruolustur');
+    } else {
+        res.redirect('/');
     }
 });
 

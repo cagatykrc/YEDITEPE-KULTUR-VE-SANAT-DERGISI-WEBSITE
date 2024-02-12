@@ -1,10 +1,12 @@
 <%- include('./partials/header.ejs') %>
 <%- include('./partials/loader.ejs') %>
 <div class="custom-container">
-    <div class="announcement-panel">
-        <h2 class="announcement-title"><%= announcement.title %></h2>
-        <p class="announcement-description"><%= announcement.description %></p>
+  <% duyurular.forEach(duyuru=>{%>
+    <div style="width: 80%;" class="announcement-panel">
+        <h2 class="announcement-title"><%= duyuru.duyuru_baslik %></h2>
+        <p class="announcement-description"><%= duyuru.duyuru_metin %></p>
     </div>
+    <% }); %>
     <!-- Kategori Filtreleme Butonu -->
     <div class="custom-row card-panel">
         <div class="sidebar close">

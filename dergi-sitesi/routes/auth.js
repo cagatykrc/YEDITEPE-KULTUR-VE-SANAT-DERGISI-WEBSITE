@@ -22,51 +22,56 @@ router.get('/giris', (req, res) => {
 
 router.post('/kayit', postlimiter, async (req, res) => {
   const { username, firstName, lastName, email, password } = req.body;
-
-  try {
-      // Kullanıcı adı ve e-posta adresi var mı kontrol et
-      const existingUser = await Users.findOne({
-          where: {
-              [Op.or]: [
-                  { username: username },
-                  { email: email }
-              ]
-          }
-      });
-
-      if (existingUser) {
-          // Kullanıcı adı veya e-posta zaten kullanılmışsa hata gönder
-          return res.status(400).json({ message: 'Bu kullanıcı adı veya e-posta adresi zaten kullanılmaktadır.' });
+  const userS = req.session.user;
+  // Kullanıcı adı ve e-posta adresi var mı kontrol et
+  const existingUser = await Users.findOne({
+      where: {
+          [Op.or]: [
+              { username: username },
+              { email: email }
+          ]
       }
+  });
 
-      // Salt değerini oluştur
-      const saltRounds = 10;
-      const salt = await bcrypt.genSalt(saltRounds);
-
-      if (!salt) {
-          throw new Error('Salt oluşturulamadı.');
-      }
-
-      // Şifreyi hashle
-      const hashedPassword = await bcrypt.hash(password, salt);
-
-      // Kullanıcıyı veritabanına ekle
-      const newUser = await Users.create({
-          username,
-          email,
-          password: hashedPassword,
-          first_name: firstName,
-          last_name: lastName,
-          role: 'user'
-      });
-
-      // Başarı durumunda kullanıcıya cevap gönder
-      res.redirect('/auth/giris');
-  } catch (error) {
-      console.error(error);
-
-      // Kullanıcı dostu bir hata mesajı gönder
-      res.status(500).json({ message: 'Bir hata oluştu.' });
+  if (existingUser) {
+      // Kullanıcı adı veya e-posta zaten kullanılmışsa hata gönder
+      console.log('hatalı');
+       res.render('kayit',  {userS,message:'Bu kullanıcı adı veya e-posta zaten kullanımda',messagecolor:'#FF0000'});
+       return
+  }
+  else{
+    try {
+  
+        // Salt değerini oluştur
+        const saltRounds = 10;
+        const salt = await bcrypt.genSalt(saltRounds);
+  
+        if (!salt) {
+            throw new Error('Salt oluşturulamadı.');
+        }
+  
+        // Şifreyi hashle
+        const hashedPassword = await bcrypt.hash(password, salt);
+  
+        // Kullanıcıyı veritabanına ekle
+        const newUser = await Users.create({
+            username,
+            email,
+            password: hashedPassword,
+            first_name: firstName,
+            last_name: lastName,
+            role: 'user'
+        });
+  
+        // Başarı durumunda kullanıcıya cevap gönder
+        res.redirect('/auth/giris');
+    } catch (error) {
+        console.error(error);
+  
+        // Kullanıcı dostu bir hata mesajı gönder
+        res.status(500).json({ message: 'Bir hata oluştu.' });
+    }
+    
   }
 });
 
@@ -86,6 +91,7 @@ router.post('/kayit', postlimiter, async (req, res) => {
 
 
 router.post('/giris', postlimiter,  async (req, res) => {
+  const userS = req.session.user;
   const { username, password } = req.body; // Token'ı req.body üzerinden al
   console.log(process.env.ACCESS_TOKEN_SECRET);
   try {
@@ -94,7 +100,8 @@ router.post('/giris', postlimiter,  async (req, res) => {
     console.log("Gelen username:", username);
     const user = await Users.findOne({ where: { username } });
     if (!user) {
-      return res.redirect('/auth/giris'); // Username not found, redirect to login page
+      res.render('giris',  {userS,message:'Kullanıcı adı bulunamadı', messagecolor:'#FF0000'});
+      return; // Username not found, redirect to login page
   }
     
 
@@ -123,7 +130,8 @@ router.post('/giris', postlimiter,  async (req, res) => {
           const passwordMatch = await bcrypt.compare(password, user.password);
 
           if (!passwordMatch) {
-              return res.redirect('/auth/giris');
+            res.render('giris',  {userS,message:'Hatalı Şifre!', messagecolor:'#FF0000'});
+            return;
           }
 
           // Kullanıcı bilgilerini oturumda sakla

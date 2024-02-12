@@ -1,6 +1,7 @@
 <%- include('../partials/header.ejs') %>
 
 <div style="padding: 12px;" class="container mt-4">
+    <div class="create-dergi">
     <h1>Dergi Düzenle</h1>
 
     <form action="/admin/<%= dergi.dergi_id %>/duzenle" method="POST">
@@ -45,6 +46,7 @@
     <div class="resim-goster mt-4">
         <img src="../uploads/<%= dergi.resim %>" alt="<%= dergi.resim %>" class="img-fluid">
     </div>
+</div>
 </div>
 
 <%- include('../partials/footer.ejs') %>
