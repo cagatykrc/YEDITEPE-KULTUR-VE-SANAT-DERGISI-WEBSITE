@@ -15,8 +15,17 @@ const authRoutes = require('./routes/auth');
 const indexRoute = require('./routes/index');
 const dergiRoute = require('./routes/dergi');
 const adminRoutes = require('./routes/admin');
-
+const https = require('https');
+const fs = require('fs');
 const app = express();
+
+// SSL KULLANILACAĞI ZAMAN BUNLAR YORUM SATIRINDAN ÇIKARILACAK
+// const options = {
+//     key: fs.readFileSync('path/to/private-key.key'),
+//     cert: fs.readFileSync('path/to/certificate.crt'),
+//   };
+  
+//   const server = https.createServer(options, app);
 
 
 require('dotenv').config();
@@ -45,9 +54,15 @@ app.use(express.static(path.join(__dirname, 'public')));
         await sequelize.sync();
         console.log('Veritabanı modelleri senkronize edildi');
         
-        const PORT = 3000;
-        app.listen(PORT, "0.0.0.0", () => {
-            console.log(`Server is running on port ${PORT}`);
+        const PORT =process.env.PORT  ||3000 ;
+        //YORUM SATIRINDAN ÇIKARILACAK SSL GELDİĞİ ZAMAN
+        // server.listen(PORT, "0.0.0.0", () => {
+        //     console.log(`Server is running on port ${PORT}`);
+        // });
+
+        //YORUM SATIRI YAPILACAK SSL GELDİĞİ ZAMAN
+            app.listen(PORT , "0.0.0.0", () => {
+                console.log(`Server is running on port ${PORT}`);
         });
     } catch (error) {
         console.error('Veritabanı modelleri senkronize edilirken bir hata oluştu:', error);
