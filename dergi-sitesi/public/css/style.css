@@ -1209,7 +1209,8 @@ a{
 .home-section{
   position: relative;
   left: 0px;
-  width: calc(100% - 260px);
+  
+  width: calc(100% - 0px);
   transition: all 0.5s ease;
 }
 .sidebar.close ~ .home-section{
@@ -1235,11 +1236,15 @@ a{
   font-size: 26px;
   font-weight: 600;
   color: white;
-  cursor: pointer;
+
 }
 .sidebar.close{
     display: none;
     opacity: 0;
+}
+.home-content {
+    width: 50px
+
 }
 
 .home-content{
@@ -1249,6 +1254,7 @@ a{
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
     width: 20%;
     display: inline-block;
+    cursor: pointer;
   }
 @media (max-width: 420px) {
   .sidebar.close .nav-links li .sub-menu{
