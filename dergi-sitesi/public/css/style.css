@@ -495,7 +495,13 @@ a{
     flex: 1; /* Üst boşluğu sıfıra ayarla */
 
 }
-
+.send-contact-area{
+    background-color: #f5f5f5;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    border-radius: 12px;
+    padding: 24px;
+    margin-top: 32px;
+}
 .create-dergi{
     background-color: #f5f5f5;
 border-radius: 12px;

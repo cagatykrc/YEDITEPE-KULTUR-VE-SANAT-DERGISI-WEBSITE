@@ -55,10 +55,8 @@ router.get('/', async (req, res) => {
     const kategoritabID = req.body;
     console.log(userS);
     try {
-        // Sequelize ile dergi verilerini çek
         const dergiler = await Dergiler.findAll();
         const duyurular = await Duyurular.findAll();
-        // Sequelize ile kategori verilerini çek
         const kategoriTabs = await Kategorilertab.findAll({
             include: [{
                 model: Kategoriler,
