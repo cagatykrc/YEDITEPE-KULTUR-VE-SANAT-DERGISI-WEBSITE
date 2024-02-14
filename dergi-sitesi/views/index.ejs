@@ -40,14 +40,14 @@
                       </ul>
                 <% }); %>
         </ul>
-          </div>
+      </div>
+      <h2 class="main-bks">Dergilerimiz</h2>
           <section class="home-section">
             <div class="home-content">
               <i class='bx bx-menu' ></i>
               <span class="text">Filtreler</span>
             </div>
           </section>
-          <h2>Yeni Çıkan Dergilerimiz</h2>
           <div class="custom-card-container">
               <% dergiler.forEach(dergi => { %>
                   <a class="custom-card <%= dergi.kategorisi %> tumu" href="/dergiler/<%= dergi.dergi_id %>">
@@ -76,7 +76,7 @@ for (var i = 0; i < arrow.length; i++) {
       });
   }
   let sidebar = document.querySelector(".sidebar");
-  let sidebarBtn = document.querySelector(".bx-menu");
+  let sidebarBtn = document.querySelector(".home-section");
   let closebtn = document.querySelector(".sidebar-closebtn");
   console.log(sidebarBtn);
   sidebarBtn.addEventListener("click", ()=>{

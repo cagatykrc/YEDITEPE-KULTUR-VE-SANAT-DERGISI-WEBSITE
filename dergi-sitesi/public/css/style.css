@@ -656,7 +656,7 @@ padding: 12px;
 
 .notification-panel {
     position: absolute;
-    left: 76%;
+    left: 73%;
     z-index: 9999;
     color: black;
     padding: 10px;
@@ -831,7 +831,7 @@ ul{
 @media (min-width: 320px) and (max-width: 700px) {
     .notification-panel {
         position: absolute;
-        left: 30%;
+        left: 20%;
         z-index: 9999;
         color: black;
         padding: 10px;
@@ -966,6 +966,13 @@ ul{
         display: inline-flex;
         align-items: center;
         cursor: pointer;
+    }
+    .main-bks{
+        background-color: #f5f5f5;
+        margin-top: 32px;
+        border-bottom:thin solid #636262;
+        padding-bottom: 10px;
+        margin-bottom: 24px;
     }
 
     #toggler:checked ~ .menu {
@@ -1218,6 +1225,7 @@ a{
 .home-section .home-content .text{
   color: #11101d;
   font-size: 35px;
+  color: white;
 }
 .home-section .home-content .bx-menu{
   margin: 0 15px;
@@ -1226,15 +1234,34 @@ a{
 .home-section .home-content .text{
   font-size: 26px;
   font-weight: 600;
+  color: white;
+  cursor: pointer;
 }
 .sidebar.close{
     display: none;
     opacity: 0;
 }
+
+.home-content{
+    background-color: #55c2da;
+    border-radius: 12px;
+    color: white;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    width: 20%;
+    display: inline-block;
+  }
 @media (max-width: 420px) {
   .sidebar.close .nav-links li .sub-menu{
     display: none;
   }
+  .home-content{
+    background-color: #2b2b29;
+    border-radius: 12px;
+    width: auto;
+    color: white;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  }
+
 }
 
 .sidebar-closebtn i{
