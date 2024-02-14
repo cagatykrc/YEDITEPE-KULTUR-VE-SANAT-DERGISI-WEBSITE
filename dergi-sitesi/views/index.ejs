@@ -81,9 +81,12 @@ for (var i = 0; i < arrow.length; i++) {
   console.log(sidebarBtn);
   sidebarBtn.addEventListener("click", ()=>{
       sidebar.classList.toggle("close");
+      
   });
   closebtn.addEventListener("click", ()=>{
       sidebar.classList.toggle("close");
+      document.querySelector(".custom-container").style.marginLeft = "0px";
+
   });
 
     // Filtreleme fonksiyonu
@@ -96,6 +99,8 @@ for (var i = 0; i < arrow.length; i++) {
             filtrele(secilenKategori);
         });
     });
+    document.getElementById("mySidebar").style.width = "250px";
+
     function filtrele(kategori) {
         // Tüm kartları gizle
         document.querySelectorAll('.custom-card').forEach(function (dergiKarti) {
