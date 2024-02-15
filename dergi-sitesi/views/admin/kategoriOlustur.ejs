@@ -2,14 +2,14 @@
 <div class="custom-category-container">
     <div class="custom-category-panel">
         <div class="category-create-panel">
-            <h2 class="text-center mb-4">Kategori Tab ve Kategori Oluştur</h2>
+            <h2 class="text-center mb-4">Kategori Başlığı ve Kategori Oluştur</h2>
             <!-- Kategori Tab Oluşturma Formu -->
             <form action="/admin/kategoritabekle" method="POST">
                 <div class="form-group">
-                    <label for="tab_ad">Tab Adı:</label>
+                    <label for="tab_ad">Kategori Başlık Adı:</label>
                     <input type="text" class="form-control admin-panel-input" id="kategori_tab_ad" maxlength="45" name="kategori_tab_ad" required>
                 </div>
-                <button type="submit" class="btn addbookbtn btn-primary">Tab Oluştur</button>
+                <button type="submit" class="btn addbookbtn btn-primary">Kategori Başlığı Oluştur</button>
             </form>
 
             <!-- Kategori Oluşturma Formu -->
@@ -19,11 +19,12 @@
                     <input type="text" class="form-control admin-panel-input" id="kategori_ad" maxlength="45" name="kategori_ad" required>
                 </div>
                 <div class="form-group">
-                    <label for="kategori_low">Kategori Adı (Küçük, boşluksuz ve yabancı karakterlerle):</label>
+                    <label for="kategori_low">Kategori Data Adı :</label>
+                    <p style="color: #333;">(küçük, boşluksuz, yabancı ve rakamlar başta yer almayacak  karakterlerle örn: <u>ekim23sayisi)</u></p>
                     <input type="text" class="form-control admin-panel-input" id="kategori_low" maxlength="45" name="kategori_low" required>
                 </div>
                 <div class="form-group">
-                    <label for="kategori_tab">Kategori Tab Seçin:</label>
+                    <label for="kategori_tab">Kategori Başlığı Seçin:</label>
                     <select name="kategori_tab_id" id="kategori_tab_id" class="form-control admin-panel-input">
                         <% kategoriTabs.forEach(tab => { %>
                             <option value="<%= tab.kategori_tab_id %>"><%= tab.kategori_tab_ad %></option>
@@ -43,7 +44,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Kategori Adı</th>
-                            <th>Kategori Tab Adı</th>
+                            <th>Kategori Başlık Adı</th>
                             <th>İşlemler</th>
                         </tr>
                     </thead>
@@ -63,7 +64,7 @@
             </div>
         </div>
         <div style="margin-top: 50px;" class="category-management-panel">
-            <h1>Kategori Yönetim</h1>
+            <h1>Kategori Başlık Yönetim</h1>
             <div class="table-responsive">
                 <table class="table table-striped table-bordered">
                     <thead class="thead-dark">

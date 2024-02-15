@@ -827,7 +827,9 @@ ul{
     margin-bottom: 48px;
 
 }
-
+.category-management-panel{
+    width: 90%;
+}
 @media (min-width: 320px) and (max-width: 700px) {
     .notification-panel {
         position: absolute;
