@@ -135,7 +135,7 @@ body {
 
 .custom-card img {
     width: 100%;
-    height: 250px;
+    height: 220px;
     object-fit: cover;
     transition: .5s;
 }
@@ -148,7 +148,7 @@ body {
 
 .custom-card-title {
     font-size: 1.5rem;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 .custom-card-text {
@@ -416,7 +416,7 @@ a{
 
 .custom-card-title {
     font-size: 1.5rem;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     color: #404040;
 }
 .custom-card-abs-title {
@@ -928,6 +928,7 @@ ul{
         margin-top: 8px;
     }
     .custom-card-content {
+        padding-top: 0;
         padding-left: 4px;
         margin: 0px;
         height: 185px;
@@ -985,7 +986,7 @@ ul{
         height: 600px;
         object-fit: fill;
         margin-right: 0px;
-        border-radius: 0;
+        border-radius: 0px;
     }
     .kategori{
         padding-left: 0px;
@@ -1228,7 +1229,7 @@ a{
   left: 0px;
   width: calc(100% - 78px);
 }
-.home-section .home-content{
+.home-section{
   height: 60px;
   display: flex;
   align-items: center;
@@ -1240,7 +1241,7 @@ a{
   color: white;
 }
 .home-section .home-content .bx-menu{
-  margin: 0 15px;
+  margin: 0 15px 0 0px;
   cursor: pointer;
 }
 .home-section .home-content .text{
@@ -1249,20 +1250,21 @@ a{
   color: white;
 
 }
-.home-content {
-    width: 50px
 
-}
 
 .home-content{
     background-color: #55c2da;
     border-radius: 12px;
+    padding: 12px;
     color: white;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-    width: 20%;
-    display: inline-block;
+    width: auto;
+    display: inline-flex;
+    align-items: center;
     cursor: pointer;
+    height: 60px;
   }
+
 @media (max-width: 420px) {
   .sidebar.close .nav-links li .sub-menu{
     display: none;
@@ -1278,6 +1280,16 @@ a{
   background: #1d1b31;
 
   }
+}
+@media (min-width: 421px) and (max-width: 1280px) and (orientation: landscape) {
+    .home-content{
+        background-color: #55c2da;
+        border-radius: 12px;
+        color: white;
+        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+        width: 50%;
+        cursor: pointer;
+      }
 }
 
 .sidebar-closebtn i{
@@ -1305,4 +1317,8 @@ a{
 
 a {
     cursor: pointer;
+}
+
+.dsp-none{
+    display: none;
 }

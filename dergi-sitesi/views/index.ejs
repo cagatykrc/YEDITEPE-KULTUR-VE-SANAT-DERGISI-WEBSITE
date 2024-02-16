@@ -14,7 +14,7 @@
             <i class='bx bx-arrow-to-left' ></i>u
           </div>
             <div class="logo-details">
-                <img src="/images/logoRemovedBackground.png" alt="" width="100px" height="100px">
+                <img class="filter-logo dsp-none" src="/images/logoRemovedBackground.png" alt="" width="100px" height="100px">
             </div>
             <ul class="nav-links">
               <li>
@@ -56,7 +56,7 @@
                           <span class="<%= dergi.kategorisi %>"></span>
                           <div class="custom-card-content">
                           <h5 class="custom-card-title"><%= dergi.dergi_basligi %></h5>
-                          <p class="custom-card-text"><%= dergi.aciklama.substring(0, 80) %>...</p>
+                          <p class="custom-card-text"><%= dergi.aciklama.substring(0, 50) %>...</p>
                       </div>
                   </div>
               </a>
@@ -78,13 +78,16 @@ for (var i = 0; i < arrow.length; i++) {
   let sidebar = document.querySelector(".sidebar");
   let sidebarBtn = document.querySelector(".home-content");
   let closebtn = document.querySelector(".sidebar-closebtn");
+  let filtlogo = document.querySelector(".filter-logo");
   console.log(sidebarBtn);
   sidebarBtn.addEventListener("click", ()=>{
       sidebar.classList.toggle("close");
-      
+      filtlogo.classList.toggle("dsp-none");
   });
   closebtn.addEventListener("click", ()=>{
       sidebar.classList.toggle("close");
+      filtlogo.classList.toggle("dsp-none");
+
       document.querySelector(".custom-container").style.marginLeft = "0px";
 
   });
