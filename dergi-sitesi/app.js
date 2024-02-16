@@ -51,7 +51,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Sequelize modellerini senkronize et
 (async () => {
     try {
-        await sequelize.sync();
+        await sequelize.sync({force:true});
         console.log('Veritabanı modelleri senkronize edildi');
         
         const PORT =process.env.PORT  ||3000 ;
