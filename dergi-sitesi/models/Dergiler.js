@@ -12,7 +12,7 @@ const Dergiler = sequelize.define('Dergiler', {
         allowNull: false,
     },
     aciklama: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false,
     },
     resim: {
