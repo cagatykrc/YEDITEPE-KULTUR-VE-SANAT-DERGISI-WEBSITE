@@ -11,7 +11,7 @@ const router = express.Router();
 
 const postlimiter = rateLimit({
   windowMs: 15 * 1000,
-  max: 1,
+  max: 3,
   message: 'Sunucuya çok fazla istek gönderildi.',
   handler: (req, res)=>{
     res.redirect('/auth/giris');
