@@ -8,12 +8,16 @@
 html{
     height: auto;
     transition: .3s ease-in-out;
+    max-width: 100vh;
+    overflow-x: hidden;
 }
 body {
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     font-family: "Open Sans", sans-serif;
     font-weight: 500;
+    width: 100%;
     min-height: 170vh;
     background-color: #E8E8E8;
 }
@@ -889,9 +893,12 @@ ul{
         margin: 0;
         padding: 0;
     }
+    iframe{
+        max-width: 50vh;
+
+    }
     .detail-page-pdf-review iframe{
         min-height: 90vh;
-        width: calc(100% -0px);
         box-sizing: border-box;
     }
     .detail-comment-area form {
@@ -1270,16 +1277,7 @@ a{
 
   }
 }
-@media (min-width: 421px) and (max-width: 1280px) and (orientation: landscape) {
-    .home-content{
-        background-color: #55c2da;
-        border-radius: 12px;
-        color: white;
-        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-        width: 50%;
-        cursor: pointer;
-      }
-}
+
 
 .sidebar-closebtn i{
     color: #f5f5f5;
@@ -1323,7 +1321,7 @@ a {
 }
 
 .cards-wrapper{
-    max-width: 1100px;
+    max-width: 100%;
     margin: 0 auto;
     margin-top: 64px;
 }
@@ -1528,4 +1526,26 @@ a {
 .filter-logo img{
     height: 100px;
     width: 100px !important;
+}
+
+@media (min-width: 421px) and (max-width: 1280px) and (orientation: landscape) {
+    .detail-page-pdf-review{
+        margin-top: 24px;
+        max-width: 100vh;
+        margin: 0;
+        padding: 0;
+        display: none;
+    }
+    .detail-page-pdf-review iframe{
+        max-height: 90vh;
+        box-sizing: border-box;
+    }
+    .home-content{
+        background-color: #55c2da;
+        border-radius: 12px;
+        color: white;
+        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+        width: 50%;
+        cursor: pointer;
+      }
 }
