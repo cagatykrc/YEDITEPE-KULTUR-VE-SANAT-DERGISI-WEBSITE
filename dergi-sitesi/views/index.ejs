@@ -59,7 +59,7 @@
                       <div class="custom-card-content">
                         <span class="custom-card-span"><%=dergi.dergi_turu %></span>
                         <h5 class="custom-card-title"><%= dergi.dergi_basligi %></h5>
-                        <p class="custom-card-text"><%= dergi.aciklama.substring(0, 50) %>...</p>
+                        <p class="custom-card-text"><%= dergi.aciklama ? dergi.aciklama.substring(0, 50) + '...' : '' %></p>
                       </div>
                   </div>
               </a>
