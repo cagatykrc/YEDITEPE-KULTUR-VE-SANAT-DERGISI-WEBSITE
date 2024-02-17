@@ -57,7 +57,7 @@
               <ul>
                 <li>Konu: <span><%= dergi.konu %></span></li>
                 <li>Yazar: <span><%= dergi.yazar %></span></li>
-                <li>Oluşturan: <span><%= dergi.olusturan_user_id %></span></li>
+                <li>Oluşturan: <span><%= olusturanUser.first_name %> <%= olusturanUser.last_name %></span></li>
                 <li>Kategori: <span><%= dergi.kategorisi %></span></li>
                 <li>Tür:  <span><%=dergi.dergi_turu%></span></li>
               </ul>

@@ -13,6 +13,9 @@ const Kategoriler = require('../models/Kategoriler');
 const verifyToken = require('../utility/verifyToken');
 const Kategorilertab = require('../models/Kategorilertab');
 const Duyurular = require('../models/Duyurular');
+const logger = require('../utility/logger');
+const now = new Date();
+
 // const limiterDefaultRequests = createLimiter(15)
 // const limiterTwoRequests = createLimiter(1)
 router.get('/panel', verifyToken,(req, res) => {
@@ -25,6 +28,30 @@ router.get('/panel', verifyToken,(req, res) => {
     }
         // Admin değilse, başka bir sayfaya yönlendir veya hata mesajı göster
 
+});
+
+router.get('/logizleme', verifyToken,(req, res)=>{
+    const userS = req.session.user;
+    if (userS && userS.role === 'admin') {
+        const dosyaYolu = path.join(__dirname, '../app.log');
+        const dosyaIcerigi = fs.readFileSync(dosyaYolu, 'utf-8');
+    // Kullanıcı admin rolüne sahipse, sayfayı render et
+        res.render('admin/logizleme', { userS, dosyaIcerigi });
+    }else{
+        res.render('404', { userS });
+    }
+});
+router.post('/logtemizle',verifyToken,(req,res)=>{
+    const userS = req.session.user;
+    if (userS && userS.role === 'admin') {
+        const dosyaYolu = path.join(__dirname, '../app.log');
+        const temizIcerik = '';
+        fs.writeFileSync(dosyaYolu, temizIcerik, 'utf-8');
+    // Kullanıcı admin rolüne sahipse, sayfayı render et
+        res.redirect('/admin/logizleme');
+    }else{
+        res.render('404', { userS });
+    }
 });
 
 router.get('/duyuruolustur', async(req,res)=>{
@@ -73,6 +100,7 @@ router.get('/dergiyonetim', verifyToken,async (req, res) => {
 
 router.get('/dergiolustur',  verifyToken,async(req, res) => {
     const userS = req.session.user;
+
     if (userS && userS.role === 'admin') {
         try {
             const categories = await Kategoriler.findAll();
@@ -89,8 +117,6 @@ router.get('/dergiolustur',  verifyToken,async(req, res) => {
 });
 
 router.post('/duyuruolustur', verifyToken,async(req,res) => {
-    const ipAddress = req.socket.remoteAddress;
-    console.log('Duyuru Oluşturdu: '+ipAddress);
     const userS = req.session.user;
     const {duyuru_baslik, duyuru_metin, duyuru_renk} = req.body;
     console.log(duyuru_renk);
@@ -103,20 +129,22 @@ router.post('/duyuruolustur', verifyToken,async(req,res) => {
             duyuru_metin: duyuru_metin,
             duyuru_renk: duyuru_renk,
         });
+        const ipAddress = req.socket.remoteAddress;
+        logger.info(userS.username+' '+'Duyuru Oluşturdu: '+ipAddress +'//   '+now);
         res.redirect('/admin/duyuruolustur');
     } else {
         res.redirect('/');
     }
 });
 router.post('/duyurusil', verifyToken,async(req,res) => {
-    const ipAddress = req.socket.remoteAddress;
-    console.log('Duyuru Sildi: '+ipAddress);
     const userS = req.session.user;
     
     if (userS && userS.role === 'admin') {
         const duyurutemizle = await Duyurular.destroy({
             truncate:true
         });
+        const ipAddress = req.socket.remoteAddress;
+        logger.info(userS.username+' '+'Duyuru Sildi: '+ipAddress +'//   '+now);
         res.redirect('/admin/duyuruolustur');
     } else {
         res.redirect('/');
@@ -130,6 +158,7 @@ router.post('/dergiolustur', verifyToken,upload.fields([
     // Your existing code
     const userS = req.session.user;
 if (userS && userS.role ==='admin') {
+    const userID = req.session.user.id;
 
     const { baslik, yazar, konu, aciklama, kategorisi, resim, indirmeLinki, turu } = req.body;
     const olusturan_user_id = userS.user_id;
@@ -148,7 +177,7 @@ if (userS && userS.role ==='admin') {
             aciklama,
             resim: resimDosya.filename,
             indirme_linki: indirmeLinki,
-            olusturan_user_id: 1,
+            olusturan_user_id: userID,
             dergi_basligi: baslik,
             pdf_dosya: pdfDosya.filename,
             yazar,
@@ -156,7 +185,7 @@ if (userS && userS.role ==='admin') {
             dergi_turu: turu,
         });
         const ipAddress = req.socket.remoteAddress;
-        console.log('Dergi Oluşturdu: '+ipAddress);
+        logger.info(userS.username+' '+'Dergi Oluşturdu: '+ipAddress +'//   '+now);
         console.log('Dergi başarıyla oluşturuldu.');
         res.redirect('/admin/panel');
     } catch (error) {
@@ -191,7 +220,7 @@ router.post('/:dergiId/duzenle',verifyToken,async (req, res) => {
                 dergi_turu: turu,
             });
             const ipAddress = req.socket.remoteAddress;
-            console.log('Dergi Düzenledi: '+ipAddress);
+            logger.info(userS.username+' '+'Dergi Düzenledi: '+ipAddress +'//   '+now);
             console.log('Dergi başarıyla güncellendi.');
             res.redirect('/admin/dergiyonetim');
         } catch (error) {
@@ -263,7 +292,7 @@ router.post('/:dergiId/sil', verifyToken, async (req, res) => {
             });
             
             const ipAddress = req.socket.remoteAddress;
-            console.log('Dergi Sildi: '+ipAddress);
+            logger.info(userS.username+' '+'Dergi Sildi: '+ipAddress +'//   '+now);
             console.log('Dergi başarıyla silindi.');
             res.redirect('/admin/dergiyonetim');
         } catch (error) {
@@ -341,7 +370,7 @@ router.post('/kullanici/:userId/update', verifyToken, async (req, res) => {
 
                 await userToUpdate.save();
                 const ipAddress = req.socket.remoteAddress;
-                console.log('Kullanıcı GÜncelledi: '+ipAddress);
+                logger.info(userS.username+' '+'Kullanıcı Güncelledi: '+ipAddress +'//   '+now);
 
                 res.redirect('/admin/kullanici/' + userId);
             } else {
@@ -388,7 +417,7 @@ router.post('/kategoriekle', verifyToken, async (req, res) => {
                 kategori_tab_id,
             });
             const ipAddress = req.socket.remoteAddress;
-            console.log('Kategori Ekledi: '+ipAddress);
+            logger.info(userS.username+' '+'Kategori Ekledi: '+ipAddress +'//   '+now);
             console.log('Kategori başarıyla oluşturuldu.');
             res.redirect('/admin/kategoriyonetim'); // Gerekirse yönlendirme yapabilirsiniz.
         } catch (error) {
@@ -411,7 +440,7 @@ router.post('/kategoritabekle', verifyToken, async (req, res) => {
                 kategori_tab_ad,
             });
             const ipAddress = req.socket.remoteAddress;
-            console.log('Kategori Tab Ekledi: '+ipAddress);
+            logger.info( userS.username+' '+'Kategori Tab Ekledi: '+ipAddress +'//   '+now);
             console.log('KategoriTab başarıyla oluşturuldu.');
             res.redirect('/admin/kategoriyonetim'); // Gerekirse yönlendirme yapabilirsiniz.
         } catch (error) {
@@ -436,7 +465,7 @@ router.post('/:kategoriId/kategorisil', verifyToken, async (req, res) => {
                 },
             });
             const ipAddress = req.socket.remoteAddress;
-            console.log('Kategori Sildi: '+ipAddress);
+            logger.info( userS.username+' '+'Kategori Sildi: '+ipAddress +'//   '+now);
             console.log('Kategori başarıyla silindi.');
             res.redirect('/admin/kategoriyonetim');
         } catch (error) {
@@ -466,7 +495,7 @@ router.post('/:kategoritabId/kategoritabsil', verifyToken, async (req, res) => {
                 },
             });
             const ipAddress = req.socket.remoteAddress;
-            console.log('Kategori Tab Sildi: '+ipAddress);
+            logger.info( userS.username+' '+'Kategori Tab Sildi: '+ipAddress +'//   '+now);
             console.log('Kategori Tab başarıyla silindi.');
             res.redirect('/admin/kategoriyonetim');
         } catch (error) {

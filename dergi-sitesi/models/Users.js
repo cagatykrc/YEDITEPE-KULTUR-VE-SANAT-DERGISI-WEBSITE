@@ -1,6 +1,5 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../utility/database');
-
 const Users = sequelize.define('Users', {
     user_id: {
         type: DataTypes.INTEGER,
@@ -36,5 +35,6 @@ const Users = sequelize.define('Users', {
     tableName: 'users', // Veritabanında kullanılacak tablo adı
     timestamps: true, // Oluşturma ve güncelleme tarih alanları ekler
 });
+
 
 module.exports = Users;

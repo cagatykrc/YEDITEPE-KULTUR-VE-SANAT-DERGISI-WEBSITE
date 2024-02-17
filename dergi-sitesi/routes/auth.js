@@ -7,6 +7,8 @@ const Users = require('../models/Users');
 const dotenv = require('dotenv');
 const { default: rateLimit } = require('express-rate-limit');
 const { Sequelize, Op } = require('sequelize');
+const logger = require('../utility/logger');
+const now = new Date();
 require('dotenv').config();
 // const limiterTwoRequests = createLimiter(2);
 // const limiterDefaultRequests = createLimiter(15);
@@ -21,57 +23,57 @@ router.get('/giris', (req, res) => {
 });
 
 router.post('/kayit', postlimiter, async (req, res) => {
-  const ipAddress = req.socket.remoteAddress;
-  console.log(ipAddress);
   const { username, firstName, lastName, email, password, verifypassword } = req.body;
   const userS = req.session.user;
   // Kullanıcı adı ve e-posta adresi var mı kontrol et
   const existingUser = await Users.findOne({
       where: {
-          [Op.or]: [
-              { username: username },
-              { email: email }
-          ]
+        [Op.or]: [
+          { username: username },
+          { email: email }
+        ]
       }
-  });
-  if (verifypassword !== password) {
-    console.log('hatalı');
-    res.render('kayit',  {userS,message:'Şifreler Uyuşmuyor.',messagecolor:'#FF0000'});
-    return
-  }
-  if (existingUser) {
+    });
+    if (verifypassword !== password) {
+      console.log('hatalı');
+      res.render('kayit',  {userS,message:'Şifreler Uyuşmuyor.',messagecolor:'#FF0000'});
+      return
+    }
+    if (existingUser) {
       // Kullanıcı adı veya e-posta zaten kullanılmışsa hata gönder
       console.log('hatalı');
-       res.render('kayit',  {userS,message:'Bu kullanıcı adı veya e-posta zaten kullanımda',messagecolor:'#FF0000'});
-       return
-  }
-  else{
-    try {
-  
+      res.render('kayit',  {userS,message:'Bu kullanıcı adı veya e-posta zaten kullanımda',messagecolor:'#FF0000'});
+      return
+    }
+    else{
+      try {
+        
         // Salt değerini oluştur
         const saltRounds = 10;
         const salt = await bcrypt.genSalt(saltRounds);
-  
+        
         if (!salt) {
-            throw new Error('Salt oluşturulamadı.');
+          throw new Error('Salt oluşturulamadı.');
         }
-  
+        
         // Şifreyi hashle
         const hashedPassword = await bcrypt.hash(password, salt);
-  
+        
         // Kullanıcıyı veritabanına ekle
         const newUser = await Users.create({
-            username,
-            email,
-            password: hashedPassword,
-            first_name: firstName,
-            last_name: lastName,
-            role: 'user'
+          username,
+          email,
+          password: hashedPassword,
+          first_name: firstName,
+          last_name: lastName,
+          role: 'user'
         });
-  
+        
         // Başarı durumunda kullanıcıya cevap gönder
+        const ipAddress = req.socket.remoteAddress;
+        logger.info(username+ " Adında "+ 'Kayıt Oluşturuldu: '+ipAddress +'//   '+now);
         res.redirect('/auth/giris');
-    } catch (error) {
+      } catch (error) {
         console.error(error);
   
         // Kullanıcı dostu bir hata mesajı gönder
@@ -152,7 +154,7 @@ router.post('/giris', postlimiter,  async (req, res) => {
           // Başarı durumunda kullanıcıya cevap gönder
           // res.cookie('token', newToken, { httpOnly: true, secure: false });
           const ipAddress = req.socket.remoteAddress;
-          console.log('Giriş yaptı: '+username+" " +ipAddress);
+          logger.info(username+" Adında Giriş Yaptı: " +ipAddress +'//   '+now);
           return res.redirect('/');
         }
         catch (error) {
@@ -163,12 +165,12 @@ router.post('/giris', postlimiter,  async (req, res) => {
   
   
   router.post('/cikis', (req, res) => {
-    const ipAddress = req.socket.remoteAddress;
-    console.log('Çıkış Yaptı'+ipAddress);
     const userS = req.session.user;
     if (userS){
       req.session.destroy();
       // res.clearCookie('token'); // Token cookie'sini temizle
+      const ipAddress = req.socket.remoteAddress;
+      logger.info(userS.username+' '+'Çıkış Yaptı'+" "+ipAddress +'//   '+now);
       res.redirect('/');
     }
     else{

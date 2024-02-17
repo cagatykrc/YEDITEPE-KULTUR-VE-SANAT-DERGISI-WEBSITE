@@ -5,6 +5,10 @@ const Yorumlar = require('../models/Yorumlar');
 const Users = require('../models/Users');
 const verifyToken= require('../utility/verifyToken');
 const postlimiter= require('../utility/limiter');
+const logger = require('../utility/logger');
+const now = new Date();
+
+
 // const limiterTwoRequests = createLimiter(2);
 // const limiterDefaultRequests = createLimiter(15);
 router.get('/:dergiId', async (req, res) => {
@@ -13,8 +17,14 @@ router.get('/:dergiId', async (req, res) => {
 
     try {
         // Sequelize ile dergi bilgilerini çek
-        const dergi = await Dergiler.findByPk(dergiId);
-
+        const dergi = await Dergiler.findByPk(dergiId, {
+            include: [{
+                model: Users,
+                as: 'olusturanUser',
+                attributes: ['first_name', 'last_name'],
+            }],
+        });
+        const olusturanUser = dergi.olusturanUser;
         // Sequelize ile dergi yorumlarını çek
         const dergiYorumlari = await Yorumlar.findAll({
             where: {
@@ -28,7 +38,7 @@ router.get('/:dergiId', async (req, res) => {
         console.log(dergiYorumlari);
 
         // Dergi sayfasını render et
-        res.render('dergiDetay', { dergi, userS, dergiYorumlari });
+        res.render('dergiDetay', { dergi, userS, dergiYorumlari,olusturanUser });
     } catch (error) {
         // Hata durumunda
         console.error('Dergi ve yorum verilerini çekerken bir hata oluştu: ' + error);
@@ -51,8 +61,8 @@ router.post('/:dergiId/yorumsil', verifyToken, async (req, res) => {
 
             await yorum.destroy();
             const ipAddress = req.socket.remoteAddress;
-            console.log('Yorum Sİldi: '+ipAddress);
-            console.log(yorumId + ' Yorum silindi.');
+            logger.info( userS.username+' '+'Yorum Sildi: '+ipAddress);
+            console.log(userS.username+' '+yorumId + ' Yorum silindi.' +'//   '+now);
             res.json({ message: yorumId + ' Yorum başarıyla silindi' });
         } catch (error) {
             console.log(error);
@@ -66,7 +76,7 @@ router.post('/:dergiId/yorumsil', verifyToken, async (req, res) => {
 // Örnek endpoint
 router.post('/:dergiId/yorumEkle',postlimiter, async (req, res) => {
     const dergiId = req.params.dergiId;
-
+    const userN = req.session.user.username;
     // Kullanıcının oturum açmış olup olmadığını kontrol et
     if (!req.session.user) {
         res.redirect('/auth/giris');
@@ -84,7 +94,7 @@ router.post('/:dergiId/yorumEkle',postlimiter, async (req, res) => {
             yorum_metni: yorumMetni
         });
         const ipAddress = req.socket.remoteAddress;
-        console.log('Yorum Ekledi: '+ipAddress);
+        logger.info( userN+' '+'Yorum Ekledi: '+ipAddress +'//   '+now);
         res.redirect(`/dergiler/${dergiId}`);
     } catch (error) {
         console.error('Yorum eklenirken bir hata oluştu: ' + error);

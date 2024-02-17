@@ -55,6 +55,7 @@ const Dergiler = sequelize.define('Dergiler', {
 
 Dergiler.hasMany(Yorumlar, { as: 'yorumlar', foreignKey: 'dergi_id', onDelete: 'CASCADE' });
 Yorumlar.belongsTo(Dergiler, { as: 'dergiler', foreignKey: 'dergi_id' });
+Dergiler.belongsTo(Users, { foreignKey: 'olusturan_user_id', as: 'olusturanUser' });
 
 const getDergiById = async (dergiId) => {
     try {
