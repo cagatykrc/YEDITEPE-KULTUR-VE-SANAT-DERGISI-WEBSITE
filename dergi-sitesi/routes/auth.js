@@ -21,7 +21,7 @@ router.get('/giris', (req, res) => {
 });
 
 router.post('/kayit', postlimiter, async (req, res) => {
-  const { username, firstName, lastName, email, password } = req.body;
+  const { username, firstName, lastName, email, password, verifypassword } = req.body;
   const userS = req.session.user;
   // Kullanıcı adı ve e-posta adresi var mı kontrol et
   const existingUser = await Users.findOne({
@@ -32,7 +32,11 @@ router.post('/kayit', postlimiter, async (req, res) => {
           ]
       }
   });
-
+  if (verifypassword !== password) {
+    console.log('hatalı');
+    res.render('kayit',  {userS,message:'Şifreler Uyuşmuyor.',messagecolor:'#FF0000'});
+    return
+  }
   if (existingUser) {
       // Kullanıcı adı veya e-posta zaten kullanılmışsa hata gönder
       console.log('hatalı');

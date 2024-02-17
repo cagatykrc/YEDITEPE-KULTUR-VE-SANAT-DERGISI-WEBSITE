@@ -74,6 +74,7 @@ body {
     justify-content: space-between;
     align-items: center;
 }
+
 .about-us,
 .social-media {
     margin-bottom: 40px;
@@ -138,6 +139,8 @@ body {
 
 .custom-card-content {
     padding: 20px;
+    padding-left: 0px;
+    padding-top: 0px;
     height: 205px;
     margin-top: 12px
 }
@@ -824,7 +827,31 @@ ul{
 .category-management-panel{
     width: 90%;
 }
+.custom-card-span{
+    padding: 5px;
+    border: 1px solid #e74c3c;
+    margin: 0;
+    background-color: #e74c3c;
+    font-size: 1.2rem;
+    text-align: right;
+
+    align-items: end;
+    justify-content: right;
+}
+.custom-card-text, .custom-card-title{
+    margin-left: 20px;
+}
 @media (min-width: 320px) and (max-width: 700px) {
+    .custom-card-span{
+        padding: 1px;
+        margin: 0;
+        background-color: #e74c3c;
+        font-size: 1.2rem;
+        text-align: right;
+        bottom: calc(100% - 525px);
+        align-items: end;
+        justify-content: right;
+    }
     .notification-panel {
         position: absolute;
         left: 20%;
@@ -912,6 +939,9 @@ ul{
         justify-content: space-between;
         width: 100%; /* Evenly space cards in the container */
     }
+    .custom-card-text, .custom-card-title{
+        margin-left: 4px;
+    }
     .container p{
         font-size: .9rem;
     }
@@ -926,7 +956,7 @@ ul{
     }
     .custom-card-content {
         padding-top: 0;
-        padding-left: 4px;
+        padding-left: 0px;
         margin: 0px;
         height: 185px;
         box-sizing: border-box;

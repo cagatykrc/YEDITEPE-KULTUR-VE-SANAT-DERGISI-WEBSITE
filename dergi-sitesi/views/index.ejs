@@ -51,12 +51,13 @@
           <div class="custom-card-container">
               <% dergiler.forEach(dergi => { %>
                   <a class="custom-card <%= dergi.kategorisi %> tumu" href="/dergiler/<%= dergi.dergi_id %>">
-                      <div class="">
-                          <img src="./uploads/<%= dergi.resim %>" alt="<%= dergi.baslik %>">
-                          <span class="<%= dergi.kategorisi %>"></span>
-                          <div class="custom-card-content">
-                          <h5 class="custom-card-title"><%= dergi.dergi_basligi %></h5>
-                          <p class="custom-card-text"><%= dergi.aciklama.substring(0, 50) %>...</p>
+                    <div class="">
+                      <img src="./uploads/<%= dergi.resim %>" alt="<%= dergi.baslik %>">
+                      <span class="<%= dergi.kategorisi %>"></span>
+                      <div class="custom-card-content">
+                        <span class="custom-card-span"><%=dergi.dergi_turu %></span>
+                        <h5 class="custom-card-title"><%= dergi.dergi_basligi %></h5>
+                        <p class="custom-card-text"><%= dergi.aciklama.substring(0, 50) %>...</p>
                       </div>
                   </div>
               </a>
