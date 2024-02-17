@@ -36,7 +36,7 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     cookie: {
-        secure: false,
+        secure: false, //SSL GELECEĞİ ZAMAN TRUE DİYE DEĞİŞTİRİLECEK
         maxAge: 1 * 24 * 60 * 60 * 1000,
     },
 }));

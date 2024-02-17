@@ -90,8 +90,8 @@ router.get('/dergiolustur',  verifyToken,async(req, res) => {
 
 router.post('/duyuruolustur', verifyToken,async(req,res) => {
     const userS = req.session.user;
-    const {duyuru_baslik, duyuru_metin} = req.body;
-    
+    const {duyuru_baslik, duyuru_metin, duyuru_renk} = req.body;
+    console.log(duyuru_renk);
     if (userS && userS.role === 'admin') {
         const duyurutemizle = await Duyurular.destroy({
             truncate:true
@@ -99,6 +99,19 @@ router.post('/duyuruolustur', verifyToken,async(req,res) => {
         const duyuruOlustur = await Duyurular.create({
             duyuru_baslik: duyuru_baslik,
             duyuru_metin: duyuru_metin,
+            duyuru_renk: duyuru_renk,
+        });
+        res.redirect('/admin/duyuruolustur');
+    } else {
+        res.redirect('/');
+    }
+});
+router.post('/duyurusil', verifyToken,async(req,res) => {
+    const userS = req.session.user;
+    
+    if (userS && userS.role === 'admin') {
+        const duyurutemizle = await Duyurular.destroy({
+            truncate:true
         });
         res.redirect('/admin/duyuruolustur');
     } else {

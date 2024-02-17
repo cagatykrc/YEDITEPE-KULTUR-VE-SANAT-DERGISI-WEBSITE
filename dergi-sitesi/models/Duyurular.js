@@ -14,6 +14,10 @@ const Duyurular = sequelize.define('Duyurular', {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    duyuru_renk: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
 }, {
     // Modelin ayarlarını belirle
     tableName: 'duyurular', // Veritabanında kullanılacak tablo adı
