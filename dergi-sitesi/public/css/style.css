@@ -8,7 +8,6 @@
 html{
     height: auto;
     transition: .3s ease-in-out;
-    max-width: 100vh;
     overflow-x: hidden;
 }
 body {
@@ -1321,7 +1320,6 @@ a {
 }
 
 .cards-wrapper{
-    max-width: 100%;
     margin: 0 auto;
     margin-top: 64px;
 }
@@ -1501,7 +1499,7 @@ a {
         grid-gap: 1.5rem;
     }
     .cards-wrapper{
-
+        max-width: 1200px;
         height: 100vh;
         display: flex;
         justify-content: center;
