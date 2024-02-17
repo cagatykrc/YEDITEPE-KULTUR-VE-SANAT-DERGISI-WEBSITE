@@ -6,7 +6,9 @@ const Users = require('../models/Users');
 const verifyToken= require('../utility/verifyToken');
 const postlimiter= require('../utility/limiter');
 const logger = require('../utility/logger');
-const now = new Date();
+const options = { timeZone: 'Europe/Istanbul' }; // Türkiye saat dilimi
+const formattedDate = new Date();
+const now = formattedDate.toLocaleString('tr-TR', options);
 
 
 // const limiterTwoRequests = createLimiter(2);
@@ -62,7 +64,7 @@ router.post('/:dergiId/yorumsil', verifyToken, async (req, res) => {
             await yorum.destroy();
             const ipAddress = req.socket.remoteAddress;
             logger.info( userS.username+' '+'Yorum Sildi: '+ipAddress);
-            console.log(userS.username+' '+yorumId + ' Yorum silindi.' +'//   '+now);
+            console.log(userS.username+' '+yorumId + ' Yorum silindi.' +'  //'+now);
             res.json({ message: yorumId + ' Yorum başarıyla silindi' });
         } catch (error) {
             console.log(error);
@@ -94,7 +96,7 @@ router.post('/:dergiId/yorumEkle',postlimiter, async (req, res) => {
             yorum_metni: yorumMetni
         });
         const ipAddress = req.socket.remoteAddress;
-        logger.info( userN+' '+'Yorum Ekledi: '+ipAddress +'//   '+now);
+        logger.info( userN+' '+'Yorum Ekledi: '+ipAddress +'  //'+now);
         res.redirect(`/dergiler/${dergiId}`);
     } catch (error) {
         console.error('Yorum eklenirken bir hata oluştu: ' + error);
