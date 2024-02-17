@@ -2,39 +2,94 @@
 
 <div class="custom-detailpage-container" style="background-color: #f5f5f5;">
     <div class="dergiId <%= dergi.dergi_id %> "></div>
-    <div class="custom-detailpage-row">
-        <div class="detail-image">
-            <img src="../uploads/<%= dergi.resim %> " class=" img-fluid" alt="<%= dergi.baslik %>">
-        </div>
-        <div class="col-md-6">
-            <div class="detail-info bg-light p-4 rounded">
-
-                <h2><%= dergi.dergi_basligi %></h2>
-
-                <h3 class="text-muted"><%= dergi.konu %></h3>
-
-                
-                
-                <p class="description"><strong>Açıklama:</strong> <%= dergi.aciklama %></p>
-                <p class="author-info"><strong>Yazar:</strong> <%= dergi.yazar %></p>
-                
-                <%  if(dergi.olusturan_user_id === 1) { %>
-                    <p class="user-info"><strong>Ekleyen:</strong>Nazım Köğçe</p>
-                    <% } else { %>
-                <p class="user-info"><strong>Ekleyen:</strong> Belirtilmedi</p>
-                <% } %>
-                <p class="download-link">
-                    <strong>İndirme Linki:</strong>
-                    <form action="/dergiler/<%= dergi.dergi_id%>/indir" method="POST">
-                        <input type="hidden" name="pdf_dosya" value="<%= dergi.pdf_dosya %>">
-                        <button name="<%=dergi.pdf_dosya%>" class="btn btn-primary"><%=  dergi.pdf_dosya%></button>
-                    </form>
-                </p>
+    <div class = "cards-wrapper">
+        <div class = "cards">
+          <!-- card left -->
+          <div class = "product-imgs">
+            <div class = "img-display">
+              <div class = "img-showcase">
+                <img src = "/uploads/<%=dergi.resim%>" alt = "">
+                <img src = "shoes_images/shoe_2.jpg" alt = "">
+                <img src = "shoes_images/shoe_3.jpg" alt = "">
+                <img src = "shoes_images/shoe_4.jpg" alt = "">
+              </div>
             </div>
-            
+            <div class = "img-select">
+              <div class = "img-item">
+                <a href = "#" data-id = "1">
+                  <img src = "" alt = "">
+                </a>
+              </div>
+              <div class = "img-item">
+                <a href = "#" data-id = "2">
+                  <img src = "" alt = "">
+                </a>
+              </div>
+              <div class = "img-item">
+                <a href = "#" data-id = "3">
+                  <img src = "" alt = "">
+                </a>
+              </div>
+              <div class = "img-item">
+                <a href = "#" data-id = "4">
+                  <img src = "" alt = "">
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- card right -->
+          <div class = "product-content">
+            <h2 class = "product-title"><%= dergi.dergi_basligi %></h2>
+            <a href = "#" class = "product-link"></a>
+            <div class = "product-rating dsp-none">
+              <i class = "fas fa-star"></i>
+              <i class = "fas fa-star"></i>
+              <i class = "fas fa-star"></i>
+              <i class = "fas fa-star"></i>
+              <i class = "fas fa-star-half-alt"></i>
+              <span>4.7(21)</span>
+            </div>
+  
+  
+            <div class = "product-detail">
+              <h2>Dergi Hakkında: </h2>
+              <p><%= dergi.aciklama %></p>
+              <ul>
+                <li>Konu: <span><%= dergi.konu %></span></li>
+                <li>Yazar: <span><%= dergi.yazar %></span></li>
+                <li>Oluşturan: <span><%= dergi.olusturan_user_id %></span></li>
+                <li>Kategori: <span><%= dergi.kategorisi %></span></li>
+                <li>Tür:  <span><%=dergi.dergi_turu%></span></li>
+              </ul>
+            </div>
+  
+            <div class = "purchase-info">
+                <form action="/dergiler/<%= dergi.dergi_id%>/indir" method="POST">
+                    <input type="hidden" name="pdf_dosya" value="<%= dergi.pdf_dosya %>">
+                    <button name="<%=dergi.pdf_dosya%>" class="btn btn-primary">Ürünü indir <i class='bx bxs-download'></i></button>
+                </form>
+              </div>
+  
+            <div class = "social-links">
+              <p>Paylaş: </p>
+              <a href = "#">
+                <i class = "fab fa-facebook-f"></i>
+              </a>
+              <a href = "#">
+                <i class = "fab fa-twitter"></i>
+              </a>
+              <a href = "#">
+                <i class = "fab fa-instagram"></i>
+              </a>
+              <a href = "#">
+                <i class = "fab fa-whatsapp"></i>
+              </a>
+
+            </div>
+          </div>
         </div>
-        
-    </div>
+      </div>
+  
     <div class="detail-page-pdf-review">
             <iframe src="/uploads/<%=  dergi.pdf_dosya%>" frameborder="0"></iframe>
     </div>
@@ -150,3 +205,6 @@
     </div>
 </div>
 <%- include('./partials/footer.ejs') %>
+
+
+
