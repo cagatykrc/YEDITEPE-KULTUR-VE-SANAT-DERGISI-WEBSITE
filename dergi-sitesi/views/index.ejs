@@ -41,6 +41,7 @@
                 <% }); %>
         </ul>
       </div>
+      <div class="top-custom-cards-cont">
       <h2 class="main-bks">Dergilerimiz</h2>
           <section class="home-section">
             <div class="home-content">
@@ -48,6 +49,7 @@
               <span class="text">Filtreler</span>
             </div>
           </section>
+        </div>
           <div class="custom-card-container">
               <% dergiler.forEach(dergi => { %>
                   <a class="custom-card <%= dergi.kategorisi %> tumu" href="/dergiler/<%= dergi.dergi_id %>">
