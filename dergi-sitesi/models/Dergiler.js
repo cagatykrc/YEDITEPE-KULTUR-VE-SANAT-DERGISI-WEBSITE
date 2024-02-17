@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../utility/database');
 const Yorumlar = require('./Yorumlar');
+const Users = require('./Users');
 const Dergiler = sequelize.define('Dergiler', {
     dergi_id: {
         type: DataTypes.INTEGER,
