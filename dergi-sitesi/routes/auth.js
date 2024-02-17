@@ -21,6 +21,8 @@ router.get('/giris', (req, res) => {
 });
 
 router.post('/kayit', postlimiter, async (req, res) => {
+  const ipAddress = req.socket.remoteAddress;
+  console.log(ipAddress);
   const { username, firstName, lastName, email, password, verifypassword } = req.body;
   const userS = req.session.user;
   // Kullanıcı adı ve e-posta adresi var mı kontrol et
@@ -106,59 +108,63 @@ router.post('/giris', postlimiter,  async (req, res) => {
     if (!user) {
       res.render('giris',  {userS,message:'Kullanıcı adı bulunamadı', messagecolor:'#FF0000'});
       return; // Username not found, redirect to login page
-  }
+    }
     
-
-      // Eğer token varsa ve geçerliyse, kullanıcı bilgilerini oturumda sakla
-      // if (token) {
+    
+    // Eğer token varsa ve geçerliyse, kullanıcı bilgilerini oturumda sakla
+    // if (token) {
       //     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
-      //         if (!err && decoded.userId === user.user_id) {
-      //             req.session.user = {
+        //         if (!err && decoded.userId === user.user_id) {
+          //             req.session.user = {
       //                 id: user.user_id,
       //                 username: user.username,
       //                 firstName: user.first_name,
       //                 role: user.role
       //             };
-
+      
       //             // Başarı durumunda kullanıcıya cevap gönder
       //             // res.cookie('token', token, { httpOnly: true, secure: false });
       //             return res.redirect('/');
       //         } else {
-      //             // Token geçerli değilse veya kullanıcı eşleşmiyorsa
-      //             console.error('Token verification failed or user mismatch');
-      //             return res.redirect('/auth/giris');
-      //         }
-      //     });
-      // } else {
+        //             // Token geçerli değilse veya kullanıcı eşleşmiyorsa
+        //             console.error('Token verification failed or user mismatch');
+        //             return res.redirect('/auth/giris');
+        //         }
+        //     });
+        // } else {
           // Token yoksa, şifreyi karşılaştır (hashli şifre)
           const passwordMatch = await bcrypt.compare(password, user.password);
-
+          
           if (!passwordMatch) {
             res.render('giris',  {userS,message:'Hatalı Şifre!', messagecolor:'#FF0000'});
             return;
           }
-
+          
           // Kullanıcı bilgilerini oturumda sakla
           // const newToken = jwt.sign({ userId: user.user_id, username: user.username, role: user.role }, '22b15b3b483df486d3fe2f2f01f5de51c6ac0e527d34d12b571e1c205ae41fb0', { expiresIn: '120s' });
           req.session.user = {
-              id: user.user_id,
-              username: user.username,
-              firstName: user.first_name,
-              role: user.role
+            id: user.user_id,
+            username: user.username,
+            firstName: user.first_name,
+            role: user.role
           };
-
+          
           // Başarı durumunda kullanıcıya cevap gönder
           // res.cookie('token', newToken, { httpOnly: true, secure: false });
+          const ipAddress = req.socket.remoteAddress;
+          console.log('Giriş yaptı: '+username+" " +ipAddress);
           return res.redirect('/');
-      }
-   catch (error) {
-      console.error(error);
-      return res.redirect('/auth/giris');
+        }
+        catch (error) {
+          console.error(error);
+          return res.redirect('/auth/giris');
   }
 });
   
   
   router.post('/cikis', (req, res) => {
+    const ipAddress = req.socket.remoteAddress;
+    console.log('Çıkış Yaptı'+ipAddress);
     const userS = req.session.user;
     if (userS){
       req.session.destroy();

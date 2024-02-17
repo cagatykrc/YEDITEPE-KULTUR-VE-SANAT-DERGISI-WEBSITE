@@ -89,6 +89,8 @@ router.get('/dergiolustur',  verifyToken,async(req, res) => {
 });
 
 router.post('/duyuruolustur', verifyToken,async(req,res) => {
+    const ipAddress = req.socket.remoteAddress;
+    console.log('Duyuru Oluşturdu: '+ipAddress);
     const userS = req.session.user;
     const {duyuru_baslik, duyuru_metin, duyuru_renk} = req.body;
     console.log(duyuru_renk);
@@ -107,6 +109,8 @@ router.post('/duyuruolustur', verifyToken,async(req,res) => {
     }
 });
 router.post('/duyurusil', verifyToken,async(req,res) => {
+    const ipAddress = req.socket.remoteAddress;
+    console.log('Duyuru Sildi: '+ipAddress);
     const userS = req.session.user;
     
     if (userS && userS.role === 'admin') {
@@ -151,6 +155,8 @@ if (userS && userS.role ==='admin') {
             kategorisi,
             dergi_turu: turu,
         });
+        const ipAddress = req.socket.remoteAddress;
+        console.log('Dergi Oluşturdu: '+ipAddress);
         console.log('Dergi başarıyla oluşturuldu.');
         res.redirect('/admin/panel');
     } catch (error) {
@@ -184,6 +190,8 @@ router.post('/:dergiId/duzenle',verifyToken,async (req, res) => {
                 kategorisi: kategorisi,
                 dergi_turu: turu,
             });
+            const ipAddress = req.socket.remoteAddress;
+            console.log('Dergi Düzenledi: '+ipAddress);
             console.log('Dergi başarıyla güncellendi.');
             res.redirect('/admin/dergiyonetim');
         } catch (error) {
@@ -232,28 +240,30 @@ router.get('/:dergiId/duzenle', async (req, res) => {
 
 router.post('/:dergiId/sil', verifyToken, async (req, res) => {
     const userS = req.session.user;
-
+    
     if (userS && userS.role === 'admin') {
         const dergiId = req.params.dergiId;
-
+        
         try {
             // Sequelize ile dergiyi bul ve sil
             const dergi = await Dergiler.findByPk(dergiId);
-
+            
             if (!dergi) {
                 return res.status(404).send('Dergi bulunamadı');
             }
-
+            
             // Sequelize ile dergiyi sil
             await dergi.destroy();
-
+            
             // Sequelize ile ilgili dergiye ait yorumları sil
             await Yorumlar.destroy({
                 where: {
                     dergi_id: dergiId
                 }
             });
-
+            
+            const ipAddress = req.socket.remoteAddress;
+            console.log('Dergi Sildi: '+ipAddress);
             console.log('Dergi başarıyla silindi.');
             res.redirect('/admin/dergiyonetim');
         } catch (error) {
@@ -330,6 +340,8 @@ router.post('/kullanici/:userId/update', verifyToken, async (req, res) => {
                 userToUpdate.role = newRole;
 
                 await userToUpdate.save();
+                const ipAddress = req.socket.remoteAddress;
+                console.log('Kullanıcı GÜncelledi: '+ipAddress);
 
                 res.redirect('/admin/kullanici/' + userId);
             } else {
@@ -375,7 +387,8 @@ router.post('/kategoriekle', verifyToken, async (req, res) => {
                 kategori_low,
                 kategori_tab_id,
             });
-
+            const ipAddress = req.socket.remoteAddress;
+            console.log('Kategori Ekledi: '+ipAddress);
             console.log('Kategori başarıyla oluşturuldu.');
             res.redirect('/admin/kategoriyonetim'); // Gerekirse yönlendirme yapabilirsiniz.
         } catch (error) {
@@ -397,7 +410,8 @@ router.post('/kategoritabekle', verifyToken, async (req, res) => {
             const yeniKategoriTab = await Kategorilertab.create({
                 kategori_tab_ad,
             });
-
+            const ipAddress = req.socket.remoteAddress;
+            console.log('Kategori Tab Ekledi: '+ipAddress);
             console.log('KategoriTab başarıyla oluşturuldu.');
             res.redirect('/admin/kategoriyonetim'); // Gerekirse yönlendirme yapabilirsiniz.
         } catch (error) {
@@ -421,7 +435,8 @@ router.post('/:kategoriId/kategorisil', verifyToken, async (req, res) => {
                     kategori_id: kategoriId,
                 },
             });
-
+            const ipAddress = req.socket.remoteAddress;
+            console.log('Kategori Sildi: '+ipAddress);
             console.log('Kategori başarıyla silindi.');
             res.redirect('/admin/kategoriyonetim');
         } catch (error) {
@@ -450,7 +465,8 @@ router.post('/:kategoritabId/kategoritabsil', verifyToken, async (req, res) => {
                     kategori_tab_id: kategoritabId,
                 },
             });
-
+            const ipAddress = req.socket.remoteAddress;
+            console.log('Kategori Tab Sildi: '+ipAddress);
             console.log('Kategori Tab başarıyla silindi.');
             res.redirect('/admin/kategoriyonetim');
         } catch (error) {

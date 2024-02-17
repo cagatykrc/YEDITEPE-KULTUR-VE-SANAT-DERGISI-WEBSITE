@@ -50,6 +50,8 @@ router.post('/:dergiId/yorumsil', verifyToken, async (req, res) => {
             }
 
             await yorum.destroy();
+            const ipAddress = req.socket.remoteAddress;
+            console.log('Yorum Sİldi: '+ipAddress);
             console.log(yorumId + ' Yorum silindi.');
             res.json({ message: yorumId + ' Yorum başarıyla silindi' });
         } catch (error) {
@@ -81,7 +83,8 @@ router.post('/:dergiId/yorumEkle',postlimiter, async (req, res) => {
             kullanici_id: kullaniciId,
             yorum_metni: yorumMetni
         });
-
+        const ipAddress = req.socket.remoteAddress;
+        console.log('Yorum Ekledi: '+ipAddress);
         res.redirect(`/dergiler/${dergiId}`);
     } catch (error) {
         console.error('Yorum eklenirken bir hata oluştu: ' + error);

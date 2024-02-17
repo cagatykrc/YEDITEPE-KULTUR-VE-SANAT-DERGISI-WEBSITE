@@ -53,7 +53,6 @@ router.post('/contact', (req, res) => {
 router.get('/', async (req, res) => {
     const userS = req.session.user;
     const kategoritabID = req.body;
-    console.log(userS);
     try {
         const dergiler = await Dergiler.findAll();
         const duyurular = await Duyurular.findAll();
@@ -68,7 +67,6 @@ router.get('/', async (req, res) => {
         
               ]
         });
-        console.log(kategoriTabs.kategoriler);
         // const kategorilers = await Kategoriler.findAll({
         //     where: {
         //         kategori_tab_id: kategoritabID,

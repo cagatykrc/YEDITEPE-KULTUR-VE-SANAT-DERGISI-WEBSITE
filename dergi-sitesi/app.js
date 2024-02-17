@@ -29,7 +29,6 @@ const app = express();
 
 
 require('dotenv').config();
-
 console.log(secretKey);
 app.use(session({
     secret: secretKey,
