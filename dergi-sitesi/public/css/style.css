@@ -654,7 +654,6 @@ padding: 12px;
 
 
 
-
 .notification-panel {
     position: fixed;
     right: 32px;
@@ -671,6 +670,13 @@ padding: 12px;
     align-items: center;
 }
 
+.notification-panel-content{
+    display: flex;
+    flex-direction: column;
+}
+.notification-panel i{
+    font-size: 1.5rem;
+}
 
 .k-menu {
     position: relative;
