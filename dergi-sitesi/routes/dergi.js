@@ -25,6 +25,7 @@ router.get('/:dergiId', async (req, res) => {
                 attributes: ['first_name'],
             }]
         });
+        console.log(dergiYorumlari);
 
         // Dergi sayfasını render et
         res.render('dergiDetay', { dergi, userS, dergiYorumlari });

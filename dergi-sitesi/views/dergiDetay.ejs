@@ -119,22 +119,8 @@
                             <div  style="padding: 5px;" class=" d-flex justify-content-between align-items-center">
                                 <h5 class="mb-1"><strong><%= yorum.User.first_name %>:</strong></h5>
                                 <small class="text-muted">
-                                    <%
-                                    const rawDate = yorum.tarih; // Bu, veritabanından gelen tarih string'i olabilir
-                                    let formattedDate;
-                                  
-                                    if (rawDate instanceof Date) {
-                                      // Eğer rawDate bir tarih nesnesi ise, direkt olarak kullanabilirsiniz
-                                      formattedDate = rawDate.toLocaleDateString('tr-TR');
-                                    } else if (typeof rawDate === 'string') {
-                                      // Eğer rawDate bir string ise, Date objesine çevirin
-                                      const dateObject = new Date(rawDate);
-                                      formattedDate = dateObject.toLocaleDateString('tr-TR');
-                                    } else {
-                                      // Eğer rawDate ne bir tarih nesnesi ne de bir string değilse
-                                      formattedDate = 'Tarih bilgisi yok';
-                                    }
-                                  %>
+                                  <%= new Date(yorum.createdAt).toLocaleDateString('tr-TR') %>
+
                                 </small>
                                 <!-- Add the delete button here -->
                                     <button class="btn btn-sm btn-danger" onclick="confirmDelete('<%=  yorum.yorum_id%>')">Delete</button>
@@ -144,6 +130,7 @@
                     <% }); %>
                 </div>
                 <script> 
+
                     function confirmDelete(yorumId) {
                         if (confirm('Emin misiniz?')) {
                             // Silme işlemi için POST isteği gönder
@@ -174,26 +161,7 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <h5 class="mb-1"><strong><%= yorum.User.first_name %>:</strong></h5>
                                 <small class="text-muted">
-                                    <%
-                                    const rawDate = yorum.tarih; // Bu, veritabanından gelen tarih string'i olabilir
-                                    let formattedDate;
-                                  
-                                    if (rawDate) { // Eğer tarih değeri mevcutsa
-                                        if (rawDate instanceof Date) {
-                                            // Eğer rawDate bir tarih nesnesi ise, direkt olarak kullanabilirsiniz
-                                            formattedDate = rawDate.toLocaleDateString('tr-TR');
-                                        } else if (typeof rawDate === 'string') {
-                                            // Eğer rawDate bir string ise, Date objesine çevirin
-                                            const dateObject = new Date(rawDate);
-                                            formattedDate = dateObject.toLocaleDateString('tr-TR');
-                                        } else {
-                                            // Eğer rawDate ne bir tarih nesnesi ne de bir string değilse
-                                            formattedDate = 'Tarih bilgisi yok';
-                                        }
-                                    } else {
-                                        formattedDate = 'Tarih bilgisi yok';
-                                    }
-                                    %>
+                                  <%= new Date(yorum.createdAt).toLocaleDateString('tr-TR') %>
                                 </small>
                             </div>
                             <p class="mb-1"><%= yorum.yorum_metni %></p>
@@ -204,6 +172,7 @@
         </div>
     </div>
 </div>
+
 <%- include('./partials/footer.ejs') %>
 
 

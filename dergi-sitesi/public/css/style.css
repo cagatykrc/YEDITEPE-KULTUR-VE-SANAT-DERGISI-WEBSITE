@@ -22,7 +22,11 @@ body {
 }
 
 
-
+@media only screen and (min-width: 701px) and  (max-width:872 ){
+    .custom-card .tumu{
+        width: 252px; /* Two cards per row with some margin */
+    }
+}
 
 .container p {
     display: flex;
@@ -437,7 +441,7 @@ a{
 }
 
 .custom-card {
-    width: 285px; /* Three cards per row with some margin */
+    width: 260px;    /* Three cards per row with some margin */
     background-color: white;
     border-radius: 1px;
     overflow: hidden;
@@ -1491,6 +1495,10 @@ a {
 }
 
 @media screen and (min-width: 992px){
+    .custom-card{
+    width: 300px; /* Three cards per row with some margin */
+
+    }
     .cards{
         box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
         border-radius:12px ;
