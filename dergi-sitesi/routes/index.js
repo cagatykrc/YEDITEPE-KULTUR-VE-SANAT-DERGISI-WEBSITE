@@ -1,11 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../utility/database');
 const Dergiler = require('../models/Dergiler');
 const Kategoriler = require('../models/Kategoriler');
 const Kategorilertab = require('../models/Kategorilertab');
 const verifyToken = require('../utility/verifyToken');
-const { getKategorilerWithTabs } = require('../models/Kategoriler');
 const nodemailer = require('nodemailer');
 const Duyurular = require('../models/Duyurular');
 // Ana sayfa

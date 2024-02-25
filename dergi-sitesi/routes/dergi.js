@@ -53,40 +53,41 @@ router.post('/:dergiId/yorumsil', verifyToken, async (req, res) => {
     const yorumId = req.body.yorumId;
     const dergiId = req.params.dergiId;
 
-    if (userS && userS.role === 'admin') {
-        try {
-            // Sequelize ile yorumu bul ve sil
-            const yorum = await Yorumlar.findByPk(yorumId);
-            if (!yorum) {
-                return res.status(404).json({ error: 'Yorum bulunamadı' });
-            }
+    if (!userS || userS.role !== 'admin') {
+        return res.status(403).json({ error: 'Yetkisiz erişim' });
+    }
 
-            await yorum.destroy();
-            const ipAddress = req.socket.remoteAddress;
-            logger.info( userS.username+' '+'Yorum Sildi: '+ipAddress);
-            console.log(userS.username+' '+yorumId + ' Yorum silindi.' +'  //'+now);
-            res.json({ message: yorumId + ' Yorum başarıyla silindi' });
-        } catch (error) {
-            console.log(error);
-            res.status(500).json({ error: 'Yorum silinirken bir hata oluştu' });
+    try {
+        // Sequelize ile yorumu bul ve sil
+        const yorum = await Yorumlar.findByPk(yorumId);
+        if (!yorum) {
+            return res.status(404).json({ error: 'Yorum bulunamadı' });
         }
-    } else {
-        res.status(403).json({ error: 'Yetkisiz erişim' });
+
+        await yorum.destroy();
+        const ipAddress = req.socket.remoteAddress;
+        logger.info(userS.username + ' ' + 'Yorum Sildi: ' + ipAddress);
+        console.log(userS.username + ' ' + yorumId + ' Yorum silindi.' + '  //' + now);
+        return res.json({ message: yorumId + ' Yorum başarıyla silindi' });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: 'Yorum silinirken bir hata oluştu' });
     }
 });
 
+
 // Örnek endpoint
-router.post('/:dergiId/yorumEkle',postlimiter, async (req, res) => {
+router.post('/:dergiId/yorumEkle', postlimiter, async (req, res) => {
     const dergiId = req.params.dergiId;
+
     // Kullanıcının oturum açmış olup olmadığını kontrol et
     if (!req.session.user) {
-        res.redirect('/auth/giris');
-        return;    
+        return res.redirect('/auth/giris');
     }
-    
+
     const kullaniciId = req.session.user.id;
     const yorumMetni = req.body.yorumMetni;
-    
+
     try {
         // Sequelize ile yorumu oluştur
         const yorum = await Yorumlar.create({
@@ -94,13 +95,15 @@ router.post('/:dergiId/yorumEkle',postlimiter, async (req, res) => {
             kullanici_id: kullaniciId,
             yorum_metni: yorumMetni
         });
+
         const userN = req.session.user.username;
         const ipAddress = req.socket.remoteAddress;
-        logger.info( userN+' '+'Yorum Ekledi: '+ipAddress +'  //'+now);
-        res.redirect(`/dergiler/${dergiId}`);
+        logger.info(userN + ' ' + 'Yorum Ekledi: ' + ipAddress + '  //' + now);
+
+        return res.redirect(`/dergiler/${dergiId}`);
     } catch (error) {
         console.error('Yorum eklenirken bir hata oluştu: ' + error);
-        res.status(500).send('Internal Server Error');
+        return res.status(500).send('Internal Server Error');
     }
 });
 
