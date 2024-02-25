@@ -1,9 +1,10 @@
 <%- include('./partials/header.ejs') %>
 <%- include('./partials/loader.ejs') %>
+
 <div class="custom-container">
   <% duyurular.forEach(duyuru=>{%>
     <div style="width: 80%;" class="announcement-panel">
-        <h2 style="color: <%= duyuru.duyuru_renk%>" class="announcement-title"><%= duyuru.duyuru_baslik %></h2>
+        <h2 class="announcement-title"><%= duyuru.duyuru_baslik %></h2>
         <p  class="announcement-description"><%= duyuru.duyuru_metin %></p>
     </div>
     <% }); %>
@@ -11,10 +12,10 @@
     <div class="custom-row card-panel">
         <div class="sidebar close">
           <div class="sidebar-closebtn">
-            <i class='bx bx-arrow-to-left' ></i>u
+            <i class='bx bx-arrow-to-left' ></i>
           </div>
             <div class="logo-details">
-                <img class="filter-logo dsp-none" src="/images/logoRemovedBackground.png" alt="" width="100px" height="100px">
+                <img class="filter-logo dsp-none" src="/images/newLogoWhiteColorTransparent.png" width="100px" height="100px" alt="">
             </div>
             <ul class="nav-links">
               <li>

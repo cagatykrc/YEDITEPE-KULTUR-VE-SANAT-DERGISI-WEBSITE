@@ -3,12 +3,16 @@ require('dotenv').config();
 const mysql = require('mysql2/promise');
 const { Sequelize } = require('sequelize');
 require('dotenv').config();
+
+
 // const sequelize = new Sequelize(process.env.DB_DATABASE, process.env.DB_USER , process.env.DB_PASS, {
 //   host: process.env.DB_HOST ,
-//   dialect:'mysql' /* one of 'mysql' | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
+//   dialect:'mysql' 
 // });
+
+
 const sequelize = new Sequelize( 'ykvs_books', 'root', 'XLIE4244hGW-TV', {
   host:'localhost',
-  dialect:'mysql' /* one of 'mysql' | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
+  dialect:'mysql'
 });
 module.exports = sequelize;  
