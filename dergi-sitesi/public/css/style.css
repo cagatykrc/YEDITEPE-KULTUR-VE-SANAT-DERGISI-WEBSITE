@@ -22,7 +22,6 @@ html{
     overflow-x: hidden;
 }
 body {
-    overflow: hidden;
     display: flex;
     flex-direction: column;
     font-weight: 500;
@@ -219,6 +218,31 @@ nav{
     top: 0;
 
 }
+.dropdown{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.dropdown-content{
+    display: none;
+    position: relative;
+
+    transition: .3s  ease-in-out;
+    z-index: 999;
+    padding:0;
+    box-shadow: none;
+    text-align: center;
+    
+}
+.dropdown-btn{
+    padding: 8px;
+    border-radius: 8px;
+    font-size: 18px;
+    border: none;
+    background-color: #00B5D8;
+    color: #ffffff;
+}
 .navbar {
     display: flex;
     flex-wrap: wrap;
@@ -228,12 +252,17 @@ nav{
     padding: 10px;
     font-family: 'LexendDeca';
     color: #4B5567;
+    z-index: 999;
 
 }
 .out-button{
     background-color: #ffffff;
     border: none;
     color: #4B5567;
+    font-size: 18px;
+    padding: 8px;
+    z-index: 999;
+    margin-top: 10px;
 }
 .navbar a {
     line-height: 20px;
@@ -271,7 +300,6 @@ nav{
     margin-right: 30px;/* Öğeleri dikey olarak ortala */
     font-family: 'Poppins', sans-serif;
 }
-
 #toggler, .navbar label {
     color: #ffffff;
     display: none;
@@ -425,9 +453,12 @@ nav{
 }
 
 .card-header {
-    background-color: #007bff;
-    color: white;
+    background-color: #ffffff;
+    color: #000000;
     border-bottom: none;
+    font-size: 48px;
+    font-family: LexendDeca;
+    font-weight: 600;
     border-radius: 10px 10px 0 0;
 }
 
@@ -572,16 +603,16 @@ a{
     margin-top: 32px;
 }
 .create-dergi{
-    background-color: #f5f5f5;
+    background-color: #ffffff;
 border-radius: 12px;
-box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+box-shadow: #E2E8F0 0px 0px 5px 0px, #E2E8F0 0px 0px 1px 0px;
 padding: 12px;
 }
 
 .card-body{
-    background-color: #f5f5f5;
+    background-color: #ffffff;
+    box-shadow: #E2E8F0 0px 0px 5px 0px, #E2E8F0 0px 0px 1px 0px;
     border-radius: 12px;
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
     padding: 12px;
 }
 .custom-textarea {
@@ -951,205 +982,7 @@ ul{
     color: #000000;
     font-family: LexendDeca;
 }
-@media (min-width: 320px) and (max-width: 700px) {
-    .fa-bars {
-        color: #4B5567;
-        font-size: 24px;
-    }
-    .top-custom-cards-cont{
-        display: block;
-    }
-    .custom-card-span{
-        padding: 1px;
-        margin: 0;
-        background-color: #e74c3c;
-        font-size: 1.2rem;
-        text-align: right;
-        bottom: calc(100% - 525px);
-        align-items: end;
-        justify-content: right;
-    }
-    .notification-panel {
-        position: fixed;
-        right: 0;
-        z-index: 9999;
-        color: black;
-        padding: 10px;
-        background-color: #f5f5f5;
-        border-radius: 12px;
-        box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-        animation: fadeInOutB 5s;
-        opacity: 0;
-    }
-    .filter-categorys{
-        left: 5px;
-        top: 50vh;
-    }
-    body{
-        background-color: #f5f5f5;
-    }
-    .custom-row{
-        width: 100%;
-        background-color: #f5f5f5;
-        box-shadow: none;
-    }
-    /* Ekran genişliği 767px'e kadar olan durumlar için stiller */
-    .container {
-        margin: 0px 0px 0px 0px;
-        padding: 0px; /* Üst boşluğu sıfıra ayarla */
-    }
-    .row {
-        flex-direction: column; /* Sütun düzenine geç */
-        align-items: center; /* Ortala */
-    }
-    .list-group-item {
-        border: none; /* Listeye kenarlık ekleme */
-        border-radius: 8px; /* Köşeleri yumuşat */
-        margin-bottom: 10px; 
-        background-color: #fff;/* Listeler arasına mesafe koy */
-        box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-    }
-    .list-group-item-admin {
-        border: none; /* Listeye kenarlık ekleme */
-        border-radius: 8px; /* Köşeleri yumuşat */
-        margin-bottom: 10px; 
-        background-color: #fff;/* Listeler arasına mesafe koy */
-        box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-    }
-    .list-group {
-        width: 100%; /* Yorum listesinin genişliğini ayarla */
-    }
-    .col-md-6 {
-        width: 100%; /* Tam genişlik */
-    }
 
-    .detail-info {
-        margin-top: 20px; /* Boşluk ekleyerek resim ile detay bilgileri arasına mesafe koy */
-        width: 99%;
-        min-height: 60vh;
-
-    }
-
-    .detail-comment-area {
-        margin-top: 20px; /* Boşluk ekleyerek detay bilgileri ile yorumlar arasına mesafe koy */
-
-    }
-    .detail-page-pdf-review{
-        margin-top: 24px;
-        width: calc(100% -0px);
-        margin: 0;
-        padding: 0;
-    }
-    iframe{
-        max-width: 50vh;
-
-    }
-    .detail-page-pdf-review iframe{
-        min-height: 90vh;
-        box-sizing: border-box;
-    }
-    .detail-comment-area form {
-        width: 100%; /* Formun genişliğini ayarla */
-    }
-    .custom-card-container {
-        flex-wrap: wrap; /* Allow cards to wrap to the next line */
-        justify-content: space-between;
-        width: 100%; /* Evenly space cards in the container */
-    }
-    .custom-card-text, .custom-card-title{
-        margin-left: 4px;
-    }
-    .container p{
-        font-size: .9rem;
-    }
-    .c-text{
-        margin-top: auto !important;
-    }
-
-    .custom-card {
-        width: calc(50% - 5px); /* Two cards per row with some margin */
-        margin: 2px; /* Add margin between cards */
-        margin-top: 8px;
-    }
-    .custom-card-content {
-        padding-top: 0;
-        padding-left: 0px;
-        padding-bottom: 3px;
-        margin: 0px;
-        height: 189px;
-        box-sizing: border-box;
-    }
-    .custom-card-title {
-        font-size: 1.1rem;
-        color: #333;
-        padding: .1rem;
-        margin-top: 5px;
-    }
-    .menu {
-        width: 100%;
-        max-height: 0;
-        overflow: hidden;
-    }
-    .logo {
-        margin-left: 0px;
-    }
-
-    .list {
-        flex-direction: column;
-        align-items: center;
-        padding: 20px;
-        margin: 0;
-    }
-    .list a {
-        text-decoration: none;
-        color: #4B5567;
-        font-size: 18px;
-        transition: color 0.3s ease-in-out; /* Renk değişimini animasyonlu yap */
-    }
-    .list a:hover {
-        color: #00B5D8; /* Hover durumunda renk değiştir */
-    }
-    .list .navbar-link-reg a{
-        color: #ffffff;
-        width: 100%;
-    }
-
-    .navbar label {
-        display: inline-flex;
-        align-items: center;
-        cursor: pointer;
-    }
-    .main-bks{
-        background-color: #f5f5f5;
-        margin-top: 24px;
-        border-bottom:thin solid #171923;
-        padding-bottom: 10px;
-        margin-bottom: 24px;
-    }
-
-
-    #toggler:checked ~ .menu {
-        max-height: 100%;
-    }
-    .detail-image img{
-        margin-left: 0px;
-        height: 600px;
-        object-fit: fill;
-        margin-right: 0px;
-        border-radius: 0px;
-    }
-    .kategori{
-        padding-left: 0px;
-    }
-    .filter-system-s{
-        margin-top: 20px;
-        display: inline-block;
-
-    }
-    h2{
-        display: inline-block;
-    }
-}
 
 a{
     display: inline-block;
@@ -1499,7 +1332,6 @@ a {
     transition: all 0.5s ease;
 }
 .img-showcase img{
-    min-width: 100%;
     height: 580px;
 }
 .img-select{
@@ -1654,6 +1486,15 @@ a {
 }
 
 @media screen and (min-width: 992px){
+    .dropdown-content{
+        top: 85%;
+        left: 22%;
+        position: absolute;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+        padding: 10px;
+        border-radius: 12px;
+        background-color: #ffffff;
+    }
     .custom-card{
     width: 300px; /* Three cards per row with some margin */
 
@@ -1716,3 +1557,205 @@ a {
       }
 }
 
+@media (min-width: 320px) and (max-width: 700px) {
+    .img-showcase img{
+        max-width: 99%;
+    }
+    .fa-bars {
+        color: #4B5567;
+        font-size: 24px;
+    }
+    .top-custom-cards-cont{
+        display: block;
+    }
+    .custom-card-span{
+        padding: 1px;
+        margin: 0;
+        background-color: #e74c3c;
+        font-size: 1.2rem;
+        text-align: right;
+        bottom: calc(100% - 525px);
+        align-items: end;
+        justify-content: right;
+    }
+    .notification-panel {
+        position: fixed;
+        right: 0;
+        z-index: 9999;
+        color: black;
+        padding: 10px;
+        background-color: #f5f5f5;
+        border-radius: 12px;
+        box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+        animation: fadeInOutB 5s;
+        opacity: 0;
+    }
+    .filter-categorys{
+        left: 5px;
+        top: 50vh;
+    }
+    body{
+        background-color: #f5f5f5;
+    }
+    .custom-row{
+        width: 100%;
+        background-color: #f5f5f5;
+        box-shadow: none;
+    }
+    /* Ekran genişliği 767px'e kadar olan durumlar için stiller */
+    .container {
+        margin: 0px 0px 0px 0px;
+        padding: 0px; /* Üst boşluğu sıfıra ayarla */
+    }
+    .row {
+        flex-direction: column; /* Sütun düzenine geç */
+        align-items: center; /* Ortala */
+    }
+    .list-group-item {
+        border: none; /* Listeye kenarlık ekleme */
+        border-radius: 8px; /* Köşeleri yumuşat */
+        margin-bottom: 10px; 
+        background-color: #fff;/* Listeler arasına mesafe koy */
+        box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    }
+    .list-group-item-admin {
+        border: none; /* Listeye kenarlık ekleme */
+        border-radius: 8px; /* Köşeleri yumuşat */
+        margin-bottom: 10px; 
+        background-color: #fff;/* Listeler arasına mesafe koy */
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    }
+    .list-group {
+        width: 100%; /* Yorum listesinin genişliğini ayarla */
+    }
+    .col-md-6 {
+        width: 100%; /* Tam genişlik */
+    }
+
+    .detail-info {
+        margin-top: 20px; /* Boşluk ekleyerek resim ile detay bilgileri arasına mesafe koy */
+        width: 99%;
+        min-height: 60vh;
+
+    }
+
+    .detail-comment-area {
+        margin-top: 20px; /* Boşluk ekleyerek detay bilgileri ile yorumlar arasına mesafe koy */
+
+    }
+    .detail-page-pdf-review{
+        margin-top: 24px;
+        width: calc(100% -0px);
+        margin: 0;
+        padding: 0;
+    }
+    iframe{
+        max-width: 50vh;
+
+    }
+    .detail-page-pdf-review iframe{
+        min-height: 90vh;
+        box-sizing: border-box;
+    }
+    .detail-comment-area form {
+        width: 100%; /* Formun genişliğini ayarla */
+    }
+    .custom-card-container {
+        flex-wrap: wrap; /* Allow cards to wrap to the next line */
+        justify-content: space-between;
+        width: 100%; /* Evenly space cards in the container */
+    }
+    .custom-card-text, .custom-card-title{
+        margin-left: 4px;
+    }
+    .container p{
+        font-size: .9rem;
+    }
+    .c-text{
+        margin-top: auto !important;
+    }
+
+    .custom-card {
+        width: calc(50% - 5px); /* Two cards per row with some margin */
+        margin: 2px; /* Add margin between cards */
+        margin-top: 8px;
+    }
+    .custom-card-content {
+        padding-top: 0;
+        padding-left: 0px;
+        padding-bottom: 3px;
+        margin: 0px;
+        height: 189px;
+        box-sizing: border-box;
+    }
+    .custom-card-title {
+        font-size: 1.1rem;
+        color: #333;
+        padding: .1rem;
+        margin-top: 5px;
+    }
+    .menu {
+        width: 100%;
+        max-height: 0;
+        overflow: hidden;
+    }
+    .logo {
+        margin-left: 0px;
+    }
+
+    .list {
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+        margin: 0;
+    }
+    .list a {
+        text-decoration: none;
+        color: #4B5567;
+        font-size: 18px;
+        transition: color 0.3s ease-in-out; /* Renk değişimini animasyonlu yap */
+    }
+    .list a:hover {
+        color: #00B5D8; /* Hover durumunda renk değiştir */
+    }
+    .list .navbar-link-reg a{
+        color: #ffffff;
+        width: 100%;
+    }
+
+    .navbar label {
+        display: inline-flex;
+        align-items: center;
+        cursor: pointer;
+    }
+    .main-bks{
+        background-color: #f5f5f5;
+        margin-top: 24px;
+        border-bottom:thin solid #171923;
+        padding-bottom: 10px;
+        margin-bottom: 24px;
+    }
+
+
+    #toggler:checked ~ .menu {
+        max-height: 100%;
+    }
+    .detail-image img{
+        margin-left: 0px;
+        height: 600px;
+        object-fit: fill;
+        margin-right: 0px;
+        border-radius: 0px;
+    }
+    .kategori{
+        padding-left: 0px;
+    }
+    .filter-system-s{
+        margin-top: 20px;
+        display: inline-block;
+
+    }
+    h2{
+        display: inline-block;
+    }
+}

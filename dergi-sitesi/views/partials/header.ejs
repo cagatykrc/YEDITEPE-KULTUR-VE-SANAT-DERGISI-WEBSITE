@@ -28,11 +28,6 @@
             <ul class="list">
                 <% if (userS && userS.username) { %>
                     <!-- Kullanıcı giriş yapmışsa -->
-                    <li class="navbar">
-                        <li class="navbar" href="#" data-bs-toggle="dropdown"aria-expanded="false">
-                            Merhaba, <%= userS.firstName %>
-                        </li>
-                    </li>
                     <li class="navbar"><a href="/">Anasayfa</a></li>
                     <li class="navbar"><a href="/hakkimizda">Hakkımızda</a></li>
                     <li class="navbar"><a href="/iletisim">İletişim</a></li>
@@ -41,8 +36,18 @@
                         <li class="item">
                             <a class="navbar" href="/admin/Panel">Kontrol Paneli</a>
                         </li>
-                    <% } %>
-                    <li class="navbar"><form action="/auth/cikis" method="POST"><button class="out-button">Çıkış yap</button></form></li>
+                        <% } %>
+                        <li class="navbar dropdown">
+                        <button class="dropdown-btn ">Merhaba, <%= userS.firstName %><i class='bx bxs-chevron-down arrow' ></i></button>
+                            <div class="dropdown-content">
+                                <a href="">
+                                    <form action="/auth/cikis" method="POST">
+                                        <button class="out-button">Çıkış yap</button>
+                                    </form>
+                                </a>
+                              </div>
+                        </li>
+                    
                 <% } else { %>
                     <!-- Kullanıcı giriş yapmamışsa -->
                     <li class="navbar"><a href="/">Anasayfa</a></li>
@@ -67,6 +72,23 @@
         </div>
       <% } %>
     <script>
+        var dropdown = document.getElementsByClassName("dropdown-btn");
+        var i;
+
+        for (i = 0; i < dropdown.length; i++) {
+        dropdown[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var dropdownContent = document.querySelector('.dropdown-content');
+            if (dropdownContent.style.display === "unset") {
+            dropdownContent.style.display = "none";
+            } else {
+            dropdownContent.style.display = "unset";
+            }
+        });
+        } 
+
+
+
         var prevScrollpos = window.pageYOffset;
         window.onscroll = function() {
         var currentScrollPos = window.pageYOffset;
@@ -78,6 +100,7 @@
         prevScrollpos = currentScrollPos;
         } 
     </script>
+    
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-PbHX7of8LQQcdiBye2w2/kVfV1Kl3HHG9h8ncZnlD8zSKeGrSjt+7tj4oN2iC2w7" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-LdEtrbybOjcgoVfBExF8R3rOys2tp2sJEL8VPRla2r8QXG5BK8N9gE3CCOu9x1Gq" crossorigin="anonymous"></script>
 
