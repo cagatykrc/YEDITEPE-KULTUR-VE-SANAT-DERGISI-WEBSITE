@@ -1,9 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap');
 input{
     background-color: #F7FAFC;
-    color: #728095;
+    color: black;
     font-weight: 400;
     font-family: LexendDeca;
+}
+h2{
+    font-family: LexendDeca;
+    font-weight: 600;
+    color: #000;
+}
+.custom-text{
+    color: #4B5567;
+    font-weight: 400;
+    font-size: 28px;
+    margin-left: 64px;
 }
 html{
     height: auto;
@@ -101,7 +112,7 @@ body {
 .about-us,
 .social-media {
     margin-bottom: 40px;
-    background-color: #EDF2F7;
+    background-color: #ffffff;
     box-shadow: #E2E8F0 0px 0px 5px 0px, #E2E8F0 0px 0px 1px 0px;
     padding: 1rem;
     border-radius: 12px;
@@ -203,6 +214,10 @@ body {
 nav{
     background-color: #ffffff;
     box-shadow: #E2E8F0 0px 0px 5px 0px, #E2E8F0 0px 0px 1px 0px;
+    transition: top .3s;
+    position: fixed;
+    top: 0;
+
 }
 .navbar {
     display: flex;
@@ -421,12 +436,12 @@ nav{
 }
 
 .btn-primary {
-    background-color: #007bff;
+    background-color: #00B5D8;
     border: none;
 }
 
 .btn-primary:hover {
-    background-color: #0056b3;
+    background-color: #00B5D8;
 }
 
 a{
@@ -528,16 +543,16 @@ a{
 
 /* Yorum ekle stilleri */
 .detail-comment-area {
-    background-color: #f8f9fa;
+    background-color: #ffffff;
     border-radius: 5px;
     margin-top: 20px;
     padding: 20px;
-    box-sizing: border-box; /* Kutu modelini etkinleştirme */
+    box-sizing: border-box;
 }
 
 .detail-comment-area {
-    width: 100%; /* .detail-comment-area içindeki .container'ın genişliği %100 olsun */
-    max-width: 100%; /* .container'ın genişliği tarayıcı genişliğini aşmasın */
+    max-width: 1200px; /* Kutu modelini etkinleştirme */
+    box-shadow: #E2E8F0 0px 0px 5px 0px, #E2E8F0 0px 0px 1px 0px; /* .detail-comment-area içindeki .container'ın genişliği %100 olsun */ /* .container'ın genişliği tarayıcı genişliğini aşmasın */
     margin: 0 auto; /* .container'ı ortala */
 
 }
@@ -550,7 +565,7 @@ a{
 
 }
 .send-contact-area{
-    background-color: #EDF2F7;
+    background-color: #ffffff;
     box-shadow: #E2E8F0 0px 0px 5px 0px, #E2E8F0 0px 0px 1px 0px;
     border-radius: 12px;
     padding: 24px;
@@ -662,10 +677,10 @@ padding: 12px;
 }
 .list-group-item {
     border: none; /* Listeye kenarlık ekleme */
-    border-radius: 8px; /* Köşeleri yumuşat */
+    border-radius: 12px; /* Köşeleri yumuşat */
     margin-bottom: 10px; 
     background-color: #fff;/* Listeler arasına mesafe koy */
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    box-shadow: #E2E8F0 0px 0px 5px 0px, #E2E8F0 0px 0px 1px 0px;
 }
 .list-group-item-admin {
     border: none; /* Listeye kenarlık ekleme */
@@ -857,7 +872,7 @@ ul{
 
 .contact{
     margin-top: 64px;
-    background-color: #EDF2F7;
+    background-color: #ffffff;
     border-radius: 12px;
     box-shadow: #E2E8F0 0px 0px 5px 0px, #E2E8F0 0px 0px 1px 0px;
     padding: 1rem;
@@ -1468,8 +1483,11 @@ a {
     margin: 0 auto;
     margin-top: 64px;
 }
+.cards{
+    background-color: #ffffff;
+}
 .cards img{
-    width: 100%;
+    max-width: 600px;
     display: block;
 }
 .img-display{
@@ -1477,7 +1495,7 @@ a {
 }
 .img-showcase{
     display: flex;
-    width: 100%;
+    width: 600px;
     transition: all 0.5s ease;
 }
 .img-showcase img{
@@ -1644,11 +1662,12 @@ a {
         box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
         border-radius:12px ;
         display: grid;
+        background-color: #ffffff;
         grid-template-columns: repeat(2, 1fr);
         grid-gap: 1.5rem;
     }
     .cards-wrapper{
-        max-width: 1200px;
+        max-width: 1300px;
         height: 100vh;
         display: flex;
         justify-content: center;

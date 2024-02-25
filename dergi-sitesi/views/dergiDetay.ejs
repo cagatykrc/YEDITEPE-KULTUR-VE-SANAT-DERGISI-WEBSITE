@@ -90,14 +90,26 @@
         </div>
       </div>
   
-    <div class="detail-page-pdf-review">
-            <iframe src="/uploads/<%=  dergi.pdf_dosya%>"></iframe>
-    </div>
+      <% if (dergi.pdf_dosya && dosyaVarMi('/uploads/' + dergi.pdf_dosya)) { %>
+        <div class="detail-page-pdf-review">
+            <iframe src="/uploads/<%= dergi.pdf_dosya %>"></iframe>
+        </div>
+    <% } %>
+    
+    <% function dosyaVarMi(dosyaYolu) { %>
+        <% try { %>
+            <% fs.accessSync(dosyaYolu, fs.constants.F_OK); %>
+            <% return true; %>
+        <% } catch (err) { %>
+            <% return false; %>
+        <% } %>
+    <% } %>
+    
 
     <div class="detail-comment-area rounded p-4 mt-3">
         <div style="box-shadow: none; min-height: auto;" class="custom-row mt-4">
             <div class="col-md-6">
-                <h3 class="mb-3">Yorum Ekle</h3>
+                <h2>Yorum Ekle</h2>
                 <form action="/dergiler/<%= dergi.dergi_id %>/yorumEkle" method="POST">
                     <div class="form-group">
                         <label for="yorumMetni">Yorumunuz:</label>
@@ -154,21 +166,28 @@
                     }
                 </script>
                 
-            <% } else { %>
-                <div class="list-group border-0">
-                    <% dergiYorumlari.forEach(yorum => { %>
-                        <div class="list-group-item">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <h5 class="mb-1"><strong><%= yorum.User.first_name %>:</strong></h5>
-                                <small class="text-muted">
-                                  <%= new Date(yorum.createdAt).toLocaleDateString('tr-TR') %>
-                                </small>
-                            </div>
-                            <p class="mb-1"><%= yorum.yorum_metni %></p>
-                        </div>
-                    <% }); %>
-                </div>
-            <% } %>
+                <% } else { %>
+                  <div class="list-group border-0">
+                      <% if (dergiYorumlari && dergiYorumlari.length) { %>
+                          <% dergiYorumlari.forEach(yorum => { %>
+                              <div class="list-group-item">
+                                  <div class="d-flex justify-content-between align-items-center">
+                                      <h5 class="mb-1"><strong><%= yorum.User.first_name %>:</strong></h5>
+                                      <small class="text-muted">
+                                          <%= new Date(yorum.createdAt).toLocaleDateString('tr-TR') %>
+                                      </small>
+                                  </div>
+                                  <p class="mb-1"><%= yorum.yorum_metni %></p>
+                              </div>
+                          <% }); %>
+                      <% } else { %>
+                          <div >
+                              <p class="custom-text">İlk yorum yapan siz olun</p>
+                          </div>
+                      <% } %>
+                  </div>
+              <% } %>
+              
         </div>
     </div>
 </div>

@@ -78,16 +78,15 @@ router.post('/:dergiId/yorumsil', verifyToken, async (req, res) => {
 // Örnek endpoint
 router.post('/:dergiId/yorumEkle',postlimiter, async (req, res) => {
     const dergiId = req.params.dergiId;
-    const userN = req.session.user.username;
     // Kullanıcının oturum açmış olup olmadığını kontrol et
     if (!req.session.user) {
         res.redirect('/auth/giris');
         return;    
     }
-
+    
     const kullaniciId = req.session.user.id;
     const yorumMetni = req.body.yorumMetni;
-
+    
     try {
         // Sequelize ile yorumu oluştur
         const yorum = await Yorumlar.create({
@@ -95,6 +94,7 @@ router.post('/:dergiId/yorumEkle',postlimiter, async (req, res) => {
             kullanici_id: kullaniciId,
             yorum_metni: yorumMetni
         });
+        const userN = req.session.user.username;
         const ipAddress = req.socket.remoteAddress;
         logger.info( userN+' '+'Yorum Ekledi: '+ipAddress +'  //'+now);
         res.redirect(`/dergiler/${dergiId}`);
