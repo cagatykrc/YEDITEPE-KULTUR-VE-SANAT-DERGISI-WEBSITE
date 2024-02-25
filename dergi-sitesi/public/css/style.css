@@ -1,4 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap');
+input{
+    background-color: #F7FAFC;
+    color: #728095;
+    font-weight: 400;
+    font-family: LexendDeca;
+}
 html{
     height: auto;
     transition: .3s ease-in-out;
@@ -95,8 +101,8 @@ body {
 .about-us,
 .social-media {
     margin-bottom: 40px;
-    background-color: #f5f5f5;
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    background-color: #EDF2F7;
+    box-shadow: #E2E8F0 0px 0px 5px 0px, #E2E8F0 0px 0px 1px 0px;
     padding: 1rem;
     border-radius: 12px;
     margin-top: 24px;
@@ -222,6 +228,10 @@ nav{
     font-size: 16px;
     text-transform: capitalize;
     margin-left: 2px;
+    transition: .3s ease-in-out;
+}
+.navbar a:hover{
+    color: #00B5D8;
 }
 .navbar-link a{
     color: #00B5D8;
@@ -255,11 +265,13 @@ nav{
 }
 
 .container p {
-    color: #495057;
+    color: #728095;
 }
 
 .container h2 {
-    color: #333333;
+    font-family: LexendDeca;
+    color: #000000;
+    font-weight: 600;
 }
 
 .container a:hover {
@@ -538,8 +550,8 @@ a{
 
 }
 .send-contact-area{
-    background-color: #f5f5f5;
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    background-color: #EDF2F7;
+    box-shadow: #E2E8F0 0px 0px 5px 0px, #E2E8F0 0px 0px 1px 0px;
     border-radius: 12px;
     padding: 24px;
     margin-top: 32px;
@@ -803,12 +815,18 @@ ul{
 }
 
 .loginPage form{
-    background-color:  #f2f2f2;
+    background-color:  #EDFDFD;
     width: 450px;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    box-shadow: #E2E8F0 0px 0px 5px 0px, #E2E8F0 0px 0px 1px 0px;
     padding: 1rem;
+    border: 1px solid #00B5D8;
     min-height: 350px;
     border-radius: 12px;
+}
+.loginPage h2{
+    color: #000000;
+    font-family: LexendDeca;
+    font-weight: 600;
 }
 
 .loginPage {
@@ -833,14 +851,15 @@ ul{
 .loginPage label{
     display: block;
     margin-bottom: 5px;
-    color: #333333;
+    color: #2E3747;
+
 }
 
 .contact{
     margin-top: 64px;
-    background-color: #fff;
+    background-color: #EDF2F7;
     border-radius: 12px;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    box-shadow: #E2E8F0 0px 0px 5px 0px, #E2E8F0 0px 0px 1px 0px;
     padding: 1rem;
 }
 .log-area{
@@ -1075,6 +1094,10 @@ ul{
     .list a:hover {
         color: #00B5D8; /* Hover durumunda renk değiştir */
     }
+    .list .navbar-link-reg a{
+        color: #ffffff;
+        width: 100%;
+    }
 
     .navbar label {
         display: inline-flex;
@@ -1125,7 +1148,6 @@ a{
   width: 260px;
   background: #EDF2F7;
   box-shadow: #E2E8F0 0px 0px 5px 0px, #E2E8F0 0px 0px 1px 0px;
-
   z-index: 100;
   transition: all 0.5s ease;
   color: #4B5567;
