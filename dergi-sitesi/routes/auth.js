@@ -89,12 +89,19 @@ router.get('/kayit', (req, res) => {
 
 router.post('/giris', postlimiter,  async (req, res) => {
   const userS = req.session.user;
-  const { email, password } = req.body; // Token'ı req.body üzerinden al
+  const { emailanduser, password } = req.body; // Token'ı req.body üzerinden al
   console.log(process.env.ACCESS_TOKEN_SECRET);
 
   try {
-    console.log(email, password);
-    const user = await Users.findOne({ where: { email } });
+    console.log(emailanduser, password);
+    const user = await Users.findOne({
+      where: {
+          [Op.or]: [
+              { email: emailanduser },
+              { username: emailanduser }
+          ]
+      }
+  });
 
     if (!user) {
       return res.render('giris',  { userS, message: 'Eposta bulunamadı', messagecolor: '#FF0000' });
