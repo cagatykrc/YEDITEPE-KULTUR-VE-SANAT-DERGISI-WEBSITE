@@ -15,7 +15,7 @@ const message = 'İstek Sayısını aştınız lütfen biraz bekleyiniz.';
 // Session'a bildirimi ekleyin
 const postlimiter = rateLimit({
   
-  windowMs: 15 * 1000,
+  windowMs: 1 * 60 * 1000,
   max: 3,
   handler: (req, res)=>{
     req.session.message = message;
