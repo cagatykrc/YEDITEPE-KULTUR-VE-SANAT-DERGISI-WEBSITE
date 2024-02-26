@@ -736,17 +736,23 @@ padding: 12px;
         top: -999;
         bottom: 0%;
         opacity: 0;
+        display: unset;
     }
     10%{
         bottom: 75%;
+        display: unset;
+
 
     }
     50% {
         opacity: 1;
+        display: unset;
+
     }
     100%{
         bottom: 75%;
         opacity: 0;
+        display: none;
     }
 }
 
