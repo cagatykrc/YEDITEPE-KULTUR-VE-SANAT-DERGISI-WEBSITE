@@ -761,7 +761,7 @@ padding: 12px;
     background-color: #f5f5f5;
     border-radius: 6px;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-    animation: fadeInOutB 5s;
+    animation: fadeInOutB 8s;
     opacity: 0;
     min-width: 300px;
     text-align: center;

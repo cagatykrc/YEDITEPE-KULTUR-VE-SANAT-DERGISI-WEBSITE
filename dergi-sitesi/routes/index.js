@@ -49,6 +49,8 @@ router.post('/contact', (req, res) => {
 
 
 router.get('/', async (req, res) => {
+    const message = req.session.message;
+    delete req.session.message;
     const userS = req.session.user;
     const kategoritabID = req.body;
     try {
@@ -74,7 +76,8 @@ router.get('/', async (req, res) => {
         //     }]
         // });
         const announcement = {title:'Site test aşamasındadır!',description:'Bu site şuan test aşamasındadır lütfen hiç bir içeriği dikkate almayınız.'}
-        res.render('index', { duyurular, dergiler, userS, kategoriTabs: kategoriTabs});
+        console.log(message);
+        res.render('index', { duyurular, dergiler, userS,message, kategoriTabs: kategoriTabs});
     } catch (error) {
         console.error('Dergi verilerini çekerken bir hata oluştu: ' + error);
         return res.status(500).send('Internal Server Error');
