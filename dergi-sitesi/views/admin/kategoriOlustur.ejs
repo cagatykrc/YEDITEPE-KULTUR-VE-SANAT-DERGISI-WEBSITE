@@ -104,7 +104,6 @@
             })
             .then(response => response.json())
             .then(data => {
-                console.log(data);
                 window.location.reload();
             })
             .catch(error => {
@@ -114,7 +113,7 @@
     }
     function confirmDeletetab(kategoritabId) {
         if (confirm('Emin misiniz?')) {
-            console.log(kategoritabId);
+
             fetch('/admin/' + kategoritabId + '/kategoritabsil', {
                 method: 'POST',
                 headers: {
@@ -124,7 +123,7 @@
             })
             .then(response => response.json())
             .then(data => {
-    console.log(data);
+
     if (data.success) {
         alert(data.message); // İsteğin başarılı olduğuna dair mesajı göster
         window.location.reload(); // Sayfayı yeniden yükle

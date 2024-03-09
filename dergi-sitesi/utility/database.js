@@ -27,8 +27,8 @@ require('dotenv').config();
 //   host: process.env.DB_HOST ,
 //   dialect:'mysql' /* one of 'mysql' | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
 // });
-const sequelize = new Sequelize( 'ykvs_books', 'epson', 'epson', {
-  host:'localhost',
+const sequelize = new Sequelize( 'ykvs_books', 'root', 'YKVSD123456', {
+  host:'37.148.211.179',
   dialect:'mysql' /* one of 'mysql' | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
 });
-module.exports = sequelize;  
+module.exports = sequelize;

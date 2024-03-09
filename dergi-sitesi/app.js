@@ -5,7 +5,7 @@ const dotenv = require('dotenv');
 const path = require('path');
 const secretKey = crypto.randomBytes(32).toString('hex');
 const sequelize = require('./utility/database');
-console.log(process.env.ACCES_TOKEN_SECRET);
+
 const authRoutes = require('./routes/auth');
 const indexRoute = require('./routes/index');
 const dergiRoute = require('./routes/dergi');
@@ -24,7 +24,7 @@ const app = express();
 
 
 require('dotenv').config();
-console.log(secretKey);
+
 app.use(session({
     secret: secretKey,
     resave: false,
@@ -42,11 +42,12 @@ app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
 // app.use(createLimiter);
 
+
+
 // Sequelize modellerini senkronize et
 (async () => {
     try {
         await sequelize.sync();
-        console.log('Veritabanı modelleri senkronize edildi');
         
         const PORT =process.env.PORT  ||3000 ;
         //YORUM SATIRINDAN ÇIKARILACAK SSL GELDİĞİ ZAMAN

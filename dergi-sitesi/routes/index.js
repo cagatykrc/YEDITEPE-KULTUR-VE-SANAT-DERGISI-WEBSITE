@@ -42,7 +42,7 @@ router.post('/contact', (req, res) => {
     if (error) {
       return console.log('E-posta gönderilemedi:', error);
     }
-    console.log('E-posta gönderildi:', info.response);
+  
     res.send('Mesajınız başarıyla gönderildi.');
   });
 });
@@ -76,7 +76,7 @@ router.get('/', async (req, res) => {
         //     }]
         // });
         const announcement = {title:'Site test aşamasındadır!',description:'Bu site şuan test aşamasındadır lütfen hiç bir içeriği dikkate almayınız.'}
-        console.log(message);
+
         res.render('index', { duyurular, dergiler, userS,message, kategoriTabs: kategoriTabs});
     } catch (error) {
         console.error('Dergi verilerini çekerken bir hata oluştu: ' + error);

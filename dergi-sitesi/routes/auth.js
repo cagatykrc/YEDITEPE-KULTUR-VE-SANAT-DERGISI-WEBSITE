@@ -90,10 +90,9 @@ router.get('/kayit', (req, res) => {
 router.post('/giris', postlimiter,  async (req, res) => {
   const userS = req.session.user;
   const { emailanduser, password } = req.body; // Token'ı req.body üzerinden al
-  console.log(process.env.ACCESS_TOKEN_SECRET);
+
 
   try {
-    console.log(emailanduser, password);
     const user = await Users.findOne({
       where: {
           [Op.or]: [

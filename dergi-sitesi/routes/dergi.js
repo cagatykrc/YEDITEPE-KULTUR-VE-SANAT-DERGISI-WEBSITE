@@ -37,7 +37,7 @@ router.get('/:dergiId', async (req, res) => {
                 attributes: ['first_name'],
             }]
         });
-        console.log(dergiYorumlari);
+
 
         // Dergi sayfasını render et
         res.render('dergiDetay', { dergi, userS, dergiYorumlari,olusturanUser });
@@ -67,7 +67,6 @@ router.post('/:dergiId/yorumsil', verifyToken, async (req, res) => {
         await yorum.destroy();
         const ipAddress = req.socket.remoteAddress;
         logger.info(userS.username + ' ' + 'Yorum Sildi: ' + ipAddress);
-        console.log(userS.username + ' ' + yorumId + ' Yorum silindi.' + '  //' + now);
         return res.json({ message: yorumId + ' Yorum başarıyla silindi' });
     } catch (error) {
         console.error(error);
@@ -109,9 +108,7 @@ router.post('/:dergiId/yorumEkle', postlimiter, async (req, res) => {
 
 router.post('/:dergiId/indir',(req, res) => {
     try {
-        const dergiId = req.params.dergiId;
         const pdfDosya = req.body.pdf_dosya;
-        console.log(pdfDosya);
         res.download("./public/uploads/"+pdfDosya);
         
     } catch (error) {

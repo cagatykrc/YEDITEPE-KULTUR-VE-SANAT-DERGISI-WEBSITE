@@ -8,7 +8,12 @@
     "start": "node app.js",
     "live": "node app.js"
   },
-  "keywords": [],
+  "keywords": [
+    "nodejs",
+    "express",
+    "sequelize",
+    "mysql"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {

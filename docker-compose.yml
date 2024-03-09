@@ -1,0 +1,11 @@
+version: '3.7'   
+services:    
+    web:
+        image: dergi-sitesi
+        build: .
+        command: node app.js
+        ports: 
+            - "4040:4040"
+        volumes: 
+            - ./dergi-sitesi/app
+            - /app/node_modules
